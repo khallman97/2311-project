@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 * 
 * @author ENAMEL team: Sunjik Lee, Li Yin, Vassilios Tzerpos.
 *
+*
 */
 public abstract class Player {
 
