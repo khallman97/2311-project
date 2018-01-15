@@ -6,7 +6,7 @@ public class ToyAuthoring {
     	    ScenarioParser s = new ScenarioParser(true);
     	    s.setScenarioFile("FactoryScenarios/Scenario_" + 1 + ".txt");
     	    VisualPlayer test = new VisualPlayer(2,1);
-    	    //Test
+    	    //this is a test
     	    
     }
 }
