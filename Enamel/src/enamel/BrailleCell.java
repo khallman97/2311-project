@@ -154,7 +154,7 @@ public class BrailleCell {
 	}
 	
 	/**
-	 * Lowers the pin that corresponds to the argument.
+	 * Lowers the pin that corresponds to the argument. 
 	 * 
 	 * @param pin
 	 *            the index of the pin to raise
