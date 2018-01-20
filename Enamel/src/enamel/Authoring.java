@@ -1,7 +1,9 @@
 package enamel;
 
 import java.awt.event.*;
+import java.awt.*;
 import javax.swing.*;
+import javax.accessibility.*;
 
 public class Authoring extends JFrame{
 	JPanel Panel = new JPanel();
@@ -31,10 +33,9 @@ public class Authoring extends JFrame{
                 System.exit(0);
             }
         });
-        file.getAccessibleContext().setAccessibleName("File menu");
+
         file.add(menuItem);
         menuBar.add(file);
-        menuBar.getAccessibleContext().setAccessibleName("Menu Bar");
         setJMenuBar(menuBar);
 	}
 	private void fileChooser() {
