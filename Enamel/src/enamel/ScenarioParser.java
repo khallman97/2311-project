@@ -541,7 +541,6 @@ public class ScenarioParser {
 	 * This method will play the scenario file but the file can be anywhere on the
 	 * users computer
 	 * 
-	 * 
 	 */
 	public void setScenarioFileWithFile(File file) {
 		try {
