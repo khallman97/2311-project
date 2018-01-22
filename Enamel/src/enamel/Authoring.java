@@ -17,6 +17,7 @@ public class Authoring extends JFrame implements ActionListener{
 		buttons();
 		menu();
 		fileChooser();
+		//test1 
 	}
 	private void UI() {
 		getContentPane().add(Panel);
