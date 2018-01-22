@@ -1,15 +1,38 @@
 package enamel;
 
+import java.io.File;
+
 public class ToyAuthoring {
 
     public static void main(String[] args) { 	  	
-    	    ScenarioParser s = new ScenarioParser(true);
-    	    s.setScenarioFile("FactoryScenarios/Scenario_" + 1 + ".txt");
-    	    VisualPlayer test = new VisualPlayer(2,1);
-
-    	    //Test
-    	    //TEST2
-    	    //test3
+    	    String name ="";
+    		File file = null;
+    		simpleGui test = new simpleGui("title");
+    		test.setVisible(true);
+    	
+    		boolean fileSelected = true;
+    		
+    		
+    		while(fileSelected) {
+    			
+    		
+    			try {
+    				file  = test.getFile();
+    				System.out.println(file.getName());
+    				fileSelected = false;
+    			} catch (Exception e) {
+    				
+    			}
+    		}
+    			
+    		
+    		ScenarioParser s = new ScenarioParser(true);
+    	    
+    		 
+    	    s.setScrenarioFileFile(file);
+    	    VisualPlayer play = new VisualPlayer(1,1);
+    	    play.refresh();
+    	  
 
     	    
     }

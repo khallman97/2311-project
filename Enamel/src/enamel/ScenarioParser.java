@@ -537,5 +537,26 @@ public class ScenarioParser {
 							+ " you are looking for a different directory?");
 		}
 	}
+	
 
+	public void setScrenarioFileFile(File file) {
+		// TODO Auto-generated method stub
+		try{
+			
+			
+			fileScanner = new Scanner(file);
+			//String absolutePath = file.getPath();
+			//scenarioFilePath = absolutePath.substring(0, absolutePath.lastIndexOf(File.separator));
+			setCellAndButton();
+			play();
+			} catch (Exception e) {
+				errorLog("Exception error: " + e.toString(),
+					"Expected the directory path of the scenario file to"
+							+ " a file exists in the project folder. \n Could not find directory to path: "
+							//+ scenarioFile + " \n Perhaps" + " you forgot to add the file to the directory or "
+							+ " you are looking for a different directory?");
+		}
+	}
 }
+
+
