@@ -537,5 +537,26 @@ public class ScenarioParser {
 							+ " you are looking for a different directory?");
 		}
 	}
-
+	/*
+	 * This method will play the scenario file but the file can be anywhere on the
+	 * users computer
+	 * 
+	 */
+	public void setScenarioFileWithFile(File file) {
+		try {
+			
+			fileScanner = new Scanner(file);
+			setCellAndButton();
+			play();
+		} catch (Exception e) {
+			errorLog("Exception error: " + e.toString(),
+					"Expected the directory path of the scenario file to"
+							+ " a file exists in the project folder. \n Could not find directory to path: "
+							+ file + " \n Perhaps" + " you forgot to add the file to the directory or "
+							+ " you are looking for a different directory?");
+		}
+	}
 }
+
+
+
