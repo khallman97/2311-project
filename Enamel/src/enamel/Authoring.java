@@ -17,7 +17,7 @@ public class Authoring extends JFrame implements ActionListener{
 		buttons();
 		menu();
 		fileChooser();
-		//test1 
+
 	}
 	private void UI() {
 		getContentPane().add(Panel);
@@ -59,7 +59,7 @@ public class Authoring extends JFrame implements ActionListener{
 			int rep = chooser.showOpenDialog(Panel);
 			if (rep == JFileChooser.APPROVE_OPTION){
 				File file = chooser.getSelectedFile();
-				output.setText("Opening "+file.getName());
+				output.setText("Opening "+file.getName());			
 			}
 		}
 	}
