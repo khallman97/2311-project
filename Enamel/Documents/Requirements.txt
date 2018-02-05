@@ -14,5 +14,8 @@ Use Cases:
 3.	Testing of scenarios
 4.	Recording audio for scenarios
 
-Acceptance Test Cases;
+Acceptance Test Cases:
+1.	Create a Scenario containing both text to speech and recorded audio. Then edit Scenario
+	to remove some text and add more audio. Then run the scenario to see if results match
+	the expected. 
 
