@@ -107,8 +107,6 @@ public class Authoring extends JFrame implements ActionListener{
         newItem.addActionListener(this);
         
         file.add(openItem);file.add(editItem);file.add(runItem);file.add(exitItem);file.add(newItem);
-        file.setToolTipText("Alt+F");
-		file.setMnemonic(KeyEvent.VK_F);
         menuBar.add(file);
         setJMenuBar(menuBar);
 	}
