@@ -5,6 +5,7 @@ import java.io.File;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.accessibility.*;
 
 //
@@ -82,11 +83,11 @@ public class Authoring extends JFrame implements ActionListener{
 	private void menu() {
 		//TODO make menu
 		
-		ImageIcon exit = new ImageIcon("exit.png");
-		ImageIcon edit = new ImageIcon("edit.png");
-		ImageIcon open = new ImageIcon("open.png");
-		ImageIcon run = new ImageIcon("start.png");
-		ImageIcon NEW = new ImageIcon("new.png");
+		ImageIcon exit = new ImageIcon("Pictures/exit.png");
+		ImageIcon edit = new ImageIcon("Pictures/edit.png");
+		ImageIcon open = new ImageIcon("Pictures/open.png");
+		ImageIcon run = new ImageIcon("Pictures/start.png");
+		ImageIcon NEW = new ImageIcon("Pictures/new.png");
 		
 		JMenuBar menuBar = new JMenuBar();
         JMenu file = new JMenu("File");
@@ -100,7 +101,7 @@ public class Authoring extends JFrame implements ActionListener{
 		editItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
 		openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
 		runItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.CTRL_MASK));
-		newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.CTRL_MASK));
+		newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 
         exitItem.addActionListener(this);
         openItem.addActionListener(this);
@@ -108,7 +109,7 @@ public class Authoring extends JFrame implements ActionListener{
         editItem.addActionListener(this);
         newItem.addActionListener(this);
         
-        file.add(openItem);file.add(editItem);file.add(runItem);file.add(exitItem);file.add(newItem);
+        file.add(openItem);file.add(newItem);file.add(editItem);file.add(runItem);file.add(exitItem);
         file.setToolTipText("Alt+F");
 		file.setMnemonic(KeyEvent.VK_F);
         menuBar.add(file);
@@ -116,8 +117,10 @@ public class Authoring extends JFrame implements ActionListener{
 	}
 	private void fileChooser() {
 		chooser = new JFileChooser();
-		//FileFilter filter = new FileFilter();
-		//chooser.setFileFilter(filter);
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Scenario Files", "txt","wav");
+		chooser.setFileFilter(filter);
+		chooser.setAcceptAllFileFilterUsed(false);
+		chooser.setCurrentDirectory(new File(System.getProperty("user.dir")+"/FactoryScenarios"));
 	}
 	public void actionPerformed(ActionEvent e){
 		output.append("You Clicked: "+e.getActionCommand()+"\n");
@@ -134,7 +137,7 @@ public class Authoring extends JFrame implements ActionListener{
 		}else if(e.getActionCommand() == "Test") {
 			output.append("Hasn't been built yet \n");
 		}else if(e.getActionCommand() == "New") {
-			//output.append("works");
+			output.append("works");
 		}
 	}
 	public static void main(String[] args) {
