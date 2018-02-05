@@ -124,6 +124,7 @@ public class Authoring extends JFrame implements ActionListener{
         setJMenuBar(menuBar);
 	}
 	private void fileChooser() {
+		//TODO improve system
 		chooser = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Scenario Files", "txt","wav");
 		chooser.setFileFilter(filter);
