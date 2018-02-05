@@ -18,7 +18,7 @@ import javax.accessibility.*;
 public class ScenarioCreator extends JFrame implements ActionListener {
 	
 	
-	private String senName;
+	private String senName;//
 	private TextArea display;
 	private Button cellAndButton; 
 	private Button questions;
