@@ -8,16 +8,23 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.accessibility.*;
 
-//
+
 
 public class Authoring extends JFrame implements ActionListener{
 	GroupLayout layout = new GroupLayout(getContentPane());
 	JFileChooser chooser;
-	JButton openButton = new JButton("Open");
-	JButton EditButton = new JButton("Edit");
-	JButton testButton = new JButton("Test");
-	JButton exitButton = new JButton("Exit");
-	JButton newButton = new JButton("New");
+	
+	ImageIcon exit = new ImageIcon("Pictures/exit.png");
+	ImageIcon edit = new ImageIcon("Pictures/edit.png");
+	ImageIcon open = new ImageIcon("Pictures/open.png");
+	ImageIcon run = new ImageIcon("Pictures/start.png");
+	ImageIcon NEW = new ImageIcon("Pictures/new.png");
+			
+	JButton openButton = new JButton("Open",open);
+	JButton EditButton = new JButton("Edit",edit);
+	JButton testButton = new JButton("Test",run);
+	JButton exitButton = new JButton("Exit",exit);
+	JButton newButton = new JButton("New",NEW);
 	JTextArea output = new JTextArea();
 	JScrollPane scr = new JScrollPane();
 	
@@ -35,6 +42,7 @@ public class Authoring extends JFrame implements ActionListener{
 	}
 	private void buttons() {
 		//TODO make buttons
+			
 		setTitle("File Chooser app");
 		output.setColumns(20);
 		output.setRows(5);
@@ -73,7 +81,7 @@ public class Authoring extends JFrame implements ActionListener{
 	        );
 
 	        pack();
-		
+
 		openButton.addActionListener(this);
 		EditButton.addActionListener(this);
 		testButton.addActionListener(this);
