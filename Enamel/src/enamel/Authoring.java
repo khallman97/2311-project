@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.accessibility.*;
 
-//
+
 
 public class Authoring extends JFrame implements ActionListener{
 	GroupLayout layout = new GroupLayout(getContentPane());
