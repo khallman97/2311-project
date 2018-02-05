@@ -79,14 +79,27 @@ public class Authoring extends JFrame implements ActionListener{
 	}
 	private void menu() {
 		//TODO make menu
+		
+		ImageIcon exit = new ImageIcon("exit.png");
+		ImageIcon edit = new ImageIcon("edit.png");
+		ImageIcon open = new ImageIcon("open.png");
+		ImageIcon run = new ImageIcon("start.png");
+		ImageIcon NEW = new ImageIcon("new.png");
+		
 		JMenuBar menuBar = new JMenuBar();
         JMenu file = new JMenu("File");
-        JMenuItem exitItem = new JMenuItem("Exit");
-        JMenuItem editItem = new JMenuItem("Edit");
-        JMenuItem openItem = new JMenuItem("Open");
-        JMenuItem runItem = new JMenuItem("Test");
-        JMenuItem newItem = new JMenuItem("New");
+        JMenuItem exitItem = new JMenuItem("Exit",exit);
+        JMenuItem editItem = new JMenuItem("Edit",edit);
+        JMenuItem openItem = new JMenuItem("Open",open);
+        JMenuItem runItem = new JMenuItem("Test",run);
+        JMenuItem newItem = new JMenuItem("New",NEW);
         
+        exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
+		editItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
+		openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
+		runItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.CTRL_MASK));
+		newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.CTRL_MASK));
+
         exitItem.addActionListener(this);
         openItem.addActionListener(this);
         runItem.addActionListener(this);
@@ -94,6 +107,8 @@ public class Authoring extends JFrame implements ActionListener{
         newItem.addActionListener(this);
         
         file.add(openItem);file.add(editItem);file.add(runItem);file.add(exitItem);file.add(newItem);
+        file.setToolTipText("Alt+F");
+		file.setMnemonic(KeyEvent.VK_F);
         menuBar.add(file);
         setJMenuBar(menuBar);
 	}
