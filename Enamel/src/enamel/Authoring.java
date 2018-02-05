@@ -94,7 +94,7 @@ public class Authoring extends JFrame implements ActionListener{
         newItem.addActionListener(this);
         
         file.add(openItem);file.add(editItem);file.add(runItem);file.add(exitItem);file.add(newItem);
-        menuBar.add(file);
+        menuBar.add(file);//
         setJMenuBar(menuBar);
 	}
 	private void fileChooser() {
@@ -117,7 +117,7 @@ public class Authoring extends JFrame implements ActionListener{
 		}else if(e.getActionCommand() == "Test") {
 			output.append("Hasn't been built yet \n");
 		}else if(e.getActionCommand() == "New") {
-			output.append("works");
+			//output.append("works");
 		}
 	}
 	public static void main(String[] args) {
