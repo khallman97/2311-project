@@ -14,6 +14,7 @@ public class Authoring extends JFrame implements ActionListener{
 	JButton EditButton = new JButton("Edit");
 	JButton testButton = new JButton("Test");
 	JButton exitButton = new JButton("Exit");
+	JButton newButton = new JButton("New");
 	JTextArea output = new JTextArea();
 	JScrollPane scr = new JScrollPane();
 	
@@ -45,6 +46,7 @@ public class Authoring extends JFrame implements ActionListener{
 	                    .addComponent(testButton, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
 	                    .addComponent(openButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 	                    .addComponent(EditButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	                    .addComponent(newButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 	                    .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 	                .addGap(137, 137, 137))
 	        );
@@ -55,7 +57,9 @@ public class Authoring extends JFrame implements ActionListener{
 	                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
 	                    .addComponent(scr)
 	                    .addGroup(layout.createSequentialGroup()
-	                        .addComponent(openButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+	                    	.addComponent(newButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+		                     .addGap(18, 18, 18)
+	                    	.addComponent(openButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
 	                        .addGap(18, 18, 18)
 	                        .addComponent(EditButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
 	                        .addGap(18, 18, 18)
@@ -71,6 +75,7 @@ public class Authoring extends JFrame implements ActionListener{
 		EditButton.addActionListener(this);
 		testButton.addActionListener(this);
 		exitButton.addActionListener(this);
+		newButton.addActionListener(this);
 	}
 	private void menu() {
 		//TODO make menu
@@ -80,13 +85,15 @@ public class Authoring extends JFrame implements ActionListener{
         JMenuItem editItem = new JMenuItem("Edit");
         JMenuItem openItem = new JMenuItem("Open");
         JMenuItem runItem = new JMenuItem("Test");
+        JMenuItem newItem = new JMenuItem("New");
         
         exitItem.addActionListener(this);
         openItem.addActionListener(this);
         runItem.addActionListener(this);
         editItem.addActionListener(this);
+        newItem.addActionListener(this);
         
-        file.add(openItem);file.add(editItem);file.add(runItem);file.add(exitItem);
+        file.add(openItem);file.add(editItem);file.add(runItem);file.add(exitItem);file.add(newItem);
         menuBar.add(file);
         setJMenuBar(menuBar);
 	}
@@ -109,6 +116,8 @@ public class Authoring extends JFrame implements ActionListener{
 			output.append("Hasn't been built yet \n");
 		}else if(e.getActionCommand() == "Test") {
 			output.append("Hasn't been built yet \n");
+		}else if(e.getActionCommand() == "New") {
+			output.append("works");
 		}
 	}
 	public static void main(String[] args) {
