@@ -25,7 +25,7 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 	private boolean cellAndButtonEntered = false;
 	private BufferedWriter writer;
 	
-	public  ScenarioCreator() throws IOException {
+	public  ScenarioCreator()  {
 		popupForName();
 		INT();
 		elements();
@@ -40,8 +40,8 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 	* work on another computer unless you change the user and create a folder called scenarios */
 	private void createEmptyDoc()  {
 		try {
-		     File file = new File("C:\\users\\kyleh\\scenarios\\Scenario_"+senName+".txt"); //change kyleh and add scenario folder to test
-		      writer = new BufferedWriter(new FileWriter("C:\\users\\kyleh\\scenarios\\Scenario_"+senName+".txt"));
+		     File file = new File("SavedScenarios/Scenario_"+senName+".txt"); //change kyleh and add scenario folder to test
+		      writer = new BufferedWriter(new FileWriter("SavedScenarios/Scenario_"+senName+".txt"));
 		     
 	             boolean fvar = file.createNewFile();
 		     if (fvar){

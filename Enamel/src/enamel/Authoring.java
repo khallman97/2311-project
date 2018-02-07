@@ -146,6 +146,7 @@ public class Authoring extends JFrame implements ActionListener{
 		}else if(e.getActionCommand() == "Test") {
 			output.append("Hasn't been built yet \n");
 		}else if(e.getActionCommand() == "New") {
+			ScenarioCreator sc = new ScenarioCreator();
 			output.append("works");
 		}
 	}
