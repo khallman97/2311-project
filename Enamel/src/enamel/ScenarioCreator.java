@@ -18,11 +18,19 @@ import javax.accessibility.*;
 public class ScenarioCreator extends JFrame implements ActionListener {
 	
 	
-	private String senName;//
+	private String senName;
+	private String fileName;
+	
 	private TextArea display;
+	
 	private Button cellAndButton; 
 	private Button questions;
+	private Button setBraille;
+	private Button addTTS;
+	private Button test;
+	
 	private boolean cellAndButtonEntered = false;
+	
 	private BufferedWriter writer;
 	
 	public  ScenarioCreator()  {
@@ -36,11 +44,11 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 		String name = JOptionPane.showInputDialog("Choose a scenario name");
 		this.senName = name;
 	}
-	/*This creates the new file for the scenario , would like to have custom directory in future. Currently this will not
-	* work on another computer unless you change the user and create a folder called scenarios */
+	/*This creates the new file for the scenario */
 	private void createEmptyDoc()  {
 		try {
-		     File file = new File("SavedScenarios/Scenario_"+senName+".txt"); //change kyleh and add scenario folder to test
+		     File file = new File("SavedScenarios/Scenario_"+senName+".txt"); 
+		     fileName = "Scenario_"+senName+".txt";
 		      writer = new BufferedWriter(new FileWriter("SavedScenarios/Scenario_"+senName+".txt"));
 		     
 	             boolean fvar = file.createNewFile();
@@ -90,21 +98,28 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 		
 		//Buttons
 		cellAndButton = new Button("Set cell and button");
-		questions = new Button("Insert Question");
+		questions = new Button("Add activity");
+		addTTS = new Button("Add text to speach");
+		test = new Button("Test Scenario");
+		
 		
 		//action listiners 
 		cellAndButton.addActionListener(this);
 		questions.addActionListener(this);
+		addTTS.addActionListener(this);
+		test.addActionListener(this);
 		
 		//disable buttons until cell and button is eneted
 		questions.setEnabled(false);
+		addTTS.setEnabled(false);
+		test.setEnabled(false);
 		
 		//add elements		
 		add(display);
-		
-		
 		add(cellAndButton);
 		add(questions);
+		add(addTTS);
+		add(test);
 	}
 	
 	public void actionPerformed(ActionEvent e) { 
@@ -121,11 +136,37 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 			addButton(buttonNum);
 			this.cellAndButtonEntered = true;
 			questions.setEnabled(true);
+			addTTS.setEnabled(true);
+			test.setEnabled(true);
 			
 		} else if (e.getSource() == questions) {
 			
-		}
-		else {
+		} else if (e.getSource() == addTTS) {
+			Object[] options = {
+				"EnterText ", "Use Voice"
+			};
+			int response = JOptionPane.showOptionDialog(null, "Choose Input Method", "" ,   JOptionPane.YES_NO_OPTION, 
+					JOptionPane.INFORMATION_MESSAGE ,null , options , options[0]);
+			System.out.println(response);
+			if (response == 0) {
+				String tts = JOptionPane.showInputDialog("Enter your text to speach");
+				addTTS(tts);
+			} else if (response == 1) {
+				JOptionPane.showMessageDialog(null, "not yet implimented");
+			} else {
+				
+			}
+			
+		} else if (e.getSource() == test)  {
+			try {
+				writer.close();
+				System.out.println("closed file");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			ScenarioParser sp = new ScenarioParser(true);
+			sp.setScenarioFile(fileName);
 		}
 		
 			
@@ -161,6 +202,17 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 	
 	public void addSkip(int duration) {
 		
+	}
+	
+	public void addTTS (String tts) {
+		try {
+			writer.write(tts);
+			writer.newLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		display.append("TTS: "+tts);
 	}
 
 	

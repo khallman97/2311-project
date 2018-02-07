@@ -523,10 +523,10 @@ public class ScenarioParser {
 	public void setScenarioFile(String scenarioFile) {
 		try {
 
-			File f = new File(scenarioFile);
+			File f = new File("/SavedScenarios/"+scenarioFile);
 			fileScanner = new Scanner(f);
-			String absolutePath = f.getAbsolutePath();
-			scenarioFilePath = absolutePath.substring(0, absolutePath.lastIndexOf(File.separator));
+			//String absolutePath = f.getAbsolutePath();
+			//scenarioFilePath = absolutePath.substring(0, absolutePath.lastIndexOf(File.separator));
 			setCellAndButton();
 			play();
 		} catch (Exception e) {
