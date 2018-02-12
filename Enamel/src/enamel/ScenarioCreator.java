@@ -34,6 +34,8 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 	
 	private boolean cellAndButtonEntered = false;
 	
+	private boolean cancelButton;
+	
 	private BufferedWriter writer;
 	
 	public  ScenarioCreator()  {
@@ -45,8 +47,13 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 	/*opens a window to create the name of the scen*/
 	private void popupForName() {
 		String name = JOptionPane.showInputDialog("Choose a scenario name");
-		this.senName = name;
+		if(name == null) {
+			cancelButton = true;
+		} else {
+			this.senName = name;
+		}
 	}
+		
 	/*This creates the new file for the scenario */
 	private void createEmptyDoc()  {
 		try {
@@ -72,8 +79,12 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 	public void INT() {
 		setLayout(new FlowLayout());
 		setSize(500,500);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		if(cancelButton == true) {
+			dispose();
+		} else {
+			setVisible(true);
+		}
 		
 		addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
@@ -88,7 +99,8 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 						
 						e.printStackTrace();
 					}
-		            System.exit(0);
+		        	dispose();
+		            //System.exit(0);
 		        }
 		    }
 		});
@@ -196,7 +208,7 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 	public void addPause(String dur) {
 		
 		try {
-			writer.write("/~pause:"+dur);
+			writer.write("/~pause:"+dur+"\n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
