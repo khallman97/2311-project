@@ -28,6 +28,9 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 	private Button setBraille;
 	private Button addTTS;
 	private Button test;
+	private Button addPause;
+	
+	private File file;
 	
 	private boolean cellAndButtonEntered = false;
 	
@@ -47,7 +50,7 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 	/*This creates the new file for the scenario */
 	private void createEmptyDoc()  {
 		try {
-		     File file = new File("SavedScenarios/Scenario_"+senName+".txt"); 
+		     file = new File("SavedScenarios/Scenario_"+senName+".txt"); 
 		     fileName = "Scenario_"+senName+".txt";
 		      writer = new BufferedWriter(new FileWriter("SavedScenarios/Scenario_"+senName+".txt"));
 		     
@@ -99,8 +102,9 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 		//Buttons
 		cellAndButton = new Button("Set cell and button");
 		questions = new Button("Add activity");
-		addTTS = new Button("Add text to speach");
+		addTTS = new Button("Add text to speech");
 		test = new Button("Test Scenario");
+		addPause = new Button("Add a pause");
 		
 		
 		//action listiners 
@@ -108,18 +112,26 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 		questions.addActionListener(this);
 		addTTS.addActionListener(this);
 		test.addActionListener(this);
+		addPause.addActionListener(this);
 		
 		//disable buttons until cell and button is eneted
-		questions.setEnabled(false);
-		addTTS.setEnabled(false);
-		test.setEnabled(false);
+		enableButtons(false);
 		
 		//add elements		
 		add(display);
 		add(cellAndButton);
 		add(questions);
 		add(addTTS);
+		add(addPause);
 		add(test);
+		
+	}
+	
+	public void enableButtons(boolean bol) {
+		questions.setEnabled(bol);
+		addTTS.setEnabled(bol);
+		test.setEnabled(bol);
+		addPause.setEnabled(bol);
 	}
 	
 	public void actionPerformed(ActionEvent e) { 
@@ -135,11 +147,15 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 			String buttonNum = button.getText();
 			addButton(buttonNum);
 			this.cellAndButtonEntered = true;
-			questions.setEnabled(true);
-			addTTS.setEnabled(true);
-			test.setEnabled(true);
+			enableButtons(true);
+			
 			
 		} else if (e.getSource() == questions) {
+			
+			/*1. pull up whole new window with all the options for creating buttons.
+			 * 
+			 */
+			
 			
 		} else if (e.getSource() == addTTS) {
 			Object[] options = {
@@ -147,9 +163,9 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 			};
 			int response = JOptionPane.showOptionDialog(null, "Choose Input Method", "" ,   JOptionPane.YES_NO_OPTION, 
 					JOptionPane.INFORMATION_MESSAGE ,null , options , options[0]);
-			System.out.println(response);
+			//System.out.println(response);
 			if (response == 0) {
-				String tts = JOptionPane.showInputDialog("Enter your text to speach");
+				String tts = JOptionPane.showInputDialog("Enter your text to speech");
 				addTTS(tts);
 			} else if (response == 1) {
 				JOptionPane.showMessageDialog(null, "not yet implimented");
@@ -166,18 +182,33 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 				e1.printStackTrace();
 			}
 			ScenarioParser sp = new ScenarioParser(true);
-			sp.setScenarioFile(fileName);
+			sp.setScenarioFileWithFile(file);
+		} else if (e.getSource() == addPause) {
+			String duration = JOptionPane.showInputDialog("How long is the pause?");
+			addPause(duration);
 		}
 		
 			
 		
+		
+	}
+	
+	public void addPause(String dur) {
+		
+		try {
+			writer.write("/~pause:"+dur);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		display.append("Pause for: "+dur+" seconds\n");
 	}
 	
 	public void addCell(String cell) {
 		try {
 			
 			writer.write("Cell "+cell+"\n");
-			writer.newLine();
+			//writer.newLine();
 			
 			
 		} catch (IOException e) {
@@ -191,7 +222,7 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 		try {
 			
 			writer.write("Button "+button+"\n");
-			writer.newLine();
+			//writer.newLine();
 			System.out.println("should have printed");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -207,12 +238,12 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 	public void addTTS (String tts) {
 		try {
 			writer.write(tts);
-			writer.newLine();
+			//writer.newLine();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		display.append("TTS: "+tts);
+		display.append("TTS: "+tts+"\n");
 	}
 
 	
