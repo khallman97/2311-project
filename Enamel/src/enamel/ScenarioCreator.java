@@ -170,31 +170,12 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 			
 			
 		} else if (e.getSource() == addTTS) {
-			Object[] options = {
-				"EnterText ", "Use Voice"
-			};
-			int response = JOptionPane.showOptionDialog(null, "Choose Input Method", "" ,   JOptionPane.YES_NO_OPTION, 
-					JOptionPane.INFORMATION_MESSAGE ,null , options , options[0]);
-			//System.out.println(response);
-			if (response == 0) {
-				String tts = JOptionPane.showInputDialog("Enter your text to speech");
-				addTTS(tts);
-			} else if (response == 1) {
-				JOptionPane.showMessageDialog(null, "not yet implimented");
-			} else {
-				
-			}
+			addTTS();
+			
+		
 			
 		} else if (e.getSource() == test)  {
-			try {
-				writer.close();
-				System.out.println("closed file");
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			ScenarioParser sp = new ScenarioParser(true);
-			sp.setScenarioFileWithFile(file);
+			test();
 		} else if (e.getSource() == addPause) {
 			String duration = JOptionPane.showInputDialog("How long is the pause?");
 			addPause(duration);
@@ -203,6 +184,18 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 			
 		
 		
+	}
+	
+	public void test() {
+		try {
+			writer.flush();
+			System.out.println("closed file");
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		ScenarioParser sp = new ScenarioParser(true);
+		sp.setScenarioFileWithFile(file);
 	}
 	
 	public void addPause(String dur) {
@@ -285,7 +278,27 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 		
 	}
 	
-	public void addTTS (String tts) {
+	public void addTTS () {
+		
+	
+		String tts="";
+		Object[] options = {
+				"EnterText ", "Use Voice"
+			};
+			int response = JOptionPane.showOptionDialog(null, "Choose Input Method", "" ,   JOptionPane.YES_NO_OPTION, 
+					JOptionPane.INFORMATION_MESSAGE ,null , options , options[0]);
+			//System.out.println(response);
+			if (response == 0) {
+				tts = JOptionPane.showInputDialog("Enter your text to speech");
+				if(tts == null) {
+					JOptionPane.showMessageDialog(null, "Error: Please enter text");
+				}
+				
+			} else if (response == 1) {
+				JOptionPane.showMessageDialog(null, "not yet implimented");
+			} 
+				
+		
 		try {
 			writer.write(tts);
 			//writer.newLine();
@@ -295,6 +308,7 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 		}
 		display.append("TTS: "+tts+"\n");
 	}
+			
 
 	
 	
