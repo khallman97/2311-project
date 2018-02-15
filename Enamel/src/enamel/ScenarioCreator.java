@@ -12,11 +12,21 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.accessibility.*;
 
+
+
 /*This class creates the scenarios for the application*/
 
 
 public class ScenarioCreator extends JFrame implements ActionListener {
-	
+	/*TO DO FOR MID TERM
+	 * Testing cases
+	 * Accesbilties functions
+	 * edit and test buttons to do something
+	 * finish new scenario creator
+	 * attepmt to impliment edit
+	 * updates our docs
+	 * 
+	 */
 	
 	private String senName;
 	private String fileName;
@@ -149,18 +159,8 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) { 
 	 
 		if(e.getSource() == cellAndButton) {
-			JTextField cell = new JTextField();
-			JTextField button = new JTextField();
-			Object[] cAB = {
-					"cell:", cell , "Buttons:" , button }; 
-			int option = JOptionPane.showConfirmDialog(null, cAB , "Enter the number of cells and buttons", JOptionPane.OK_CANCEL_OPTION);
-			String cellNum = cell.getText();
-			addCell(cellNum);
-			String buttonNum = button.getText();
-			addButton(buttonNum);
-			this.cellAndButtonEntered = true;
-			enableButtons(true);
 			
+			addCellAndButton();
 			
 		} else if (e.getSource() == questions) {
 			
@@ -216,18 +216,56 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 		display.append("Pause for: "+dur+" seconds\n");
 	}
 	
-	public void addCell(String cell) {
-		try {
+	public void addCellAndButton() {
+		JTextField cell = new JTextField();
+		JTextField button = new JTextField();
+		Object[] cAB = {
+				"Cell(s):", cell , "Button(s):" , button }; 
+		boolean wasNotEntered = true;
+		do {
 			
-			writer.write("Cell "+cell+"\n");
-			//writer.newLine();
+		
+			int option = JOptionPane.showConfirmDialog(null, cAB , "Enter the number of cells and buttons", JOptionPane.OK_CANCEL_OPTION);
+			System.out.println(option);
+			
+				
+			if (option == -1 || option ==2){
+				break;
+			} else {
+				
+			
+				try {
+					
+						String cellNum = cell.getText();
+						String buttonNum = button.getText();
+						int cellNumber = Integer.parseInt(cellNum);
+						int buttonNumber = Integer.parseInt(buttonNum);
+						this.cellAndButtonEntered = true;
+						enableButtons(true);
+						try {
+						
+							writer.write("Cell "+cellNum+"\n");
+							writer.write("Button "+buttonNum+"\n");
+							//writer.newLine();
+						
+						
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						display.append("Number of cells: " +cellNum+"\n");
+						display.append("Number of buttons: "+buttonNum+"\n");
+						wasNotEntered = false;
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "Error: Please enter valid Integers greater then 0");
+				} 
+				
+					
+			}
+		}while (wasNotEntered);
+				
 			
 			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		display.append("Number of cells: " +cell+"\n");
 	}
 	
 	public void addButton(String button) {
@@ -240,7 +278,7 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-	    display.append("Number of buttons: "+button+"\n");
+	    
 	}
 	
 	public void addSkip(int duration) {
