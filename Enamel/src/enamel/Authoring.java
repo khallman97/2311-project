@@ -28,6 +28,7 @@ public class Authoring extends JFrame implements ActionListener{
 	JTextArea output = new JTextArea();
 	JScrollPane scr = new JScrollPane();
 	
+	
 	public Authoring() {
 		UI();
 		buttons();
@@ -131,6 +132,71 @@ public class Authoring extends JFrame implements ActionListener{
 		chooser.setAcceptAllFileFilterUsed(false);
 		chooser.setCurrentDirectory(new File(System.getProperty("user.dir")+"/FactoryScenarios"));
 	}
+	
+	public void submenuEDIT(String filename) {
+		JPanel menuBuild = new JPanel();
+		JFrame secWIN = new JFrame();
+		secWIN.setContentPane(menuBuild);
+		JScrollPane sde = new JScrollPane();
+		JScrollPane tde = new JScrollPane();
+		JTree opTree = new JTree();
+		JList<String> opList = new JList<>();
+		JButton addbut = new JButton("Add item");
+		JButton rembut = new JButton("Remove item");
+		JButton editbut = new JButton("Edit item");
+		
+		sde.setViewportView(opTree);
+		opList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+		tde.setViewportView(opList);
+		
+		secWIN.setBounds(100, 100, 600, 600);
+		secWIN.setResizable(false);
+		secWIN.setTitle("Scenario Editor");
+		secWIN.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
+		
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(menuBuild);
+        menuBuild.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(editbut)
+                        .addGap(18, 18, 18)
+                        .addComponent(rembut))
+                    .addComponent(tde, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sde, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(addbut)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tde, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                    .addComponent(sde, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(editbut)
+                        .addComponent(rembut))
+                    .addComponent(addbut))
+                .addGap(40, 40, 40))
+        );
+        secWIN.setVisible(true);
+	}
+	
 	public void actionPerformed(ActionEvent e){
 		output.append("You Clicked: "+e.getActionCommand()+"\n");
 		if (e.getActionCommand() == "Open"){
@@ -146,8 +212,13 @@ public class Authoring extends JFrame implements ActionListener{
 		}else if(e.getActionCommand() == "Test") {
 			output.append("Hasn't been built yet \n");
 		}else if(e.getActionCommand() == "New") {
-			ScenarioCreator sc = new ScenarioCreator();
-			output.append("works");
+			//ScenarioCreator sc = new ScenarioCreator();
+			String n = JOptionPane.showInputDialog("Please enter a file name:");
+			if (!n.isEmpty()) {
+				submenuEDIT(n);
+			}else {
+				output.append("No Filename given");
+			}
 		}
 	}
 	public static void main(String[] args) {
