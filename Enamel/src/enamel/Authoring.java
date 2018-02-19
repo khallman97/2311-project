@@ -4,16 +4,22 @@ import java.awt.event.*;
 import java.io.File;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
 import javax.accessibility.*;
 
 
 
 public class Authoring extends JFrame implements ActionListener{
 	GroupLayout layout = new GroupLayout(getContentPane());
-	JFileChooser chooser;
-	
+	JFileChooser chooser;JButton addbut;JButton rembut;JButton editbut;
+	DefaultListModel<String> opList;JTree opTree;JList<String> Listdisplay;
 	ImageIcon exit = new ImageIcon("Pictures/exit.png");
 	ImageIcon edit = new ImageIcon("Pictures/edit.png");
 	ImageIcon open = new ImageIcon("Pictures/open.png");
@@ -134,31 +140,46 @@ public class Authoring extends JFrame implements ActionListener{
 	}
 	
 	public void submenuEDIT(String filename) {
+		//items needed for menu
 		JPanel menuBuild = new JPanel();
 		JFrame secWIN = new JFrame();
 		secWIN.setContentPane(menuBuild);
 		JScrollPane sde = new JScrollPane();
 		JScrollPane tde = new JScrollPane();
-		JTree opTree = new JTree();
-		JList<String> opList = new JList<>();
-		JButton addbut = new JButton("Add item");
-		JButton rembut = new JButton("Remove item");
-		JButton editbut = new JButton("Edit item");
+		opList = new DefaultListModel<>();
+		opTree = new JTree();
+		Listdisplay = new JList<>(opList);
+		addbut = new JButton("Add item");
+		rembut = new JButton("Remove item");
+		editbut = new JButton("Edit item");
 		
+		//setup views
 		sde.setViewportView(opTree);
-		opList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-		tde.setViewportView(opList);
-		
+		opTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		tde.setViewportView(Listdisplay);
+		//adjust the window
 		secWIN.setBounds(100, 100, 600, 600);
 		secWIN.setResizable(false);
 		secWIN.setTitle("Scenario Editor");
 		secWIN.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
+		//some selection code
+		rembut.setEnabled(false);rembut.addActionListener(this);
+		editbut.setEnabled(false);editbut.addActionListener(this);
+		addbut.setEnabled(false);addbut.addActionListener(this);
+		Listdisplay.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				rembut.setEnabled(true);
+				editbut.setEnabled(true);
+			}
+		});
+		opTree.addTreeSelectionListener(new TreeSelectionListener() {
+			public void valueChanged(TreeSelectionEvent e) {
+				addbut.setEnabled(true);
+			}
+		});
 		
+		//layout all the data nicely
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(menuBuild);
         menuBuild.setLayout(layout);
         layout.setHorizontalGroup(
@@ -219,6 +240,24 @@ public class Authoring extends JFrame implements ActionListener{
 			}else {
 				output.append("No Filename given");
 			}
+		}else if(e.getActionCommand() == "Remove item") {
+			opList.removeElementAt(Listdisplay.getSelectedIndex());
+			Listdisplay.clearSelection();
+			rembut.setEnabled(false);
+			editbut.setEnabled(false);
+		}else if(e.getActionCommand() == "Edit item") {
+			Listdisplay.clearSelection();
+			editbut.setEnabled(false);
+			rembut.setEnabled(false);
+		}else if(e.getActionCommand() == "Add item") {
+			DefaultMutableTreeNode pick = (DefaultMutableTreeNode) opTree.getLastSelectedPathComponent();
+			if (pick.isLeaf()) {
+				opList.addElement((String) pick.getUserObject());
+			}else {
+				output.append("not a vaild option \n");
+			}
+			opTree.clearSelection();
+			addbut.setEnabled(false);
 		}
 	}
 	public static void main(String[] args) {
