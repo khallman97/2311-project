@@ -53,6 +53,7 @@ public class Authoring extends JFrame implements ActionListener{
 	JTextArea output = new JTextArea();
 	JScrollPane scr = new JScrollPane();
 	
+	
 	public Authoring() {
 		UI();
 		buttons();
@@ -64,15 +65,10 @@ public class Authoring extends JFrame implements ActionListener{
 		getContentPane().setLayout(layout);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
-//
-		Font f1 = new Font("Helvetica", Font.BOLD, 20);
 
-		UIManager.put("Button.background", Color.gray);
-		UIManager.put("Button.foreground", Color.black);		
-		UIManager.put("Button.font", f1);
-		UIManager.put("Menu.font", f1);
+		
 
-	}
+}
 	private void buttons() {
 		//TODO make buttons
 			
@@ -120,6 +116,8 @@ public class Authoring extends JFrame implements ActionListener{
 		testButton.addActionListener(this);
 		exitButton.addActionListener(this);
 		newButton.addActionListener(this);
+		
+		
 	}
 	private void menu() {
 		//TODO make menu
@@ -138,7 +136,13 @@ public class Authoring extends JFrame implements ActionListener{
         JMenuItem runItem = new JMenuItem("Test",run);
         JMenuItem newItem = new JMenuItem("New",NEW);
         
-        
+		Font f2 = new Font("Helvetica", Font.PLAIN, 20);
+    	exitItem.setFont(f2);
+    	editItem.setFont(f2);
+    	openItem.setFont(f2);
+    	runItem.setFont(f2);
+    	newItem.setFont(f2);
+     
 //      exitItem.setPreferredSize(new Dimension(200, exitItem.getPreferredSize().height));
         exitItem.setPreferredSize(new Dimension(200, 50));
         editItem.setPreferredSize(new Dimension(200, 50));
