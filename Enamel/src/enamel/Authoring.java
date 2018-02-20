@@ -70,6 +70,8 @@ public class Authoring extends JFrame implements ActionListener{
 		Font f2 = new Font("Helvetica", Font.PLAIN, 20);
 
 			
+		UIManager.put("Button.background", Color.gray);
+		UIManager.put("Button.foreground", Color.black);		
 		UIManager.put("Button.font", f1);
 		UIManager.put("Menu.font", f2);
 		UIManager.put("ToolTip.font", f2);
@@ -80,6 +82,11 @@ public class Authoring extends JFrame implements ActionListener{
 		newButton.setFont(f1);
 		exitButton.setFont(f1);
 		
+		openButton.setBackground(Color.CYAN);
+		EditButton.setBackground(Color.CYAN);
+		testButton.setBackground(Color.CYAN);
+		newButton.setBackground(Color.CYAN);
+		exitButton.setBackground(Color.CYAN);
 		
 
 }
