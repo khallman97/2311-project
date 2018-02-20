@@ -112,6 +112,9 @@ public class Authoring extends JFrame implements ActionListener{
         JMenuItem runItem = new JMenuItem("Test",run);
         JMenuItem newItem = new JMenuItem("New",NEW);
         
+//        exitItem.setPreferredSize(new Dimension(200, exitItem.getPreferredSize().height));
+        exitItem.setPreferredSize(new Dimension(200, 50));
+      
         exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
 		editItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
 		openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
