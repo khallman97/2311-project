@@ -66,6 +66,20 @@ public class Authoring extends JFrame implements ActionListener{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 
+		Font f1 = new Font("Helvetica", Font.BOLD, 20);
+		Font f2 = new Font("Helvetica", Font.PLAIN, 20);
+
+			
+		UIManager.put("Button.font", f1);
+		UIManager.put("Menu.font", f2);
+		UIManager.put("ToolTip.font", f2);
+		
+		openButton.setFont(f1);
+		EditButton.setFont(f1);
+		testButton.setFont(f1);
+		newButton.setFont(f1);
+		exitButton.setFont(f1);
+		
 		
 
 }
