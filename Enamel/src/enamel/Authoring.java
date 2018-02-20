@@ -1,18 +1,37 @@
 package enamel;
 
-import java.awt.event.*;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.File;
-import java.awt.*;
-import javax.swing.*;
+
+import javax.swing.UIManager;
+import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTree;
+import javax.swing.KeyStroke;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
-import javax.accessibility.*;
 
 
 
@@ -34,7 +53,6 @@ public class Authoring extends JFrame implements ActionListener{
 	JTextArea output = new JTextArea();
 	JScrollPane scr = new JScrollPane();
 	
-	
 	public Authoring() {
 		UI();
 		buttons();
@@ -46,6 +64,14 @@ public class Authoring extends JFrame implements ActionListener{
 		getContentPane().setLayout(layout);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
+
+		Font f1 = new Font("Helvetica", Font.BOLD, 20);
+
+		UIManager.put("Button.background", Color.gray);
+		UIManager.put("Button.foreground", Color.black);		
+		UIManager.put("Button.font", f1);
+		UIManager.put("Menu.font", f1);
+
 	}
 	private void buttons() {
 		//TODO make buttons
@@ -112,9 +138,14 @@ public class Authoring extends JFrame implements ActionListener{
         JMenuItem runItem = new JMenuItem("Test",run);
         JMenuItem newItem = new JMenuItem("New",NEW);
         
-//        exitItem.setPreferredSize(new Dimension(200, exitItem.getPreferredSize().height));
+        
+//      exitItem.setPreferredSize(new Dimension(200, exitItem.getPreferredSize().height));
         exitItem.setPreferredSize(new Dimension(200, 50));
-      
+        editItem.setPreferredSize(new Dimension(200, 50));
+        openItem.setPreferredSize(new Dimension(200, 50));
+        runItem.setPreferredSize(new Dimension(200, 50));
+        newItem.setPreferredSize(new Dimension(200, 50));
+        
         exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
 		editItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
 		openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
