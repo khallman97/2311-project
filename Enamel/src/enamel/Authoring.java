@@ -64,7 +64,7 @@ public class Authoring extends JFrame implements ActionListener{
 		getContentPane().setLayout(layout);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
-
+//
 		Font f1 = new Font("Helvetica", Font.BOLD, 20);
 
 		UIManager.put("Button.background", Color.gray);
