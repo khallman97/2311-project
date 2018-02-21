@@ -17,7 +17,7 @@ import javax.accessibility.*;
 /*This class creates the scenarios for the application*/
 
 
-public class ScenarioCreator extends JFrame  {
+public class ScenarioCreator  {
 	/*TO DO FOR MID TERM
 	 * Testing cases
 	 * Accesbilties functions
@@ -51,14 +51,11 @@ public class ScenarioCreator extends JFrame  {
 	private int Cell;
 	private int Button;
 	
-	public  ScenarioCreator(String name)  {
-		//popupForName();
-		//INT();
-		//elements();
-		this.senName = name;
+	public  ScenarioCreator()  {
+		
 		createEmptyDoc();
 	}
-	/*opens a window to create the name of the scen*/
+	/*opens a window to create the name of the screen
 	private void popupForName() {
 		String name = JOptionPane.showInputDialog("Choose a scenario name");
 		if(name == null) {
@@ -67,6 +64,7 @@ public class ScenarioCreator extends JFrame  {
 			this.senName = name;
 		}
 	}
+	*/
 		
 	/*This creates the new file for the scenario */
 	private void createEmptyDoc()  {
@@ -90,110 +88,33 @@ public class ScenarioCreator extends JFrame  {
 		
 	}
 
-	public void INT() {
-		setLayout(new FlowLayout());
-		setSize(500,500);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		if(cancelButton == true) {
-			dispose();
-		} else {
-			setVisible(true);
+
+
+
+	public String questionForString() {
+		boolean wasNotEntered = true;
+		String word=null;
+		while (wasNotEntered){
+			word = JOptionPane.showInputDialog(null, "Enter the word or letter you wish to display");
+			if(word == null) {
+				JOptionPane.showMessageDialog(null, "Error: File name already exists");
+			} else {
+				//Object[] buttons = new Object[Button];
+				//for(int i = 0; i <= this.Button ; i++) {
+					//buttons[i] = "Button" + i ,  ; 
+				//}
+				
+				
+				//int rc = JOptionPane.showOptionDialog(null, null, "Which button has the right answer" , JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons[1]);
+			}
+		}//..
+		try {
+			writer.append("/~disp-string:"+word);
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
-		
-		addWindowListener(new java.awt.event.WindowAdapter() {
-		    @Override
-		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		        if (JOptionPane.showConfirmDialog( 
-		            getParent(), "Are you sure to close this window?", "Really Closing?", 
-		            JOptionPane.YES_NO_OPTION,
-		            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-		        	try {
-						writer.close();
-					} catch (IOException e) {
-						
-						e.printStackTrace();
-					}
-		        	dispose();
-		            //System.exit(0);
-		        }
-		    }
-		});
+		return word;
 	}
-	
-	//for buttons
-	
-	public void elements()  {
-		//Text Fields
-		display = new TextArea(15 , 50);
-		display.setEditable(false);
-		
-		//Buttons
-		cellAndButton = new Button("Set cell and button");
-		questions = new Button("Add activity");
-		addTTS = new Button("Add text to speech");
-		test = new Button("Test Scenario");
-		addPause = new Button("Add a pause");
-		
-		
-		//action listiners 
-		/*
-		cellAndButton.addActionListener(this);
-		questions.addActionListener(this);
-		addTTS.addActionListener(this);
-		test.addActionListener(this);
-		addPause.addActionListener(this);
-		*/
-		
-		//disable buttons until cell and button is eneted
-		enableButtons(false);
-		
-		//add elements		
-		add(display);
-		add(cellAndButton);
-		add(questions);
-		add(addTTS);
-		add(addPause);
-		add(test);
-		
-	}
-	
-	public void enableButtons(boolean bol) {
-		questions.setEnabled(bol);
-		addTTS.setEnabled(bol);
-		test.setEnabled(bol);
-		addPause.setEnabled(bol);
-	}
-	
-	/*public void actionPerformed(ActionEvent e) { 
-	 
-		if(e.getSource() == cellAndButton) {
-			
-			addCellAndButton();
-			
-		} else if (e.getSource() == questions) {
-			
-			/*1. pull up whole new window with all the options for creating buttons.
-			 * 
-			 
-			
-			
-		} else if (e.getSource() == addTTS) {
-			addTTS();
-			
-		
-			
-		} else if (e.getSource() == test)  {
-			test();
-		} else if (e.getSource() == addPause) {
-			String duration = JOptionPane.showInputDialog("How long is the pause?");
-			addPause(duration);
-		}
-		
-			
-		
-		
-	} */
-	
 	
 	public void test() {
 		try {
@@ -248,7 +169,7 @@ public class ScenarioCreator extends JFrame  {
 						Cell = Integer.parseInt(cellNum);
 						Button = Integer.parseInt(buttonNum);
 						this.cellAndButtonEntered = true;
-						enableButtons(true);
+						
 						try {
 						
 							writer.write("Cell "+Cell+"\n");
