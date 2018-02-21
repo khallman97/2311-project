@@ -31,6 +31,8 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 
@@ -39,6 +41,7 @@ public class Authoring extends JFrame implements ActionListener{
 	GroupLayout layout = new GroupLayout(getContentPane());
 	JFileChooser chooser;JButton addbut;JButton rembut;JButton editbut;
 	DefaultListModel<String> opList;JTree opTree;JList<String> Listdisplay;
+	ScenarioCreator sc;
 	ImageIcon exit = new ImageIcon("Pictures/exit.png");
 	ImageIcon edit = new ImageIcon("Pictures/edit.png");
 	ImageIcon open = new ImageIcon("Pictures/open.png");
@@ -198,7 +201,7 @@ public class Authoring extends JFrame implements ActionListener{
 		chooser.setCurrentDirectory(new File(System.getProperty("user.dir")+"/FactoryScenarios"));
 	}
 	
-	public void submenuEDIT(String filename) {
+	private void submenuEDIT(String filename) {
 		//items needed for menu
 		JPanel menuBuild = new JPanel();
 		JFrame secWIN = new JFrame();
@@ -214,13 +217,24 @@ public class Authoring extends JFrame implements ActionListener{
 		
 		//setup views
 		sde.setViewportView(opTree);
+		opTree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("Options")));
 		opTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		tde.setViewportView(Listdisplay);
+		
 		//adjust the window
 		secWIN.setBounds(100, 100, 600, 600);
 		secWIN.setResizable(false);
 		secWIN.setTitle("Scenario Editor");
 		secWIN.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
+		//Add the options
+		DefaultTreeModel modeltmp = (DefaultTreeModel) opTree.getModel();
+		DefaultMutableTreeNode root = (DefaultMutableTreeNode) modeltmp.getRoot();
+		DefaultMutableTreeNode child = new DefaultMutableTreeNode("Text-to-speech");
+		modeltmp.insertNodeInto(child, root,root.getChildCount());
+		opTree.scrollPathToVisible(new TreePath(child.getPath()));
+		modeltmp.insertNodeInto(new DefaultMutableTreeNode("Activity"), root,root.getChildCount());
+		modeltmp.insertNodeInto(new DefaultMutableTreeNode("Pause"), root,root.getChildCount());
 		
 		//some selection code
 		rembut.setEnabled(false);rembut.addActionListener(this);
@@ -237,7 +251,11 @@ public class Authoring extends JFrame implements ActionListener{
 				addbut.setEnabled(true);
 			}
 		});
-		
+		//startup sc
+		//sc = new ScenarioCreator();
+		//sc.addCellAndButton();
+		//opList.addElement("Cells: "+sc.getCell());
+		//opList.addElement("Buttons: "+sc.getButton());
 		//layout all the data nicely
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(menuBuild);
         menuBuild.setLayout(layout);
