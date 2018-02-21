@@ -17,7 +17,7 @@ import javax.accessibility.*;
 /*This class creates the scenarios for the application*/
 
 
-public class ScenarioCreator extends JFrame implements ActionListener {
+public class ScenarioCreator extends JFrame  {
 	/*TO DO FOR MID TERM
 	 * Testing cases
 	 * Accesbilties functions
@@ -47,6 +47,9 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 	private boolean cancelButton;
 	
 	private BufferedWriter writer;
+	
+	private int Cell;
+	private int Button;
 	
 	public  ScenarioCreator()  {
 		popupForName();
@@ -116,6 +119,8 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 		});
 	}
 	
+	//for buttons
+	
 	public void elements()  {
 		//Text Fields
 		display = new TextArea(15 , 50);
@@ -130,11 +135,13 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 		
 		
 		//action listiners 
+		/*
 		cellAndButton.addActionListener(this);
 		questions.addActionListener(this);
 		addTTS.addActionListener(this);
 		test.addActionListener(this);
 		addPause.addActionListener(this);
+		*/
 		
 		//disable buttons until cell and button is eneted
 		enableButtons(false);
@@ -156,7 +163,7 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 		addPause.setEnabled(bol);
 	}
 	
-	public void actionPerformed(ActionEvent e) { 
+	/*public void actionPerformed(ActionEvent e) { 
 	 
 		if(e.getSource() == cellAndButton) {
 			
@@ -166,7 +173,7 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 			
 			/*1. pull up whole new window with all the options for creating buttons.
 			 * 
-			 */
+			 
 			
 			
 		} else if (e.getSource() == addTTS) {
@@ -184,7 +191,8 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 			
 		
 		
-	}
+	} */
+	
 	
 	public void test() {
 		try {
@@ -197,18 +205,23 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 		ScenarioParser sp = new ScenarioParser(true);
 		sp.setScenarioFileWithFile(file);
 	}
-	
-	public void addPause(String dur) {
+	/*
+	 * Returns the string back
+	 */
+	public String addPause() {
+		String duration = JOptionPane.showInputDialog("How long is the pause?");
 		
 		try {
-			writer.write("/~pause:"+dur+"\n");
+			writer.write("/~pause:"+duration+"\n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		display.append("Pause for: "+dur+" seconds\n");
+		return duration;
+		//display.append("Pause for: "+dur+" seconds\n"); ignore
 	}
-	
+	/*
+	 * does not return call the getCell and getButton for values
+	 */
 	public void addCellAndButton() {
 		JTextField cell = new JTextField();
 		JTextField button = new JTextField();
@@ -231,14 +244,14 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 					
 						String cellNum = cell.getText();
 						String buttonNum = button.getText();
-						int cellNumber = Integer.parseInt(cellNum);
-						int buttonNumber = Integer.parseInt(buttonNum);
+						Cell = Integer.parseInt(cellNum);
+						Button = Integer.parseInt(buttonNum);
 						this.cellAndButtonEntered = true;
 						enableButtons(true);
 						try {
 						
-							writer.write("Cell "+cellNum+"\n");
-							writer.write("Button "+buttonNum+"\n");
+							writer.write("Cell "+Cell+"\n");
+							writer.write("Button "+Button+"\n");
 							//writer.newLine();
 						
 						
@@ -246,8 +259,8 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						display.append("Number of cells: " +cellNum+"\n");
-						display.append("Number of buttons: "+buttonNum+"\n");
+						//display.append("Number of cells: " +cellNum+"\n");
+						//display.append("Number of buttons: "+buttonNum+"\n");
 						wasNotEntered = false;
 				} catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(null, "Error: Please enter valid Integers greater then 0");
@@ -261,24 +274,18 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 			
 	}
 	
-	public void addButton(String button) {
-		try {
-			
-			writer.write("Button "+button+"\n");
-			//writer.newLine();
-			System.out.println("should have printed");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-	    
+	public int getCell() {
+		return this.Cell;
+	}
+	public int getButton() {
+		return this.Button;
 	}
 	
-	public void addSkip(int duration) {
-		
-	}
 	
-	public void addTTS () {
+	
+
+	
+	public String addTTS () {
 		
 	
 		String tts="";
@@ -306,7 +313,8 @@ public class ScenarioCreator extends JFrame implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		display.append("TTS: "+tts+"\n");
+		return tts;
+		//display.append("TTS: "+tts+"\n");
 	}
 			
 
