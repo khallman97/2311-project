@@ -219,7 +219,7 @@ public class ScenarioCreator extends JFrame  {
 		return duration;
 		//display.append("Pause for: "+dur+" seconds\n"); ignore
 	}
-	/*
+	/*..
 	 * does not return call the getCell and getButton for values
 	 */
 	public void addCellAndButton() {
