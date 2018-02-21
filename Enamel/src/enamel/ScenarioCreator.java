@@ -52,9 +52,9 @@ public class ScenarioCreator extends JFrame  {
 	private int Button;
 	
 	public  ScenarioCreator()  {
-		popupForName();
-		INT();
-		elements();
+		//popupForName();
+		//INT();
+		//elements();
 		createEmptyDoc();
 	}
 	/*opens a window to create the name of the scen*/
@@ -79,7 +79,7 @@ public class ScenarioCreator extends JFrame  {
 		          //System.out.println("File has been created successfully");
 		     }
 		     else{
-		          //System.out.println("File already present at the specified location");
+		    	 JOptionPane.showMessageDialog(null, "Error: File name already exists");
 		     }
 	    	} catch (IOException e) {
 	    		//System.out.println("Exception Occurred:");
