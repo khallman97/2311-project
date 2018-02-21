@@ -252,10 +252,10 @@ public class Authoring extends JFrame implements ActionListener{
 			}
 		});
 		//startup sc
-		//sc = new ScenarioCreator();
-		//sc.addCellAndButton();
-		//opList.addElement("Cells: "+sc.getCell());
-		//opList.addElement("Buttons: "+sc.getButton());
+		sc = new ScenarioCreator(filename);
+		sc.addCellAndButton();
+		opList.addElement("Cells: "+sc.getCell());
+		opList.addElement("Buttons: "+sc.getButton());
 		//layout all the data nicely
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(menuBuild);
         menuBuild.setLayout(layout);

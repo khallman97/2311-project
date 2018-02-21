@@ -51,10 +51,11 @@ public class ScenarioCreator extends JFrame  {
 	private int Cell;
 	private int Button;
 	
-	public  ScenarioCreator()  {
+	public  ScenarioCreator(String name)  {
 		//popupForName();
 		//INT();
 		//elements();
+		this.senName = name;
 		createEmptyDoc();
 	}
 	/*opens a window to create the name of the scen*/
