@@ -302,7 +302,7 @@ public class Authoring extends JFrame implements ActionListener{
 		}else if (event == "Activity") {
 			item="Activity: "+sc.questionForString();
 		}else if (event == "Pause") {
-			item="Pause for "+sc.addPause();
+			item="Pause: "+sc.addPause();
 		}else if (event == "redo") {
 			sc.addCellAndButton();
 			opList.addElement("Cells: "+sc.getCell());
@@ -351,7 +351,7 @@ public class Authoring extends JFrame implements ActionListener{
 				AddList("redo");
 			}else {
 				opList.remove(index);
-				opList.add(index,AddList(item));
+				opList.insertElementAt(AddList(item.substring(0, item.indexOf(":"))),index);
 			}
 			Listdisplay.clearSelection();
 			editbut.setEnabled(false);
