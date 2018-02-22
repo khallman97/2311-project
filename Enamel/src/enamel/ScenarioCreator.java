@@ -51,8 +51,8 @@ public class ScenarioCreator  {
 	private int Cell;
 	private int Button;
 	
-	public  ScenarioCreator()  {
-		
+	public  ScenarioCreator(String SENNAME)  {
+		this.senName=SENNAME;
 		createEmptyDoc();
 	}
 	/*opens a window to create the name of the screen
@@ -69,9 +69,9 @@ public class ScenarioCreator  {
 	/*This creates the new file for the scenario */
 	private void createEmptyDoc()  {
 		try {
-		     file = new File("SavedScenarios/Scenario_"+senName+".txt"); 
-		     fileName = "Scenario_"+senName+".txt";
-		      writer = new BufferedWriter(new FileWriter("SavedScenarios/Scenario_"+senName+".txt"));
+		     file = new File("SavedScenarios/Scenario_"+this.senName+".txt"); 
+		     fileName = "Scenario_"+this.senName+".txt";
+		      writer = new BufferedWriter(new FileWriter("SavedScenarios/Scenario_"+this.senName+".txt"));
 		     
 	             boolean fvar = file.createNewFile();
 		     if (fvar){

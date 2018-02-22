@@ -251,7 +251,7 @@ public class Authoring extends JFrame implements ActionListener{
 				addbut.setEnabled(true);
 			}
 		});
-		//startup sc
+		//startup sc and send the chosen filename
 		sc = new ScenarioCreator(filename);
 		sc.addCellAndButton();
 		opList.addElement("Cells: "+sc.getCell());
@@ -295,6 +295,23 @@ public class Authoring extends JFrame implements ActionListener{
         secWIN.setVisible(true);
 	}
 	
+	private String AddList(String event) {
+		String item = null;
+		if (event == "Text-to-speech") {
+			item="Text-to-speech: "+sc.addTTS();
+		}else if (event == "Activity") {
+			item="Activity: "+sc.questionForString();
+		}else if (event == "Pause") {
+			item="Pause for "+sc.addPause();
+		}else if (event == "redo") {
+			sc.addCellAndButton();
+			opList.addElement("Cells: "+sc.getCell());
+			opList.addElement("Buttons: "+sc.getButton());
+		}
+		
+		return item;
+	}
+	
 	public void actionPerformed(ActionEvent e){
 		output.append("You Clicked: "+e.getActionCommand()+"\n");
 		if (e.getActionCommand() == "Open"){
@@ -310,7 +327,6 @@ public class Authoring extends JFrame implements ActionListener{
 		}else if(e.getActionCommand() == "Test") {
 			output.append("Hasn't been built yet \n");
 		}else if(e.getActionCommand() == "New") {
-			//ScenarioCreator sc = new ScenarioCreator();
 			String n = JOptionPane.showInputDialog("Please enter a file name:");
 			if (!n.isEmpty()) {
 				submenuEDIT(n);
@@ -318,18 +334,32 @@ public class Authoring extends JFrame implements ActionListener{
 				output.append("No Filename given");
 			}
 		}else if(e.getActionCommand() == "Remove item") {
-			opList.removeElementAt(Listdisplay.getSelectedIndex());
+			if (Listdisplay.getSelectedIndex() <= 1) {
+				output.append("Can not remove item");
+			}else {
+				opList.remove(Listdisplay.getSelectedIndex());
+			}
 			Listdisplay.clearSelection();
 			rembut.setEnabled(false);
 			editbut.setEnabled(false);
 		}else if(e.getActionCommand() == "Edit item") {
+			int index=Listdisplay.getSelectedIndex();
+			String item=opList.getElementAt(index);
+			if (index <= 1) {
+				opList.remove(0);
+				opList.remove(0);
+				AddList("redo");
+			}else {
+				opList.remove(index);
+				opList.add(index,AddList(item));
+			}
 			Listdisplay.clearSelection();
 			editbut.setEnabled(false);
 			rembut.setEnabled(false);
 		}else if(e.getActionCommand() == "Add item") {
 			DefaultMutableTreeNode pick = (DefaultMutableTreeNode) opTree.getLastSelectedPathComponent();
 			if (pick.isLeaf()) {
-				opList.addElement((String) pick.getUserObject());
+				opList.addElement(AddList((String) pick.getUserObject()));
 			}else {
 				output.append("not a vaild option \n");
 			}
