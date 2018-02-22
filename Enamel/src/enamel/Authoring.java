@@ -350,8 +350,7 @@ public class Authoring extends JFrame implements ActionListener{
 				opList.remove(0);
 				AddList("redo");
 			}else {
-				opList.remove(index);
-				opList.insertElementAt(AddList(item.substring(0, item.indexOf(":"))),index);
+				opList.setElementAt(AddList(item.substring(0, item.indexOf(":"))),index);
 			}
 			Listdisplay.clearSelection();
 			editbut.setEnabled(false);
