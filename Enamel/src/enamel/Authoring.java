@@ -39,7 +39,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 public class Authoring extends JFrame implements ActionListener{
 	GroupLayout layout = new GroupLayout(getContentPane());
-	JFileChooser chooser;JButton addbut;JButton rembut;JButton editbut;
+	JFileChooser chooser;JButton addbut;JButton rembut;JButton editbut;JButton savebut;JButton testbut;
 	DefaultListModel<String> opList;JTree opTree;JList<String> Listdisplay;
 	ScenarioCreator sc;
 	ImageIcon exit = new ImageIcon("Pictures/exit.png");
@@ -214,6 +214,8 @@ public class Authoring extends JFrame implements ActionListener{
 		addbut = new JButton("Add item");
 		rembut = new JButton("Remove item");
 		editbut = new JButton("Edit item");
+		savebut = new JButton("Save");
+		testbut = new JButton("Test Now");
 		
 		//setup views
 		sde.setViewportView(opTree);
@@ -222,10 +224,11 @@ public class Authoring extends JFrame implements ActionListener{
 		tde.setViewportView(Listdisplay);
 		
 		//adjust the window
-		secWIN.setBounds(100, 100, 600, 600);
+		secWIN.setBounds(100, 100, 700, 600);
 		secWIN.setResizable(false);
 		secWIN.setTitle("Scenario Editor");
 		secWIN.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		//add save on exit stuff here
 		
 		//Add the options
 		DefaultTreeModel modeltmp = (DefaultTreeModel) opTree.getModel();
@@ -233,13 +236,16 @@ public class Authoring extends JFrame implements ActionListener{
 		DefaultMutableTreeNode child = new DefaultMutableTreeNode("Text-to-speech");
 		modeltmp.insertNodeInto(child, root,root.getChildCount());
 		opTree.scrollPathToVisible(new TreePath(child.getPath()));
-		modeltmp.insertNodeInto(new DefaultMutableTreeNode("Activity"), root,root.getChildCount());
+		modeltmp.insertNodeInto(new DefaultMutableTreeNode("Question"), root,root.getChildCount());
 		modeltmp.insertNodeInto(new DefaultMutableTreeNode("Pause"), root,root.getChildCount());
+		//modeltmp.insertNodeInto(new DefaultMutableTreeNode("Save"), root,root.getChildCount());
 		
 		//some selection code
 		rembut.setEnabled(false);rembut.addActionListener(this);
 		editbut.setEnabled(false);editbut.addActionListener(this);
 		addbut.setEnabled(false);addbut.addActionListener(this);
+		savebut.setEnabled(true);savebut.addActionListener(this);
+		testbut.setEnabled(true);testbut.addActionListener(this);
 		Listdisplay.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				rembut.setEnabled(true);
@@ -274,7 +280,12 @@ public class Authoring extends JFrame implements ActionListener{
                     .addComponent(sde, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(addbut)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18,18,18)
+                        //.addGap(0, 0, Short.MAX_VALUE)))
+                		.addComponent(savebut)
+                		.addGap(18,18,18)
+                		.addComponent(testbut)
+                		.addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -289,7 +300,9 @@ public class Authoring extends JFrame implements ActionListener{
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(editbut)
                         .addComponent(rembut))
-                    .addComponent(addbut))
+                    .addComponent(addbut)
+                	.addComponent(savebut)
+                	.addComponent(testbut))
                 .addGap(40, 40, 40))
         );
         secWIN.setVisible(true);
@@ -299,8 +312,15 @@ public class Authoring extends JFrame implements ActionListener{
 		String item = null;
 		if (event == "Text-to-speech") {
 			item="Text-to-speech: "+sc.addTTS();
-		}else if (event == "Activity") {
-			item="Activity: "+sc.questionForString();
+		}else if (event == "Question") {
+			
+			sc.questionForString();
+			item="You added a question";
+			
+			
+			
+			
+			
 		}else if (event == "Pause") {
 			item="Pause: "+sc.addPause();
 		}else if (event == "redo") {
@@ -361,9 +381,15 @@ public class Authoring extends JFrame implements ActionListener{
 				opList.addElement(AddList((String) pick.getUserObject()));
 			}else {
 				output.append("not a vaild option \n");
+				
 			}
 			opTree.clearSelection();
 			addbut.setEnabled(false);
+		}else if(e.getActionCommand() == "Save") {
+			sc.save();
+			
+		}else if(e.getActionCommand() == "Test Now") {
+			sc.test();
 		}
 	}
 	public static void main(String[] args) {

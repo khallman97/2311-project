@@ -30,6 +30,8 @@ public class ScenarioCreator  {
 	
 	private String senName;
 	private String fileName;
+	private String question;
+	private boolean QRunning;
 	
 	private TextArea display;
 	
@@ -78,7 +80,7 @@ public class ScenarioCreator  {
 		          //System.out.println("File has been created successfully");
 		     }
 		     else{
-		    	 JOptionPane.showMessageDialog(null, "Error: File name already exists");
+		    	 //JOptionPane.showMessageDialog(null, "Error: File name already exists");
 		     }
 	    	} catch (IOException e) {
 	    		//System.out.println("Exception Occurred:");
@@ -87,33 +89,181 @@ public class ScenarioCreator  {
 		   
 		
 	}
-
-
-
-
-	public String questionForString() {
-		boolean wasNotEntered = true;
-		String word=null;
-		while (wasNotEntered){
-			word = JOptionPane.showInputDialog(null, "Enter the word or letter you wish to display");
-			if(word == null) {
-				JOptionPane.showMessageDialog(null, "Error: File name already exists");
-			} else {
-				//Object[] buttons = new Object[Button];
-				//for(int i = 0; i <= this.Button ; i++) {
-					//buttons[i] = "Button" + i ,  ; 
-				//}
-				
-				
-				//int rc = JOptionPane.showOptionDialog(null, null, "Which button has the right answer" , JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons[1]);
-			}
-		}//..
+	
+	public void save() {
 		try {
-			writer.append("/~disp-string:"+word);
-		} catch (IOException e1) {
-			e1.printStackTrace();
+			writer.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return word;
+	}
+	
+	public boolean questionRunning() {
+		return this.QRunning;
+	}
+	
+	public void QRunning(boolean bol) {
+		this.QRunning = bol;
+	}
+
+	public String getQuestion() {
+		return this.question;
+	}
+	
+	public void setQuestion(String quest) {
+		this.question = quest;
+	}
+
+	public void questionForString() {
+		
+		String Question="";
+		String cellValue=""; 
+		String currentButton=""; 
+		boolean soundSelected=false;
+		String rightResponse="";
+		String wrongResponse="";
+		
+		QRunning(true);
+		
+		
+		
+		/*This makes the frame and questions for 
+		 * creating questions
+		 */
+		
+		
+		
+		
+		JFrame testFrame = new JFrame();
+		testFrame.setSize(800, 500);
+		testFrame.setLayout(new GridLayout(7,0));
+		
+		JTextField questionDes = new JTextField("Enter what you want your question to ask here:");
+		questionDes.setEditable(false);
+		testFrame.add(questionDes);
+		
+		JTextField questionAnswer = new JTextField();
+		questionAnswer.setSize(1, 1);
+		testFrame.add(questionAnswer);
+		
+		
+		JTextField pinSetQuestion = new JTextField("Enter what you want to display on the braille cells: ");
+		pinSetQuestion.setEditable(false);
+		testFrame.add(pinSetQuestion);
+		
+		JTextField cellAnswer = new JTextField();
+		cellAnswer.setSize(1, 1);
+		testFrame.add(cellAnswer);
+		
+		JTextField ButtonQuestion = new JTextField("Choose which button will contain the answer");
+		ButtonQuestion.setEditable(false);
+		testFrame.add(ButtonQuestion);
+		
+		String[] buttonNum = new String[Button];
+		
+		for ( int i=0 ; i < Button ; i++) {
+			int current = i+1;
+			
+			buttonNum[i] = Integer.toString(current);
+		}
+		
+		JComboBox buttonList = new JComboBox(buttonNum);
+		buttonList.setSelectedItem(0);
+		testFrame.add(buttonList);
+		
+		JTextField soundsQuestion = new JTextField("Do you want to use the built in correct and incorrect sounds? Click The box if you wish to do so");
+		soundsQuestion.setEditable(false);
+		testFrame.add(soundsQuestion);
+		
+		JCheckBox soundsTrue = new JCheckBox("Yes");
+		testFrame.add(soundsTrue);
+		
+		JTextField rightAnswerText = new JTextField("Enter a personal message you wish to say here if the answer is correct. If you do not want to enter any text then leave blank");
+		rightAnswerText.setEditable(false);
+		testFrame.add(rightAnswerText);
+		
+		JTextField rightAnswer = new JTextField();
+		rightAnswer.setSize(1, 1);
+		testFrame.add(rightAnswer);
+		
+		JTextField wrongQuestion = new JTextField("Enter a personal message you wish to say here if the answer is wrong. If you do not want to enter any text then leave blank");
+		wrongQuestion.setEditable(false);
+		testFrame.add(wrongQuestion);
+		
+		JTextField wrongAnswer = new JTextField();
+		wrongAnswer.setSize(1, 1);
+		testFrame.add(wrongAnswer);
+		
+		JButton done = new JButton("finished");
+		testFrame.add(done);
+		done.addActionListener(new ActionListener() { 
+			  public void actionPerformed(ActionEvent e) { 
+				  String Question = questionAnswer.getText();
+				  String cellValue = cellAnswer.getText();
+				  String currentButton = (String) buttonList.getSelectedItem();
+				  boolean soundSelected = soundsTrue.isSelected();
+				  String rightResponse = rightAnswer.getText();
+				  String wrongResponse = wrongAnswer.getText();
+				  
+				  setQuestion(Question);
+				
+					
+					try {
+						writer.write("\n");
+						writer.write("/~pause:1\n");
+						writer.write("/~disp-clearAll \n");
+						writer.write("/~disp-string:"+cellValue+"\n");
+						writer.write(Question+"\n");
+						
+						for(int i = 0; i < 4 ; i ++) {
+							int check = i+1;
+							if(Integer.toString(check).equals(currentButton)) {
+								writer.write("/~skip-button:"+check+" ONEE \n");
+							} else {
+								writer.write("/~skip-button:"+check+" TWOO \n");
+							}
+						}
+						writer.write("/~user-input \n");
+						writer.write("\n");
+						writer.write("/~ONEE\n");
+						if (soundSelected==true) {
+							writer.write("/~sound:correct.wav \n");
+						}
+						writer.write(rightResponse+" \n");
+						writer.write("/~skip:NEXTT\n");
+						writer.write("\n");
+						
+						writer.write("/~TWOO\n");
+						if (soundSelected==true) {
+							writer.write("/~sound:wrong.wav \n");
+						}
+						writer.write(wrongResponse+"\n");
+						writer.write("/~skip:NEXTT\n");
+						writer.write("\n");
+						
+						writer.write("/~NEXTT\n");
+						
+						QRunning(false);
+						
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+					testFrame.setVisible(false);
+				  
+				  
+				  
+				  } 
+				} );
+		
+		
+		testFrame.setVisible(true);
+		
+		
+		
+	
+		
+		
+
 	}
 	
 	public void test() {
@@ -229,7 +379,7 @@ public class ScenarioCreator  {
 				
 		
 		try {
-			writer.write(tts);
+			writer.write(tts+"\n");
 			//writer.newLine();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
