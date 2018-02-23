@@ -178,7 +178,7 @@ public class ScenarioCreator  {
 		JCheckBox soundsTrue = new JCheckBox("Yes");
 		testFrame.add(soundsTrue);
 		
-		JTextField rightAnswerText = new JTextField("Enter a personal message you wish to say here if the answer is correct. If you do not want to enter any text then leave blank");
+		JTextField rightAnswerText = new JTextField("Enter a message you wish to say here if the answer is correct.");
 		rightAnswerText.setEditable(false);
 		testFrame.add(rightAnswerText);
 		
@@ -186,7 +186,7 @@ public class ScenarioCreator  {
 		rightAnswer.setSize(1, 1);
 		testFrame.add(rightAnswer);
 		
-		JTextField wrongQuestion = new JTextField("Enter a personal message you wish to say here if the answer is wrong. If you do not want to enter any text then leave blank");
+		JTextField wrongQuestion = new JTextField("Enter a message you wish to say here if the answer is wrong.");
 		wrongQuestion.setEditable(false);
 		testFrame.add(wrongQuestion);
 		
