@@ -126,6 +126,9 @@ public class ScenarioCreator  {
 		QRunning(true);
 		
 		
+			
+		
+		
 		
 		/*This makes the frame and questions for 
 		 * creating questions
@@ -243,14 +246,14 @@ public class ScenarioCreator  {
 						
 						writer.write("/~NEXTT\n");
 						
-						QRunning(false);
+						
 						
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
 					testFrame.setVisible(false);
-				  
-				  
+					
+				    
 				  
 				  } 
 				} );
@@ -258,6 +261,8 @@ public class ScenarioCreator  {
 		
 		testFrame.setVisible(true);
 		
+		
+	
 		
 		
 	

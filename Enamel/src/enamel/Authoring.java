@@ -363,8 +363,22 @@ public class Authoring extends JFrame implements ActionListener{
 			rembut.setEnabled(false);
 			editbut.setEnabled(false);
 		}else if(e.getActionCommand() == "Edit item") {
+			
+			
+			/*
+			 * fix this
+			 */
+			
+			
 			int index=Listdisplay.getSelectedIndex();
 			String item=opList.getElementAt(index);
+			
+			if(item.substring(0, 14).equals("Text-to-speech")) {
+				opList.remove(index);
+				opList.add(index, "Text-to-speech"+sc.addTTS());
+				
+			}
+			
 			if (index <= 1) {
 				opList.remove(0);
 				opList.remove(0);
