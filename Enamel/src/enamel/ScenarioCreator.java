@@ -123,7 +123,7 @@ public class ScenarioCreator  {
 		String rightResponse="";
 		String wrongResponse="";
 		
-		QRunning(true);
+		//QRunning(true);
 		
 		
 			

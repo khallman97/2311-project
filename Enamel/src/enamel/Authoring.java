@@ -198,7 +198,7 @@ public class Authoring extends JFrame implements ActionListener{
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Scenario Files", "txt","wav");
 		chooser.setFileFilter(filter);
 		chooser.setAcceptAllFileFilterUsed(false);
-		chooser.setCurrentDirectory(new File(System.getProperty("user.dir")+"/FactoryScenarios"));
+		chooser.setCurrentDirectory(new File(System.getProperty("user.dir")+"/SavedScenarios"));
 	}
 	
 	private void submenuEDIT(String filename) {
@@ -365,20 +365,26 @@ public class Authoring extends JFrame implements ActionListener{
 		}else if(e.getActionCommand() == "Edit item") {
 			
 			
-			/*
-			 * fix this
-			 */
-			
+	
 			
 			int index=Listdisplay.getSelectedIndex();
 			String item=opList.getElementAt(index);
 			
 			if(item.substring(0, 14).equals("Text-to-speech")) {
 				opList.remove(index);
-				opList.add(index, "Text-to-speech"+sc.addTTS());
-				
+				opList.add(index, "Text-to-speech: "+sc.addTTS());
+				Listdisplay.clearSelection();
+			} else if(item.substring(0, 5).equals("Pause")) {
+				opList.remove(index);
+				opList.add(index, "Pause: "+sc.addPause());
+				Listdisplay.clearSelection();
+			} else if(item.equals("You added a question")) {
+				opList.remove(index);
+				sc.questionForString();
+				opList.add(index, "You added a question");
+				Listdisplay.clearSelection();
 			}
-			
+			/*
 			if (index <= 1) {
 				opList.remove(0);
 				opList.remove(0);
@@ -389,6 +395,7 @@ public class Authoring extends JFrame implements ActionListener{
 			Listdisplay.clearSelection();
 			editbut.setEnabled(false);
 			rembut.setEnabled(false);
+			*/
 		}else if(e.getActionCommand() == "Add item") {
 			DefaultMutableTreeNode pick = (DefaultMutableTreeNode) opTree.getLastSelectedPathComponent();
 			if (pick.isLeaf()) {
