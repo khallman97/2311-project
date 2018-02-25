@@ -379,7 +379,7 @@ public class ScenarioCreator  {
 				}
 				
 			} else if (response == 1) {
-				JOptionPane.showMessageDialog(null, "not yet implimented");
+				JOptionPane.showMessageDialog(null, "Not yet implemented");
 			} 
 				
 		

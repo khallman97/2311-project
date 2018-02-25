@@ -96,7 +96,7 @@ public class Authoring extends JFrame implements ActionListener{
 	private void buttons() {
 		//TODO make buttons
 			
-		setTitle("File Chooser app");
+		setTitle("Authoring App");
 		output.setColumns(20);
 		output.setRows(5);
 		scr.setViewportView(output);
@@ -211,9 +211,9 @@ public class Authoring extends JFrame implements ActionListener{
 		opList = new DefaultListModel<>();
 		opTree = new JTree();
 		Listdisplay = new JList<>(opList);
-		addbut = new JButton("Add item");
-		rembut = new JButton("Remove item");
-		editbut = new JButton("Edit item");
+		addbut = new JButton("Add Item");
+		rembut = new JButton("Remove Item");
+		editbut = new JButton("Edit Item");
 		savebut = new JButton("Save");
 		testbut = new JButton("Test Now");
 		
@@ -343,9 +343,9 @@ public class Authoring extends JFrame implements ActionListener{
 		}else if(e.getActionCommand() == "Exit") {
 			System.exit(0);
 		}else if(e.getActionCommand() == "Edit") {
-			output.append("Hasn't been built yet \n");
+			output.append("Editting hasn't been built yet \n");
 		}else if(e.getActionCommand() == "Test") {
-			output.append("Hasn't been built yet \n");
+			output.append("Testing hasn't been built yet \n");
 		}else if(e.getActionCommand() == "New") {
 			String n = JOptionPane.showInputDialog("Please enter a file name:");
 			if (!n.isEmpty()) {
