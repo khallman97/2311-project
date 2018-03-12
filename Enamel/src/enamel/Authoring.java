@@ -98,8 +98,8 @@ public class Authoring extends JFrame implements ActionListener{
 			
 		setTitle("Authoring App");
 		output.setColumns(20);
-		output.setRows(5);			//Chun-Wah
-		output.setEditable(false);
+		output.setRows(5);			
+		output.setEditable(false);		// Bug fix, to ensure user is not able to edit the text field
 		scr.setViewportView(output);
 		layout.setHorizontalGroup(
 	            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
