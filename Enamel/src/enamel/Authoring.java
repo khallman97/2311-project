@@ -99,7 +99,9 @@ public class Authoring extends JFrame implements ActionListener{
 		setTitle("Authoring App");
 		output.setColumns(20);
 		output.setRows(5);			
+
 		output.setEditable(false);		// Bug fix, to ensure user is not able to edit the text field
+
 		scr.setViewportView(output);
 		layout.setHorizontalGroup(
 	            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,7 +226,7 @@ public class Authoring extends JFrame implements ActionListener{
 		tde.setViewportView(Listdisplay);
 		
 		//adjust the window
-		secWIN.setBounds(100, 100, 800, 600);
+		secWIN.setBounds(100, 100, 800, 600); //kyle
 		secWIN.setResizable(false);
 		secWIN.setTitle("Scenario Editor");
 		secWIN.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
