@@ -1,17 +1,17 @@
-**Authoring App**
+# :computer: **Authoring App** 
 (Description)
 
-Team 8 Group Members
-  Kyle
-  Gagan
-  Chun-Wah
+### Team 8 Group Members
+  * [Kyle](https://github.com/khallman97)
+  * [Gagan](https://github.com/Gagenpreet)
+  * [Chun-Wah](https://github.com/gnuch)
 
-**Documentation**
+### **Documentation**
 
-**Version vM Release Notes**
+### **Version vM Release Notes**
   You can see the release notes [here](https://github.com/khallman97/2311-project/blob/master/README.txt)
   
-**Download Instructions**
+### **Download Instructions**
 
-**JAR File**
+### **JAR File**
 
