@@ -94,11 +94,12 @@ public class Authoring extends JFrame implements ActionListener{
 
 }
 	private void buttons() {
-		//TODO make buttons
+		
 			
 		setTitle("Authoring App");
 		output.setColumns(20);
-		output.setRows(5);
+		output.setRows(5);			//Chun-Wah
+		output.setEditable(false);
 		scr.setViewportView(output);
 		layout.setHorizontalGroup(
 	            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,7 +145,7 @@ public class Authoring extends JFrame implements ActionListener{
 		
 	}
 	private void menu() {
-		//TODO make menu
+		
 		
 		ImageIcon exit = new ImageIcon("Pictures/exit.png");
 		ImageIcon edit = new ImageIcon("Pictures/edit.png");
@@ -193,7 +194,6 @@ public class Authoring extends JFrame implements ActionListener{
         setJMenuBar(menuBar);
 	}
 	private void fileChooser() {
-		//TODO improve system
 		chooser = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Scenario Files", "txt","wav");
 		chooser.setFileFilter(filter);
@@ -224,7 +224,7 @@ public class Authoring extends JFrame implements ActionListener{
 		tde.setViewportView(Listdisplay);
 		
 		//adjust the window
-		secWIN.setBounds(100, 100, 700, 600);
+		secWIN.setBounds(100, 100, 800, 600);
 		secWIN.setResizable(false);
 		secWIN.setTitle("Scenario Editor");
 		secWIN.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -313,14 +313,8 @@ public class Authoring extends JFrame implements ActionListener{
 		if (event == "Text-to-speech") {
 			item="Text-to-speech: "+sc.addTTS();
 		}else if (event == "Question") {
-			
 			sc.questionForString();
 			item="You added a question";
-			
-			
-			
-			
-			
 		}else if (event == "Pause") {
 			item="Pause: "+sc.addPause();
 		}else if (event == "redo") {
@@ -333,7 +327,7 @@ public class Authoring extends JFrame implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e){
-		output.append("You Clicked: "+e.getActionCommand()+"\n");
+		//output.append("You Clicked: "+e.getActionCommand()+"\n");
 		if (e.getActionCommand() == "Open"){
 			int rep = chooser.showOpenDialog(getContentPane());
 			if (rep == JFileChooser.APPROVE_OPTION){
@@ -353,7 +347,7 @@ public class Authoring extends JFrame implements ActionListener{
 			}else {
 				output.append("No Filename given");
 			}
-		}else if(e.getActionCommand() == "Remove item") {
+		}else if(e.getActionCommand() == "Remove Item") {
 			if (Listdisplay.getSelectedIndex() <= 1) {
 				output.append("Can not remove item");
 			}else {
@@ -362,7 +356,7 @@ public class Authoring extends JFrame implements ActionListener{
 			Listdisplay.clearSelection();
 			rembut.setEnabled(false);
 			editbut.setEnabled(false);
-		}else if(e.getActionCommand() == "Edit item") {
+		}else if(e.getActionCommand() == "Edit Item") {
 			
 			
 	
@@ -396,7 +390,7 @@ public class Authoring extends JFrame implements ActionListener{
 			editbut.setEnabled(false);
 			rembut.setEnabled(false);
 			*/
-		}else if(e.getActionCommand() == "Add item") {
+		}else if(e.getActionCommand() == "Add Item") {
 			DefaultMutableTreeNode pick = (DefaultMutableTreeNode) opTree.getLastSelectedPathComponent();
 			if (pick.isLeaf()) {
 				opList.addElement(AddList((String) pick.getUserObject()));
@@ -414,7 +408,6 @@ public class Authoring extends JFrame implements ActionListener{
 		}
 	}
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Authoring au = new Authoring();
 		au.setVisible(true);
 	}
