@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,26 +17,10 @@ import javax.swing.JTextField;
  * @author Chun-Wah Chung
  *
  */
-public class TTSgui {
+public class TTSgui extends JFrame{
 
 		private JFrame frame;
-		private JTextField txtTypeHere;
-
-		/**
-		 * Launch the application.
-		 */
-		public static void main(String[] args) {
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						TTSgui window = new TTSgui();
-						window.frame.setVisible(true);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
-		}
+		private JTextField txtTypeHere;	
 
 		/**
 		 * Create the application.
@@ -52,6 +35,7 @@ public class TTSgui {
 		private void initialize() {
 			
 			frame = new JFrame();
+			frame.setTitle("Text-to-Speech");
 			frame.setResizable(false);
 			frame.setBounds(100, 100, 450, 300);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,7 +80,22 @@ public class TTSgui {
 			});
 			
 		}
-
+		/**
+		 * Launch the application.
+		 */
+		public static void main(String[] args) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						TTSgui window = new TTSgui();
+						window.frame.setVisible(true);
+						window.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
 	
 
 }
