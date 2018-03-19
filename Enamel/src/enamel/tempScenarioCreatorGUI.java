@@ -1,30 +1,29 @@
 package enamel;
 
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Font;
-import javax.swing.JRadioButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JSeparator;
 
 public class tempScenarioCreatorGUI {
 
 	private JFrame frmScenarioCreatorWindow;
-	private JTextField txtEnterAPositive;
-	private JTextField txtEnterAPositive_1;
+	private JTextField cellNumTxtField;
+	private JTextField btnNumTxtField;
 	private JTextField txtAudioFileName;
-	private JTextField txtTypeTextHere;
+	private JTextField ttsTxtField;
 
 	/**
 	 * Launch the application.
@@ -62,16 +61,30 @@ public class tempScenarioCreatorGUI {
 		JLabel lblNumberOfCells = new JLabel("Number of Cells");
 		lblNumberOfCells.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		txtEnterAPositive = new JTextField();
-		txtEnterAPositive.setText("Enter a positive integer here");
-		txtEnterAPositive.setColumns(10);
+		cellNumTxtField = new JTextField();
+		cellNumTxtField.setText("Enter a positive integer here");
+		cellNumTxtField.setColumns(10);
+		
+		cellNumTxtField.addMouseListener(new MouseAdapter() {
+			  @Override
+			  public void mouseClicked(MouseEvent e) {
+				  cellNumTxtField.setText("");
+			  }
+			});
 		
 		JLabel lblNumberOfButtons = new JLabel("Number of Buttons");
 		lblNumberOfButtons.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		txtEnterAPositive_1 = new JTextField();
-		txtEnterAPositive_1.setText("Enter a positive integer here");
-		txtEnterAPositive_1.setColumns(10);
+		btnNumTxtField = new JTextField();
+		btnNumTxtField.setText("Enter a positive integer here");
+		btnNumTxtField.setColumns(10);
+		
+		btnNumTxtField.addMouseListener(new MouseAdapter() {
+			  @Override
+			  public void mouseClicked(MouseEvent e) {
+				  btnNumTxtField.setText("");
+			  }
+			});
 		
 		JLabel lblInsertAudioFile = new JLabel("Insert Audio File");
 		lblInsertAudioFile.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -91,12 +104,12 @@ public class tempScenarioCreatorGUI {
 		JLabel lblBrailleCell = new JLabel("Braille Cell");
 		lblBrailleCell.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		JLabel lblInsertTexttospeech = new JLabel("Insert Text-To-Speech");
-		lblInsertTexttospeech.setFont(new Font("Tahoma", Font.BOLD, 16));
+		JLabel lblTTS = new JLabel("Insert Text-To-Speech");
+		lblTTS.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		txtTypeTextHere = new JTextField();
-		txtTypeTextHere.setText("Type text here");
-		txtTypeTextHere.setColumns(10);
+		ttsTxtField = new JTextField();
+		ttsTxtField.setText("Type text here");
+		ttsTxtField.setColumns(10);
 		
 		JSeparator separator = new JSeparator();
 		
@@ -133,8 +146,8 @@ public class tempScenarioCreatorGUI {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(28)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(txtEnterAPositive, Alignment.LEADING)
-						.addComponent(txtEnterAPositive_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+						.addComponent(cellNumTxtField, Alignment.LEADING)
+						.addComponent(btnNumTxtField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
 						.addComponent(lblNumberOfButtons, Alignment.LEADING)
 						.addComponent(lblNumberOfCells, Alignment.LEADING)
 						.addComponent(lblBrailleCell, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE)
@@ -164,9 +177,9 @@ public class tempScenarioCreatorGUI {
 						.addComponent(lblInsertAudioFile)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(lblInsertTexttospeech, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblTTS, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(txtAudioFileName, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-								.addComponent(txtTypeTextHere, Alignment.LEADING))
+								.addComponent(ttsTxtField, Alignment.LEADING))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(removeSpeechBtn, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
@@ -194,7 +207,7 @@ public class tempScenarioCreatorGUI {
 								.addComponent(lblInsertAudioFile))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(txtEnterAPositive, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(cellNumTxtField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(txtAudioFileName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnUpload))
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -203,8 +216,8 @@ public class tempScenarioCreatorGUI {
 									.addComponent(lblNumberOfButtons)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(txtEnterAPositive_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblInsertTexttospeech, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)))
+										.addComponent(btnNumTxtField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblTTS, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)))
 								.addGroup(groupLayout.createSequentialGroup()
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(removeAudioFileBtn)))
@@ -212,7 +225,7 @@ public class tempScenarioCreatorGUI {
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(txtTypeTextHere, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+										.addComponent(ttsTxtField, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
 										.addGroup(groupLayout.createSequentialGroup()
 											.addGap(15)
 											.addComponent(lblBrailleCell, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
