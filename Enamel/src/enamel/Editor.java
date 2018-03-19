@@ -11,8 +11,8 @@ import java.util.Scanner;
 /**
  * 
  * this class takes control over everything for editing 
- * the txt files and writing to them
- * 
+ * the "txt" files and writing to them
+ *
  * @author kyleh
  *
  */
