@@ -51,6 +51,7 @@ public class tempScenarioCreatorGUI {
 
 	/**
 	 * Initialize the contents of the frame.
+	 * 
 	 */
 	private void initialize() {
 		frmScenarioCreatorWindow = new JFrame();
