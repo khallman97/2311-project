@@ -16,6 +16,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Color;
 
 public class tempScenarioCreatorGUI {
 
@@ -55,7 +56,7 @@ public class tempScenarioCreatorGUI {
 	private void initialize() {
 		frmScenarioCreatorWindow = new JFrame();
 		frmScenarioCreatorWindow.setTitle("Scenario Creator Window");
-		frmScenarioCreatorWindow.setBounds(100, 100, 632, 475);
+		frmScenarioCreatorWindow.setBounds(100, 100, 647, 365);
 		frmScenarioCreatorWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel lblNumberOfCells = new JLabel("Number of Cells");
@@ -93,9 +94,18 @@ public class tempScenarioCreatorGUI {
 		txtAudioFileName.setText("Audio File Name");
 		txtAudioFileName.setColumns(10);
 		
+		txtAudioFileName.addMouseListener(new MouseAdapter() {
+			  @Override
+			  public void mouseClicked(MouseEvent e) {
+				  txtAudioFileName.setText("");
+			  }
+			});
+		
 		JButton btnUpload = new JButton("Upload");
+		btnUpload.setBackground(Color.LIGHT_GRAY);
 		
 		JButton removeAudioFileBtn = new JButton("Remove");
+		removeAudioFileBtn.setBackground(Color.LIGHT_GRAY);
 		removeAudioFileBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -111,27 +121,40 @@ public class tempScenarioCreatorGUI {
 		ttsTxtField.setText("Type text here");
 		ttsTxtField.setColumns(10);
 		
+		ttsTxtField.addMouseListener(new MouseAdapter() {
+			  @Override
+			  public void mouseClicked(MouseEvent e) {
+				  ttsTxtField.setText("");
+			  }
+			});
+		
 		JSeparator separator = new JSeparator();
 		
 		JButton btnAdd = new JButton("Add ");
+		btnAdd.setBackground(Color.LIGHT_GRAY);
 		
 		JButton removeSpeechBtn = new JButton("Remove");
+		removeSpeechBtn.setBackground(Color.LIGHT_GRAY);
+		removeSpeechBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		
-		JRadioButton radioButton_7 = new JRadioButton("");
+		JRadioButton rad1 = new JRadioButton("");
 		
-		JRadioButton radioButton_8 = new JRadioButton("");
+		JRadioButton rad2 = new JRadioButton("");
 		
-		JRadioButton radioButton_9 = new JRadioButton("");
+		JRadioButton rad3 = new JRadioButton("");
 		
-		JRadioButton radioButton_10 = new JRadioButton("");
+		JRadioButton rad4 = new JRadioButton("");
 		
-		JRadioButton radioButton_11 = new JRadioButton("");
+		JRadioButton rad5 = new JRadioButton("");
 		
-		JRadioButton radioButton_12 = new JRadioButton("");
+		JRadioButton rad6 = new JRadioButton("");
 		
-		JRadioButton radioButton = new JRadioButton("");
+		JRadioButton rad7 = new JRadioButton("");
 		
-		JRadioButton radioButton_1 = new JRadioButton("");
+		JRadioButton rad8 = new JRadioButton("");
 		
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
@@ -142,34 +165,34 @@ public class tempScenarioCreatorGUI {
 		JButton btnSave = new JButton("Save");
 		GroupLayout groupLayout = new GroupLayout(frmScenarioCreatorWindow.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(28)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(cellNumTxtField, Alignment.LEADING)
-						.addComponent(btnNumTxtField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-						.addComponent(lblNumberOfButtons, Alignment.LEADING)
-						.addComponent(lblNumberOfCells, Alignment.LEADING)
-						.addComponent(lblBrailleCell, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE)
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(cellNumTxtField)
+						.addComponent(btnNumTxtField, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+						.addComponent(lblNumberOfButtons)
+						.addComponent(lblNumberOfCells)
+						.addComponent(lblBrailleCell, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(10)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(radioButton_9, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+									.addComponent(rad3, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(radioButton_10, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+									.addComponent(rad4, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(radioButton_7, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+									.addComponent(rad1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(radioButton_8, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+									.addComponent(rad2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(radioButton_11, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+									.addComponent(rad5, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(radioButton_12, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+									.addComponent(rad6, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(radioButton, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+									.addComponent(rad7, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(radioButton_1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))))
+									.addComponent(rad8, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))))
 					.addGap(38)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(41)
@@ -181,15 +204,14 @@ public class tempScenarioCreatorGUI {
 								.addComponent(txtAudioFileName, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
 								.addComponent(ttsTxtField, Alignment.LEADING))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(removeSpeechBtn, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnAdd, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-									.addComponent(btnUpload, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(removeAudioFileBtn, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-					.addContainerGap(398, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap(437, Short.MAX_VALUE)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(removeSpeechBtn, GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+								.addComponent(btnAdd, GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+								.addComponent(removeAudioFileBtn, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnUpload, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(27, Short.MAX_VALUE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap(452, Short.MAX_VALUE)
 					.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnCancel, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
@@ -231,20 +253,20 @@ public class tempScenarioCreatorGUI {
 											.addComponent(lblBrailleCell, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
 											.addPreferredGap(ComponentPlacement.UNRELATED)
 											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(radioButton_8)
-												.addComponent(radioButton_7))
+												.addComponent(rad2)
+												.addComponent(rad1))
 											.addPreferredGap(ComponentPlacement.RELATED)
 											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(radioButton_10)
-												.addComponent(radioButton_9))))
+												.addComponent(rad4)
+												.addComponent(rad3))))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(rad5)
+										.addComponent(rad6))
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addComponent(radioButton_11)
-										.addComponent(radioButton_12))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addComponent(radioButton)
-										.addComponent(radioButton_1)))
+										.addComponent(rad7)
+										.addComponent(rad8)))
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(btnAdd)
 									.addPreferredGap(ComponentPlacement.RELATED)
