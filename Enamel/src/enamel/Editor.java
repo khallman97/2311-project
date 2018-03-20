@@ -39,6 +39,9 @@ public class Editor {
 	 * to what we want the user to see
 	 */
 	public void parseToApp(){
+		
+		elements = new LinkedList<String>();
+		
 		while(reader.hasNextLine()) {
 			
 			String currentLine = reader.nextLine();
@@ -57,7 +60,7 @@ public class Editor {
 			//Check for sound
 			else if (currentLine.substring(0, 8).equals("/~sound:")) {
 				String pauseDur = currentLine.substring(8);
-				currentLine = "Pause for "+pauseDur;
+				currentLine = "Playing sound: "+pauseDur;
 				elements.add(currentLine);
 			}
 			
@@ -185,26 +188,25 @@ public class Editor {
 			if (currentLine.substring(0, 20).equals("Program will skip to")) {
 				String skipTo = currentLine.substring(20);
 				currentLine = "/~skip:"+skipTo;
-				
-				//This line change depending on layout
-				currentLine = "Program will skip to"+skipTo;
 				toWrite.add(currentLine);
 				
 			}
 			
 			//Check for sound
-			else if (currentLine.substring(0, 8).equals("/~sound:")) {
-				String pauseDur = currentLine.substring(8);
-				currentLine = "Pause for "+pauseDur;
-				elements.add(currentLine);
+			else if (currentLine.substring(0, 15).equals("Playing sound: ")) {
+				String sound = currentLine.substring(15);
+				currentLine = "/~sound:"+sound;
+				toWrite.add(currentLine);
 			}
 			
 			// Check for pause
-			else if (currentLine.substring(0, 8).equals("/~pause:")) {
-				String pauseDur = currentLine.substring(8);
-				currentLine = "Pause for "+pauseDur;
-				elements.add(currentLine);
+			else if (currentLine.substring(0, 10).equals("Pause for ")) {
+				String pauseDur = currentLine.substring(10);
+				currentLine = "/~pause:"+pauseDur;
+				toWrite.add(currentLine);
 			}
+			
+			//*********************************************************************//
 			
 			// Check for repeat button
 			else if (currentLine.substring(0, 16).equals("/~repeat-button:")) {
