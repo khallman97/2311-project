@@ -21,6 +21,7 @@ public class Editor {
 	private File scenario;
 	private Scanner reader;
 	private List<String> elements;
+	private List<String> toWrite;
 	
 	public Editor(File fileName) {
 		this.scenario = fileName;
@@ -30,39 +31,14 @@ public class Editor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		readFile();
+		
 	}
 	
-	
-	public void readFile() {
-	
-		try {
-			
-			elements = new LinkedList<String>();
-			
-			/**
-			 * Add the current lines to the list
-			 */
-			
-			while (reader.hasNextLine()) {
-				String line = reader.nextLine();
-				elements.add(line);
-				
-				
-				
-			}
-			
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	/** 
 	 * Converts the current lines of the list
 	 * to what we want the user to see
 	 */
-	public void parser(){
+	public void parseToApp(){
 		while(reader.hasNextLine()) {
 			
 			String currentLine = reader.nextLine();
@@ -111,58 +87,219 @@ public class Editor {
 				currentLine = "Resetting buttons";
 				elements.add(currentLine);
 			}
-			// The key phrase to assign a button to skip to another part of the
-			// scenario.
+			
+			//Checks for the button that the skip is set too
 			else if (currentLine.substring(0, 14).equals("/~skip-button:")) {
-				skipButton(fileLine.substring(14));
+				String skipBut = currentLine.substring(14);
+				currentLine = "Answer set to: "+skipBut+" Button";
+				elements.add(currentLine);
 			}
-			// The key phrase to clear the display of all of the braille cells.
+			
+			//Checks for when display is cleared
 			else if (currentLine.substring(0, 15).equals("/~disp-clearAll")) {
-				player.clearAllCells();
+				currentLine = "Clearning cells";
+				elements.add(currentLine);
 			}
-			// The key phrase to set a Braille cell to a string.
+			
+			// Checks for what pins are to be diplayed
 			else if (currentLine.substring(0, 17).equals("/~disp-cell-pins:")) {
-				dispCellPins(fileLine.substring(17));
+				String pins = currentLine.substring(17);
+				currentLine = "Displaying pins "+pins;
+				elements.add(currentLine);
 			}
-			// The key phrase to represent a string in Braille.
+			
+			// Checks for the string that is being displayed
 			else if (currentLine.substring(0, 14).equals("/~disp-string:")) {
-				player.displayString(fileLine.substring(14));
+				String st = currentLine.substring(14);
+				currentLine = "Displaying the string "+st;
+				elements.add(currentLine);
 			}
-			// The key phrase to change the cell to represent a character in
-			// Braille.
+			
+			// Checks for a character 
 			else if (currentLine.substring(0, 17).equals("/~disp-cell-char:")) {
-				dispCellChar(fileLine.substring(17));
+				String charact = currentLine.substring(17);
+				currentLine = "Displaying the char "+charact;
+				elements.add(currentLine);
 			}
-			// The key phrase to raise a pin of the specified Braille cell.
+			
+			// Checks which pins are to be raised
 			else if (currentLine.substring(0, 18).equals("/~disp-cell-raise:")) {
-				dispCellRaise(fileLine.substring(18));
+				String pins = currentLine.substring(18);
+				currentLine = "Displaying the pins: "+pins;
+				elements.add(currentLine);
 			}
-			// The key phrase to lower a pin of the specified Braille cell.
+			
+			// Check whichs pins are to be lowered
 			else if (currentLine.substring(0, 18).equals("/~disp-cell-lower:")) {
-				dispCellLower(fileLine.substring(18));
+				String lowered = currentLine.substring(18);
+				currentLine = "The following pins are lowered "+lowered;
+				elements.add(currentLine);
 			}
-			// The key phrase to clear a Braille cell.
+			
+			// Pharases to clear cells
+			//Clears selected cells
 			else if (currentLine.substring(0, 18).equals("/~disp-cell-clear:")) {
-				dispCellClear(fileLine.substring(18));
-			} else if (currentLine.substring(0, 21).equals("/~disp-cell-lowerPins")) {
-				dispCellRaise("0");
+				String cleared = currentLine.substring(18);
+				currentLine = "Pins "+cleared+" are to be lowered";
+				elements.add(currentLine);
+			} 
+			
+		    //Lowers all pins
+			else if (currentLine.substring(0, 21).equals("/~disp-cell-lowerPins")) {
+				currentLine = "Lowered all pins";
+				elements.add(currentLine);
 			}
-			// The key phrase to wait for the program to receive a user's input.
+			
+			// Check for user input
 			else if (currentLine.substring(0, 12).equals("/~user-input")) {
-				userInput = true;
+				currentLine = "Wait for answer";
+				elements.add(currentLine);
 			}
-			// Anything other than the specified commands above, is to be
-			// interpreted as text that
-			// will be spoken for the user to hear.
+			
+			//Check for text to speach
 			else {
-				speak(fileLine);
+				currentLine = "TTS: "+currentLine;
+				elements.add(currentLine);
 			}
 			
 			
 		}
 		
 		
+	
 		
+	}
+	
+	public void parseToFileFormat() {
+		
+		toWrite = new LinkedList<String>();
+		
+		for ( int i = 0; i <= elements.size(); i++) {
+			
+			
+			String currentLine = elements.get(i);
+			
+			
+			
+			//Check for skip
+			if (currentLine.substring(0, 20).equals("Program will skip to")) {
+				String skipTo = currentLine.substring(20);
+				currentLine = "/~skip:"+skipTo;
+				
+				//This line change depending on layout
+				currentLine = "Program will skip to"+skipTo;
+				toWrite.add(currentLine);
+				
+			}
+			
+			//Check for sound
+			else if (currentLine.substring(0, 8).equals("/~sound:")) {
+				String pauseDur = currentLine.substring(8);
+				currentLine = "Pause for "+pauseDur;
+				elements.add(currentLine);
+			}
+			
+			// Check for pause
+			else if (currentLine.substring(0, 8).equals("/~pause:")) {
+				String pauseDur = currentLine.substring(8);
+				currentLine = "Pause for "+pauseDur;
+				elements.add(currentLine);
+			}
+			
+			// Check for repeat button
+			else if (currentLine.substring(0, 16).equals("/~repeat-button:")) {
+				String repeatBut = currentLine.substring(16);
+				currentLine = "Repeat button set to "+repeatBut;
+				elements.add(currentLine);
+			}
+			
+			//Check for repeat ***Need to check up on repeat
+			else if (currentLine.substring(0, 8).equals("/~repeat")) {
+				
+				currentLine = "Repeating";
+				elements.add(currentLine);
+			}
+			
+			//Check for button reset
+			else if (currentLine.substring(0, 15).equals("/~reset-buttons")) {
+				currentLine = "Resetting buttons";
+				elements.add(currentLine);
+			}
+			
+			//Checks for the button that the skip is set too
+			else if (currentLine.substring(0, 14).equals("/~skip-button:")) {
+				String skipBut = currentLine.substring(14);
+				currentLine = "Answer set to: "+skipBut+" Button";
+				elements.add(currentLine);
+			}
+			
+			//Checks for when display is cleared
+			else if (currentLine.substring(0, 15).equals("/~disp-clearAll")) {
+				currentLine = "Clearning cells";
+				elements.add(currentLine);
+			}
+			
+			// Checks for what pins are to be diplayed
+			else if (currentLine.substring(0, 17).equals("/~disp-cell-pins:")) {
+				String pins = currentLine.substring(17);
+				currentLine = "Displaying pins "+pins;
+				elements.add(currentLine);
+			}
+			
+			// Checks for the string that is being displayed
+			else if (currentLine.substring(0, 14).equals("/~disp-string:")) {
+				String st = currentLine.substring(14);
+				currentLine = "Displaying the string "+st;
+				elements.add(currentLine);
+			}
+			
+			// Checks for a character 
+			else if (currentLine.substring(0, 17).equals("/~disp-cell-char:")) {
+				String charact = currentLine.substring(17);
+				currentLine = "Displaying the char "+charact;
+				elements.add(currentLine);
+			}
+			
+			// Checks which pins are to be raised
+			else if (currentLine.substring(0, 18).equals("/~disp-cell-raise:")) {
+				String pins = currentLine.substring(18);
+				currentLine = "Displaying the pins: "+pins;
+				elements.add(currentLine);
+			}
+			
+			// Check whichs pins are to be lowered
+			else if (currentLine.substring(0, 18).equals("/~disp-cell-lower:")) {
+				String lowered = currentLine.substring(18);
+				currentLine = "The following pins are lowered "+lowered;
+				elements.add(currentLine);
+			}
+			
+			// Pharases to clear cells
+			//Clears selected cells
+			else if (currentLine.substring(0, 18).equals("/~disp-cell-clear:")) {
+				String cleared = currentLine.substring(18);
+				currentLine = "Pins "+cleared+" are to be lowered";
+				elements.add(currentLine);
+			} 
+			
+		    //Lowers all pins
+			else if (currentLine.substring(0, 21).equals("/~disp-cell-lowerPins")) {
+				currentLine = "Lowered all pins";
+				elements.add(currentLine);
+			}
+			
+			// Check for user input
+			else if (currentLine.substring(0, 12).equals("/~user-input")) {
+				currentLine = "Wait for answer";
+				elements.add(currentLine);
+			}
+			
+			//Check for text to speach
+			else {
+				currentLine = "TTS: "+currentLine;
+				elements.add(currentLine);
+			}
+		}
 		
 	}
 	
