@@ -53,6 +53,10 @@ public class ScenarioCreator  {
 	private int Cell;
 	private int Button;
 	
+	public  ScenarioCreator()  {
+		createEmptyDoc();
+	}
+	
 	public  ScenarioCreator(String SENNAME)  {
 		this.senName=SENNAME;
 		createEmptyDoc();
