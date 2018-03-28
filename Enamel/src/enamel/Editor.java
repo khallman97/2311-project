@@ -378,7 +378,7 @@ public class Editor {
 				currentLine = "/~disp-cell-lower:"+lowered;
 				toWrite.add(currentLine);
 			}
-			
+			//
 		
 			else if (currentLine.substring(0, 34).equals("The following cells are cleared:")) {
 				String cleared = currentLine.substring(34);
