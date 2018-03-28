@@ -1,404 +1,337 @@
 package enamel;
 
-
-import java.awt.event.*;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import javax.accessibility.*;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.lang.reflect.AccessibleObject;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JTextArea;
 
+public class ScenarioCreator {
 
-/*This class creates the scenarios for the application*/
+	private JFrame frmScenarioCreatorWindow;
+	private JTextField cellNumTxtField;
+	private JTextField btnNumTxtField;
+	private JTextField txtAudioFileName;
+	private JTextField ttsTxtField;
+	private JTextField QuestionTxtFld;
+	private JTextField ScenarioTxtFld;
 
-
-public class ScenarioCreator  {
-	/*TO DO FOR MID TERM
-	 * Testing cases
-	 * Accesbilties functions
-	 * edit and test buttons to do something
-	 * finish new scenario creator
-	 * attepmt to impliment edit
-	 * updates our docs
-	 * 
+	/** 
+	 * Launch the application.
 	 */
-	
-	private String senName;
-	private String fileName;
-	private String question;
-	private boolean QRunning;
-	
-	private TextArea display;
-	
-	private Button cellAndButton; 
-	private Button questions;
-	private Button setBraille;
-	private Button addTTS;
-	private Button test;
-	private Button addPause;
-	
-	private File file;
-	
-	private boolean cellAndButtonEntered = false;
-	
-	private boolean cancelButton;
-	
-	private BufferedWriter writer;
-	
-	private int Cell;
-	private int Button;
-	
-	public  ScenarioCreator(String SENNAME)  {
-		this.senName=SENNAME;
-		createEmptyDoc();
-	}
-	/*opens a window to create the name of the screen
-	private void popupForName() {
-		String name = JOptionPane.showInputDialog("Choose a scenario name");
-		if(name == null) {
-			cancelButton = true;
-		} else {
-			this.senName = name;
-		}
-	}
-	*/
-		
-	/*This creates the new file for the scenario */
-	private void createEmptyDoc()  {
-		try {
-		     file = new File("SavedScenarios/Scenario_"+this.senName+".txt"); 
-		     fileName = "Scenario_"+this.senName+".txt";
-		      writer = new BufferedWriter(new FileWriter("SavedScenarios/Scenario_"+this.senName+".txt"));
-		     
-	             boolean fvar = file.createNewFile();
-		     if (fvar){
-		          //System.out.println("File has been created successfully");
-		     }
-		     else{
-		    	 //JOptionPane.showMessageDialog(null, "Error: File name already exists");
-		     }
-	    	} catch (IOException e) {
-	    		//System.out.println("Exception Occurred:");
-		        //e.printStackTrace();
-		  }
-		   
-		
-	}
-	
-	public void save() {
-		try {
-			writer.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public boolean questionRunning() {
-		return this.QRunning;
-	}
-	
-	public void QRunning(boolean bol) {
-		this.QRunning = bol;
-	}
-
-	public String getQuestion() {
-		return this.question;
-	}
-	
-	public void setQuestion(String quest) {
-		this.question = quest;
-	}
-
-	public void questionForString() {
-		
-		String Question="";
-		String cellValue=""; 
-		String currentButton=""; 
-		boolean soundSelected=false;
-		String rightResponse="";
-		String wrongResponse="";
-		
-		//QRunning(true);
-		
-		
-			
-		
-		
-		
-		/*This makes the frame and questions for 
-		 * creating questions
-		 */
-		
-		
-		
-		
-		JFrame testFrame = new JFrame();
-		testFrame.setSize(800, 500);
-		testFrame.setLayout(new GridLayout(7,0));
-		
-		JTextField questionDes = new JTextField("Enter what you want your question to ask here:");
-		questionDes.setEditable(false);
-		testFrame.add(questionDes);
-		
-		JTextField questionAnswer = new JTextField();
-		questionAnswer.setSize(1, 1);
-		testFrame.add(questionAnswer);
-		
-		
-		JTextField pinSetQuestion = new JTextField("Enter what you want to display on the braille cells: ");
-		pinSetQuestion.setEditable(false);
-		testFrame.add(pinSetQuestion);
-		
-		JTextField cellAnswer = new JTextField();
-		cellAnswer.setSize(1, 1);
-		testFrame.add(cellAnswer);
-		
-		JTextField ButtonQuestion = new JTextField("Choose which button will contain the answer");
-		ButtonQuestion.setEditable(false);
-		testFrame.add(ButtonQuestion);
-		
-		String[] buttonNum = new String[Button];
-		
-		for ( int i=0 ; i < Button ; i++) {
-			int current = i+1;
-			
-			buttonNum[i] = Integer.toString(current);
-		}
-		
-		JComboBox buttonList = new JComboBox(buttonNum);
-		buttonList.setSelectedItem(0);
-		testFrame.add(buttonList);
-		
-		JTextField soundsQuestion = new JTextField("Do you want to use the built in correct and incorrect sounds? Click The box if you wish to do so");
-		soundsQuestion.setEditable(false);
-		testFrame.add(soundsQuestion);
-		
-		JCheckBox soundsTrue = new JCheckBox("Yes");
-		testFrame.add(soundsTrue);
-		
-		JTextField rightAnswerText = new JTextField("Enter a message you wish to say here if the answer is correct.");
-		rightAnswerText.setEditable(false);
-		testFrame.add(rightAnswerText);
-		
-		JTextField rightAnswer = new JTextField();
-		rightAnswer.setSize(1, 1);
-		testFrame.add(rightAnswer);
-		
-		JTextField wrongQuestion = new JTextField("Enter a message you wish to say here if the answer is wrong.");
-		wrongQuestion.setEditable(false);
-		testFrame.add(wrongQuestion);
-		
-		JTextField wrongAnswer = new JTextField();
-		wrongAnswer.setSize(1, 1);
-		testFrame.add(wrongAnswer);
-		
-		JButton done = new JButton("finished");
-		testFrame.add(done);
-		done.addActionListener(new ActionListener() { 
-			  public void actionPerformed(ActionEvent e) { 
-				  String Question = questionAnswer.getText();
-				  String cellValue = cellAnswer.getText();
-				  String currentButton = (String) buttonList.getSelectedItem();
-				  boolean soundSelected = soundsTrue.isSelected();
-				  String rightResponse = rightAnswer.getText();
-				  String wrongResponse = wrongAnswer.getText();
-				  
-				  setQuestion(Question);
-				
-					
-					try {
-						writer.write("\n");
-						writer.write("/~pause:1\n");
-						writer.write("/~disp-clearAll \n");
-						writer.write("/~disp-string:"+cellValue+"\n");
-						writer.write(Question+"\n");
-						
-						for(int i = 0; i < 4 ; i ++) {
-							int check = i+1;
-							if(Integer.toString(check).equals(currentButton)) {
-								writer.write("/~skip-button:"+check+" ONEE \n");
-							} else {
-								writer.write("/~skip-button:"+check+" TWOO \n");
-							}
-						}
-						writer.write("/~user-input \n");
-						writer.write("\n");
-						writer.write("/~ONEE\n");
-						if (soundSelected==true) {
-							writer.write("/~sound:correct.wav \n");
-						}
-						writer.write(rightResponse+" \n");
-						writer.write("/~skip:NEXTT\n");
-						writer.write("\n");
-						
-						writer.write("/~TWOO\n");
-						if (soundSelected==true) {
-							writer.write("/~sound:wrong.wav \n");
-						}
-						writer.write(wrongResponse+"\n");
-						writer.write("/~skip:NEXTT\n");
-						writer.write("\n");
-						
-						writer.write("/~NEXTT\n");
-						
-						
-						
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-					testFrame.setVisible(false);
-					
-				    
-				  
-				  } 
-				} );
-		
-		
-		testFrame.setVisible(true);
-		
-		
-	
-		
-		
-	
-		
-		
-
-	}
-	
-	public void test() {
-		try {
-			writer.flush();
-			System.out.println("closed file");
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		ScenarioParser sp = new ScenarioParser(true);
-		sp.setScenarioFileWithFile(file);
-	}
-	/*
-	 * Returns the string back
-	 */
-	public String addPause() {
-		String duration = JOptionPane.showInputDialog("How long is the pause?");
-		
-		try {
-			writer.write("/~pause:"+duration+"\n");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return duration;
-		//display.append("Pause for: "+dur+" seconds\n"); ignore
-	}
-	/*..
-	 * does not return call the getCell and getButton for values
-	 */
-	public void addCellAndButton() {
-		JTextField cell = new JTextField();
-		JTextField button = new JTextField();
-		Object[] cAB = {
-				"Cell(s):", cell , "Button(s):" , button }; 
-		boolean wasNotEntered = true;
-		do {
-			
-		
-			int option = JOptionPane.showConfirmDialog(null, cAB , "Enter the number of cells and buttons", JOptionPane.OK_CANCEL_OPTION);
-			System.out.println(option);
-			
-				
-			if (option == -1 || option ==2){
-				break;
-			} else {
-				
-			
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
 				try {
-					
-						String cellNum = cell.getText();
-						String buttonNum = button.getText();
-						Cell = Integer.parseInt(cellNum);
-						Button = Integer.parseInt(buttonNum);
-						this.cellAndButtonEntered = true;
-						
-						try {
-						
-							writer.write("Cell "+Cell+"\n");
-							writer.write("Button "+Button+"\n");
-							//writer.newLine();
-						
-						
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						//display.append("Number of cells: " +cellNum+"\n");
-						//display.append("Number of buttons: "+buttonNum+"\n");
-						wasNotEntered = false;
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Error: Please enter valid Integers greater then 0");
-				} 
-				
-					
-			}
-		}while (wasNotEntered);
-				
-			
-			
-	}
-	
-	public int getCell() {
-		return this.Cell;
-	}
-	public int getButton() {
-		return this.Button;
-	}
-	
-	
-	
-
-	
-	public String addTTS () {
-		
-	
-		String tts="";
-		Object[] options = {
-				"EnterText ", "Use Voice"
-			};
-			int response = JOptionPane.showOptionDialog(null, "Choose Input Method", "" ,   JOptionPane.YES_NO_OPTION, 
-					JOptionPane.INFORMATION_MESSAGE ,null , options , options[0]);
-			//System.out.println(response);
-			if (response == 0) {
-				tts = JOptionPane.showInputDialog("Enter your text to speech");
-				if(tts == null) {
-					JOptionPane.showMessageDialog(null, "Error: Please enter text");
+					ScenarioCreator window = new ScenarioCreator();
+					window.frmScenarioCreatorWindow.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-				
-			} else if (response == 1) {
-				JOptionPane.showMessageDialog(null, "Not yet implemented");
-			} 
-				
-		
-		try {
-			writer.write(tts+"\n");
-			//writer.newLine();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return tts;
-		//display.append("TTS: "+tts+"\n");
+			}
+		});
 	}
-			
 
-	
-	
-	
+	/**
+	 * Create the application.
+	 */
+	public ScenarioCreator() {
+		initialize();
+	}
 
-
-	
+	/**
+	 * Initialize the contents of the frame.
+	 *
+	 */
+	private void initialize() {
+		frmScenarioCreatorWindow = new JFrame();
+		frmScenarioCreatorWindow.setTitle("Scenario Creator Window");
+		frmScenarioCreatorWindow.setBounds(100, 100, 1009, 436);
+		frmScenarioCreatorWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JLabel lblNumberOfCells = new JLabel("Number of Cells");
+		lblNumberOfCells.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		cellNumTxtField = new JTextField();
+		cellNumTxtField.setText("Enter a positive integer here");
+		cellNumTxtField.setColumns(10);
+		
+		cellNumTxtField.addMouseListener(new MouseAdapter() {
+			  @Override
+			  public void mouseClicked(MouseEvent e) {
+				  cellNumTxtField.setText("");
+			  }
+			});
+		
+		JLabel lblNumberOfButtons = new JLabel("Number of Buttons");
+		lblNumberOfButtons.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		btnNumTxtField = new JTextField();
+		btnNumTxtField.setText("Enter a positive integer here");
+		btnNumTxtField.setColumns(10);
+		
+		btnNumTxtField.addMouseListener(new MouseAdapter() {
+			  @Override
+			  public void mouseClicked(MouseEvent e) {
+				  btnNumTxtField.setText("");
+			  }
+			});
+		
+		JLabel lblInsertAudioFile = new JLabel("Insert Audio File");
+		lblInsertAudioFile.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		txtAudioFileName = new JTextField();
+		txtAudioFileName.setText("Audio File Name");
+		txtAudioFileName.setColumns(10);
+		
+		txtAudioFileName.addMouseListener(new MouseAdapter() {
+			  @Override
+			  public void mouseClicked(MouseEvent e) {
+				  txtAudioFileName.setText("");
+			  }
+			});
+		
+		JButton btnUpload = new JButton("Upload");
+		
+		btnUpload.setBackground(Color.LIGHT_GRAY);
+		
+		JButton removeAudioFileBtn = new JButton("Remove");
+		removeAudioFileBtn.setBackground(Color.LIGHT_GRAY);
+		removeAudioFileBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		
+		JLabel lblBrailleCell = new JLabel("Braille Cell");
+		lblBrailleCell.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		JLabel lblTTS = new JLabel("Insert Text-To-Speech");
+		lblTTS.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		ttsTxtField = new JTextField();
+		ttsTxtField.setText("Type text here");
+		ttsTxtField.setColumns(10);
+		
+		ttsTxtField.addMouseListener(new MouseAdapter() {
+			  @Override
+			  public void mouseClicked(MouseEvent e) {
+				  ttsTxtField.setText("");
+			  }
+			});
+		
+		JSeparator separator = new JSeparator();
+		
+		JButton btnAdd = new JButton("Add ");
+		btnAdd.setBackground(Color.LIGHT_GRAY);
+		
+		JButton removeSpeechBtn = new JButton("Remove");
+		removeSpeechBtn.setBackground(Color.LIGHT_GRAY);
+		removeSpeechBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		
+		JRadioButton rad1 = new JRadioButton("");
+		
+		JRadioButton rad2 = new JRadioButton("");
+		
+		JRadioButton rad3 = new JRadioButton("");
+		
+		JRadioButton rad4 = new JRadioButton("");
+		
+		JRadioButton rad5 = new JRadioButton("");
+		
+		JRadioButton rad6 = new JRadioButton("");
+		
+		JRadioButton rad7 = new JRadioButton("");
+		
+		JRadioButton rad8 = new JRadioButton("");
+		
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		
+		JButton btnSave = new JButton("Save");
+		
+		QuestionTxtFld = new JTextField();
+		QuestionTxtFld.setText("Enter question here");
+		QuestionTxtFld.setColumns(10);
+		
+		JLabel lblAddQuestion = new JLabel("Add Question");
+		lblAddQuestion.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		JButton AddQuestionBtn = new JButton("Add ");
+		AddQuestionBtn.setBackground(Color.LIGHT_GRAY);
+		
+		JButton RmQuestBtn = new JButton("Remove");
+		RmQuestBtn.setBackground(Color.LIGHT_GRAY);
+		
+		ScenarioTxtFld = new JTextField();
+		ScenarioTxtFld.setColumns(10);
+		ScenarioTxtFld.setEditable(false);
+		
+		JLabel lblScenarioFile = new JLabel("Scenario File");
+		lblScenarioFile.setFont(new Font("Tahoma", Font.BOLD, 16));
+		GroupLayout groupLayout = new GroupLayout(frmScenarioCreatorWindow.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(28)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(cellNumTxtField)
+						.addComponent(btnNumTxtField, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+						.addComponent(lblNumberOfButtons)
+						.addComponent(lblNumberOfCells)
+						.addComponent(lblBrailleCell, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(10)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(rad1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(rad2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(rad7, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(rad8, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+										.addComponent(rad5, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+										.addComponent(rad3, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+									.addGap(4)
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(rad6, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+										.addComponent(rad4, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))))
+							.addGap(50)))
+					.addGap(38)
+					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(41)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(lblTTS, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(txtAudioFileName, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+								.addComponent(ttsTxtField, Alignment.LEADING)
+								.addComponent(QuestionTxtFld, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblAddQuestion, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+									.addComponent(removeSpeechBtn, GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+									.addComponent(btnAdd, GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+									.addComponent(removeAudioFileBtn, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(btnUpload, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
+								.addComponent(AddQuestionBtn, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+								.addComponent(RmQuestBtn, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(lblInsertAudioFile))
+					.addGap(47)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(ScenarioTxtFld, GroupLayout.PREFERRED_SIZE, 291, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblScenarioFile, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(51, Short.MAX_VALUE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap(814, Short.MAX_VALUE)
+					.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnCancel, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(27)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(separator, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblNumberOfCells)
+										.addComponent(lblInsertAudioFile))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(cellNumTxtField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(txtAudioFileName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(btnUpload))
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(removeAudioFileBtn))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addGap(18)
+											.addComponent(lblNumberOfButtons)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+												.addComponent(btnNumTxtField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblTTS, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+												.addGroup(groupLayout.createSequentialGroup()
+													.addComponent(btnAdd)
+													.addPreferredGap(ComponentPlacement.RELATED)
+													.addComponent(removeSpeechBtn))
+												.addComponent(ttsTxtField, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+												.addGroup(groupLayout.createSequentialGroup()
+													.addGap(15)
+													.addComponent(lblBrailleCell, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+													.addPreferredGap(ComponentPlacement.UNRELATED)
+													.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+														.addComponent(rad2)
+														.addComponent(rad1))
+													.addPreferredGap(ComponentPlacement.RELATED)
+													.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+														.addComponent(rad3)
+														.addComponent(rad4))))
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+												.addGroup(groupLayout.createSequentialGroup()
+													.addComponent(rad5)
+													.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+														.addGroup(groupLayout.createSequentialGroup()
+															.addGap(4)
+															.addComponent(lblAddQuestion, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+															.addGap(4))
+														.addGroup(groupLayout.createSequentialGroup()
+															.addPreferredGap(ComponentPlacement.RELATED)
+															.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+																.addComponent(rad8)
+																.addComponent(rad7)))))
+												.addComponent(rad6))
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+												.addComponent(QuestionTxtFld, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+												.addComponent(AddQuestionBtn))
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(RmQuestBtn)))
+									.addGap(36)
+									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(btnCancel)
+										.addComponent(btnSave)))))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(23)
+							.addComponent(lblScenarioFile, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(ScenarioTxtFld, GroupLayout.PREFERRED_SIZE, 291, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		frmScenarioCreatorWindow.getContentPane().setLayout(groupLayout);
+	}
 }
