@@ -1,6 +1,5 @@
 package enamel;
 
-import javax.accessibility.*;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -8,18 +7,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.lang.reflect.AccessibleObject;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JTextArea;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 /**
  * Scenario Creator Class
  * (GUI for Scenario Creator) 
@@ -121,6 +121,26 @@ public class ScenarioCreator {
 			  @Override
 			  public void mouseClicked(MouseEvent e) {
 				  btnNumTxtField.setText("");
+			  }
+			});
+		//*****************************************************  Action Listener for checking button and cell number fields have been set
+		btnNumTxtField.getDocument().addDocumentListener(new DocumentListener() {
+			  public void changedUpdate(DocumentEvent e) {
+			    warn();
+			  }
+			  public void removeUpdate(DocumentEvent e) {
+			    warn();
+			  }
+			  public void insertUpdate(DocumentEvent e) {
+			    warn();
+			  }
+
+			  public void warn() {
+			     if (Integer.parseInt(btnNumTxtField.getText())<=0){
+			       JOptionPane.showMessageDialog(null,
+			          "Error: Please enter number bigger than 0", "Error Massage",
+			          JOptionPane.ERROR_MESSAGE);
+			     }
 			  }
 			});
 		
