@@ -71,8 +71,7 @@ public class Authoring extends JFrame implements ActionListener{
 
 		Font f1 = new Font("Helvetica", Font.BOLD, 20);
 		Font f2 = new Font("Helvetica", Font.PLAIN, 20);
-
-			
+		
 		UIManager.put("Button.background", Color.gray);
 		UIManager.put("Button.foreground", Color.black);		
 		UIManager.put("Button.font", f1);
@@ -90,18 +89,12 @@ public class Authoring extends JFrame implements ActionListener{
 		testButton.setBackground(Color.CYAN);
 		newButton.setBackground(Color.CYAN);
 		exitButton.setBackground(Color.CYAN);
-		
-
 }
-	private void buttons() {
-		
-			
+	private void buttons() {	
 		setTitle("Authoring App");
 		output.setColumns(20);
 		output.setRows(5);			
-
 		output.setEditable(false);		// Bug fix, to ensure user is not able to edit the text field
-
 		scr.setViewportView(output);
 		layout.setHorizontalGroup(
 	            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,12 +136,8 @@ public class Authoring extends JFrame implements ActionListener{
 		testButton.addActionListener(this);
 		exitButton.addActionListener(this);
 		newButton.addActionListener(this);
-		
-		
 	}
 	private void menu() {
-		
-		
 		ImageIcon exit = new ImageIcon("Pictures/exit.png");
 		ImageIcon edit = new ImageIcon("Pictures/edit.png");
 		ImageIcon open = new ImageIcon("Pictures/open.png");
@@ -203,131 +192,6 @@ public class Authoring extends JFrame implements ActionListener{
 		chooser.setCurrentDirectory(new File(System.getProperty("user.dir")+"/SavedScenarios"));
 	}
 	
-	private void submenuEDIT(String filename) {
-		//items needed for menu
-		JPanel menuBuild = new JPanel();
-		JFrame secWIN = new JFrame();
-		secWIN.setContentPane(menuBuild);
-		JScrollPane sde = new JScrollPane();
-		JScrollPane tde = new JScrollPane();
-		opList = new DefaultListModel<>();
-		opTree = new JTree();
-		Listdisplay = new JList<>(opList);
-		addbut = new JButton("Add Item");
-		rembut = new JButton("Remove Item");
-		editbut = new JButton("Edit Item");
-		savebut = new JButton("Save");
-		testbut = new JButton("Test Now");
-		
-		//setup views
-		sde.setViewportView(opTree);
-		opTree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("Options")));
-		opTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		tde.setViewportView(Listdisplay);
-		
-		//adjust the window
-		secWIN.setBounds(100, 100, 800, 600); //kyle
-		secWIN.setResizable(false);
-		secWIN.setTitle("Scenario Editor");
-		secWIN.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		//add save on exit stuff here
-		
-		//Add the options
-		DefaultTreeModel modeltmp = (DefaultTreeModel) opTree.getModel();
-		DefaultMutableTreeNode root = (DefaultMutableTreeNode) modeltmp.getRoot();
-		DefaultMutableTreeNode child = new DefaultMutableTreeNode("Text-to-speech");
-		modeltmp.insertNodeInto(child, root,root.getChildCount());
-		opTree.scrollPathToVisible(new TreePath(child.getPath()));
-		modeltmp.insertNodeInto(new DefaultMutableTreeNode("Question"), root,root.getChildCount());
-		modeltmp.insertNodeInto(new DefaultMutableTreeNode("Pause"), root,root.getChildCount());
-		//modeltmp.insertNodeInto(new DefaultMutableTreeNode("Save"), root,root.getChildCount());
-		
-		//some selection code
-		rembut.setEnabled(false);rembut.addActionListener(this);
-		editbut.setEnabled(false);editbut.addActionListener(this);
-		addbut.setEnabled(false);addbut.addActionListener(this);
-		savebut.setEnabled(true);savebut.addActionListener(this);
-		testbut.setEnabled(true);testbut.addActionListener(this);
-		Listdisplay.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				rembut.setEnabled(true);
-				editbut.setEnabled(true);
-			}
-		});
-		opTree.addTreeSelectionListener(new TreeSelectionListener() {
-			public void valueChanged(TreeSelectionEvent e) {
-				addbut.setEnabled(true);
-			}
-		});
-		//startup sc and send the chosen filename
-		sc = new ScenarioCreator(filename);
-		sc.addCellAndButton();
-		opList.addElement("Cells: "+sc.getCell());
-		opList.addElement("Buttons: "+sc.getButton());
-		//layout all the data nicely
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(menuBuild);
-        menuBuild.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(editbut)
-                        .addGap(18, 18, 18)
-                        .addComponent(rembut))
-                    .addComponent(tde, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sde, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(addbut)
-                        .addGap(18,18,18)
-                        //.addGap(0, 0, Short.MAX_VALUE)))
-                		.addComponent(savebut)
-                		.addGap(18,18,18)
-                		.addComponent(testbut)
-                		.addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tde, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                    .addComponent(sde, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(editbut)
-                        .addComponent(rembut))
-                    .addComponent(addbut)
-                	.addComponent(savebut)
-                	.addComponent(testbut))
-                .addGap(40, 40, 40))
-        );
-        secWIN.setVisible(true);
-	}
-	
-	private String AddList(String event) {
-		String item = null;
-		if (event == "Text-to-speech") {
-			item="Text-to-speech: "+sc.addTTS();
-		}else if (event == "Question") {
-			sc.questionForString();
-			item="You added a question";
-		}else if (event == "Pause") {
-			item="Pause: "+sc.addPause();
-		}else if (event == "redo") {
-			sc.addCellAndButton();
-			opList.addElement("Cells: "+sc.getCell());
-			opList.addElement("Buttons: "+sc.getButton());
-		}
-		
-		return item;
-	}
-	
 	public void actionPerformed(ActionEvent e){
 		//output.append("You Clicked: "+e.getActionCommand()+"\n");
 		if (e.getActionCommand() == "Open"){
@@ -339,74 +203,16 @@ public class Authoring extends JFrame implements ActionListener{
 		}else if(e.getActionCommand() == "Exit") {
 			System.exit(0);
 		}else if(e.getActionCommand() == "Edit") {
-			output.append("Editting hasn't been built yet \n");
+			//add sc with filename here
 		}else if(e.getActionCommand() == "Test") {
 			output.append("Testing hasn't been built yet \n");
 		}else if(e.getActionCommand() == "New") {
 			String n = JOptionPane.showInputDialog("Please enter a file name:");
 			if (!n.isEmpty()) {
-				submenuEDIT(n);
+				//create sc here
 			}else {
 				output.append("No Filename given");
 			}
-		}else if(e.getActionCommand() == "Remove Item") {
-			if (Listdisplay.getSelectedIndex() <= 1) {
-				output.append("Can not remove item");
-			}else {
-				opList.remove(Listdisplay.getSelectedIndex());
-			}
-			Listdisplay.clearSelection();
-			rembut.setEnabled(false);
-			editbut.setEnabled(false);
-		}else if(e.getActionCommand() == "Edit Item") {
-			
-			
-	
-			
-			int index=Listdisplay.getSelectedIndex();
-			String item=opList.getElementAt(index);
-			
-			if(item.substring(0, 14).equals("Text-to-speech")) {
-				opList.remove(index);
-				opList.add(index, "Text-to-speech: "+sc.addTTS());
-				Listdisplay.clearSelection();
-			} else if(item.substring(0, 5).equals("Pause")) {
-				opList.remove(index);
-				opList.add(index, "Pause: "+sc.addPause());
-				Listdisplay.clearSelection();
-			} else if(item.equals("You added a question")) {
-				opList.remove(index);
-				sc.questionForString();
-				opList.add(index, "You added a question");
-				Listdisplay.clearSelection();
-			}
-			/*
-			if (index <= 1) {
-				opList.remove(0);
-				opList.remove(0);
-				AddList("redo");
-			}else {
-				opList.setElementAt(AddList(item.substring(0, item.indexOf(":"))),index);
-			}
-			Listdisplay.clearSelection();
-			editbut.setEnabled(false);
-			rembut.setEnabled(false);
-			*/
-		}else if(e.getActionCommand() == "Add Item") {
-			DefaultMutableTreeNode pick = (DefaultMutableTreeNode) opTree.getLastSelectedPathComponent();
-			if (pick.isLeaf()) {
-				opList.addElement(AddList((String) pick.getUserObject()));
-			}else {
-				output.append("not a vaild option \n");
-				
-			}
-			opTree.clearSelection();
-			addbut.setEnabled(false);
-		}else if(e.getActionCommand() == "Save") {
-			sc.save();
-			
-		}else if(e.getActionCommand() == "Test Now") {
-			sc.test();
 		}
 	}
 	public static void main(String[] args) {
