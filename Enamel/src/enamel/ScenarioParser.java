@@ -95,7 +95,7 @@ public class ScenarioParser {
 		} else {
 			// The key phrase to indicate to play a sound file.
 			if (fileLine.length() >= 8 && fileLine.substring(0, 8).equals("/~sound:")) {
-				playSound(fileLine.substring(8));
+				playSound(fileLine.substring(8).trim());
 			}
 			// The key phrase to indicate to skip to another part of the
 			// scenario.
@@ -523,7 +523,7 @@ public class ScenarioParser {
 	public void setScenarioFile(String scenarioFile) {
 		try {
 
-			File f = new File("/SavedScenarios/"+scenarioFile);
+			File f = new File(scenarioFile);
 			fileScanner = new Scanner(f);
 			String absolutePath = f.getAbsolutePath();
 			scenarioFilePath = absolutePath.substring(0, absolutePath.lastIndexOf(File.separator));
@@ -537,26 +537,6 @@ public class ScenarioParser {
 							+ " you are looking for a different directory?");
 		}
 	}
-	/*
-	 * This method will play the scenario file but the file can be anywhere on the
-	 * users computer
-	 * 
-	 */
-	public void setScenarioFileWithFile(File file) {
-		try {
-			
-			fileScanner = new Scanner(file);
-			setCellAndButton();
-			play();
-		} catch (Exception e) {
-			errorLog("Exception error: " + e.toString(),
-					"Expected the directory path of the scenario file to"
-							+ " a file exists in the project folder. \n Could not find directory to path: "
-							+ file + " \n Perhaps" + " you forgot to add the file to the directory or "
-							+ " you are looking for a different directory?");
-		}
-	}
+
 }
-
-
 
