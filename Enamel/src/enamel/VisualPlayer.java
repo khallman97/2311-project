@@ -170,7 +170,7 @@ public class VisualPlayer extends Player {
 		
 	}
 	
-	
+	//
 //
 	/**
 	 * Returns a reference to the button at the index passed as argument. The
