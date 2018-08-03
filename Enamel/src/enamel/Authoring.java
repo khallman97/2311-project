@@ -199,17 +199,18 @@ public class Authoring extends JFrame implements ActionListener{
 			if (rep == JFileChooser.APPROVE_OPTION){
 				File file = chooser.getSelectedFile();
 				output.append("Opening "+file.getName()+"\n");
+				//TODO add sc with filenam here
 			}
 		}else if(e.getActionCommand() == "Exit") {
 			System.exit(0);
 		}else if(e.getActionCommand() == "Edit") {
-			//add sc with filename here
+			//TODO add sc with filename here
 		}else if(e.getActionCommand() == "Test") {
 			output.append("Testing hasn't been built yet \n");
 		}else if(e.getActionCommand() == "New") {
 			String n = JOptionPane.showInputDialog("Please enter a file name:");
 			if (!n.isEmpty()) {
-				//create sc here
+				//TODO create sc here
 			}else {
 				output.append("No Filename given");
 			}
