@@ -170,8 +170,8 @@ public class VisualPlayer extends Player {
 		
 	}
 	
-	
-
+	//
+//
 	/**
 	 * Returns a reference to the button at the index passed as argument. The
 	 * main purpose of providing this method is so the client can add

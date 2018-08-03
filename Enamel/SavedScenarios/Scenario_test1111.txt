@@ -1,3 +1,10 @@
 Cell 2
 Button 2
-hello and welcome/~pause:4
+
+hello and welcome
+
+/~disp-clearAll
+
+/~pause:1
+
+/~disp-string:n
