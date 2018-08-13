@@ -54,22 +54,6 @@ public class ScenarioCreator {
 	private JButton AddQuestionBtn;
 	private JButton RmQuestBtn;
 
-	/** 
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ScenarioCreator window = new ScenarioCreator();
-					window.frmScenarioCreatorWindow.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the application.
 	 */
@@ -92,9 +76,10 @@ public class ScenarioCreator {
 		
 		frmScenarioCreatorWindow = new JFrame();
 		frmScenarioCreatorWindow.setTitle("Scenario Creator Window");
-		frmScenarioCreatorWindow.setBounds(100, 100, 1009, 500);
+		frmScenarioCreatorWindow.setBounds(100, 100, 1200, 500);
 		frmScenarioCreatorWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmScenarioCreatorWindow.setResizable(false);
+		frmScenarioCreatorWindow.setVisible(true);
 		
 		JLabel lblNumberOfCells = new JLabel("Number of Cells");
 		lblNumberOfCells.setFont(new Font("Tahoma", Font.BOLD, 16));

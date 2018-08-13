@@ -199,15 +199,18 @@ public class Authoring extends JFrame implements ActionListener{
 			if (rep == JFileChooser.APPROVE_OPTION){
 				File file = chooser.getSelectedFile();
 				output.append("Opening "+file.getName()+"\n");
-				//TODO add sc with filenam here
+				sc = new ScenarioCreator(file.getName());
 			}
 		}else if(e.getActionCommand() == "Exit") {
 			System.exit(0);
 		}else if(e.getActionCommand() == "Edit") {
-			//TODO add sc with filename here
+			int rep = chooser.showOpenDialog(getContentPane());
+			if (rep == JFileChooser.APPROVE_OPTION){
+				File file = chooser.getSelectedFile();
+				output.append("Opening "+file.getName()+"\n");
+				sc = new ScenarioCreator(file.getName());
+			}
 		}else if(e.getActionCommand() == "Test") {
-			
-			//output.append("Testing hasn't been built yet \n");
 			File file = null;
 			int rep = chooser.showOpenDialog(getContentPane());
 			if (rep == JFileChooser.APPROVE_OPTION){
@@ -220,7 +223,7 @@ public class Authoring extends JFrame implements ActionListener{
 		}else if(e.getActionCommand() == "New") {
 			String n = JOptionPane.showInputDialog("Please enter a file name:");
 			if (!n.isEmpty()) {
-				//TODO create sc here
+				sc = new ScenarioCreator(n);
 			}else {
 				output.append("No Filename given");
 			}
