@@ -111,15 +111,13 @@ public class ScenarioCreator implements ActionListener {
 	
 	private void enableFile(File file) {
 		edit = new Editor(file);
-		this.contents = edit.parseToApp(); //copying linked list 
-		System.out.println("test");
-		System.out.println(contents.size());
-		for (int i = 0 ; contents.size() > i ; i++) {
-			String currentLine = contents.get(i);
-			System.out.print(currentLine);
-			System.out.println("test");
+		
+		/*
+		for (int i = 0 ; edit.getSize() > i ; i++) {
+			String currentLine = edit.getElement(i);
+			System.out.println(currentLine);
 			
-		}
+		}*/
 	}
 	
 	
@@ -353,6 +351,8 @@ public class ScenarioCreator implements ActionListener {
 		ScenarioTxtFld.setColumns(10);
 		ScenarioTxtFld.setEditable(false);
 		
+		
+		
 		JLabel lblScenarioFile = new JLabel("Scenario File");
 		lblScenarioFile.setFont(new Font("Tahoma", Font.BOLD, 16));
 		GroupLayout groupLayout = new GroupLayout(frmScenarioCreatorWindow.getContentPane());
@@ -497,6 +497,8 @@ public class ScenarioCreator implements ActionListener {
 					.addContainerGap(120, Short.MAX_VALUE))
 		);
 		frmScenarioCreatorWindow.getContentPane().setLayout(groupLayout);
+		
+	
 	}
 	public void setEnabled(boolean initialState) {
 		//cellNumTxtField.setEnabled(!initialState);

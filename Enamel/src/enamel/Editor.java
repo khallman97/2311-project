@@ -31,7 +31,7 @@ public class Editor {
 	private Scanner reader;
 	private BufferedWriter writer;
 
-	private LinkedList<String> elements;
+	private static List<String> elements;
 	private List<String> toWrite;
 
 	public Editor(File file) {
@@ -63,11 +63,11 @@ public class Editor {
 	/**
 	 * Converts the current lines of the list to what we want the user to see
 	 */
-	public LinkedList<String> parseToApp() {
+	public void parseToApp() {
 
 		elements = new LinkedList<String>();
 		
-		int i = 0;
+
 
 		while (reader.hasNextLine()) {
 
@@ -216,12 +216,12 @@ public class Editor {
 				elements.add(currentLine);
 			}
 			
-			System.out.println(elements.get(i));
-			i++;
-
+			
+			//System.out.println(currentLine);
 		}
+		//System.out.println(elements.size());
 		
-		return new LinkedList<String>(elements);
+		
 	}
 
 	/*
@@ -384,6 +384,14 @@ public class Editor {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public String getElement(int index) {
+		return elements.get(index);
+	}
+	
+	public int getSize() {
+		return elements.size();
 	}
 
 }
