@@ -107,7 +107,7 @@ public class InitialScenarioCreator extends JFrame implements ActionListener  {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
+			//
 			frame.dispose();
 			
 		  

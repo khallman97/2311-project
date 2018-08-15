@@ -27,7 +27,7 @@ public class TextPrompt extends JLabel
 		FOCUS_GAINED,
 		FOCUS_LOST;
 	}
-
+//
 	private JTextComponent component;
 	private Document document;
 
