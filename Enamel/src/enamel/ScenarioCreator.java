@@ -43,6 +43,8 @@ public class ScenarioCreator implements ActionListener {
 	private JPanel p, pi;
 	private JButton ok, close;
 	private JTextField name, cell, button;
+	private File newFile;
+	private String newFilePath;
 	
 	private Scanner reader;
 	private BufferedWriter writer;
@@ -83,20 +85,25 @@ public class ScenarioCreator implements ActionListener {
 			setEnabled(false);
 		} else {
 			initialize(true);
-			setEnabled(false);
+			setEnabled(true);
 		}
 	}
 	
-	public ScenarioCreator(String filename, boolean newFile) {
+	public ScenarioCreator(File fileName, boolean newFile) {
 		
 		if(newFile == true) {
 			Int();
 			initialize(false);
 			setEnabled(false);
 		} else {
+			this.newFilePath = fileName.getAbsolutePath();
 			initialize(true);
-			setEnabled(false);
+			setEnabled(true);
 		}
+	}
+	
+	private void enableFile() {
+		
 	}
 	
 	
@@ -156,11 +163,11 @@ public class ScenarioCreator implements ActionListener {
 		
 		frmScenarioCreatorWindow = new JFrame();
 		frmScenarioCreatorWindow.setTitle("Scenario Creator Window");
-		frmScenarioCreatorWindow.setBounds(100, 100, 1200, 500);
+		frmScenarioCreatorWindow.setBounds(200, 200, 1600, 700);
 		frmScenarioCreatorWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmScenarioCreatorWindow.setResizable(false);
 		frmScenarioCreatorWindow.setVisible(visable);
-		
+		/*
 		JLabel lblNumberOfCells = new JLabel("Number of Cells");
 		lblNumberOfCells.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
@@ -188,8 +195,13 @@ public class ScenarioCreator implements ActionListener {
 				  btnNumTxtField.setText("");
 			  }
 			});
+			*/
+		
 		//*****************************************************  Action Listener for checking button and cell number fields have been set
+		
+		/*
 		btnNumTxtField.getDocument().addDocumentListener(new DocumentListener() {
+			
 			  public void changedUpdate(DocumentEvent e) {
 			    warn();
 			  }
@@ -208,48 +220,62 @@ public class ScenarioCreator implements ActionListener {
 			     }
 			  }
 			});
+		*/
+		
+		//Audio Button
 		
 		JLabel lblInsertAudioFile = new JLabel("Insert Audio File");
 		lblInsertAudioFile.setFont(new Font("Tahoma", Font.BOLD, 16));
-		
-		txtAudioFileName = new JTextField();
-		txtAudioFileName.setText("Audio File Name");
+		txtAudioFileName = new JTextField(20);
 		txtAudioFileName.setColumns(10);
+		TextPrompt txtAudioFileP = new TextPrompt("Audio File Name" , txtAudioFileName); 
+		//txtAudioFileName.setText("Audio File Name");
 		
+		/*
 		txtAudioFileName.addMouseListener(new MouseAdapter() {
 			  @Override
 			  public void mouseClicked(MouseEvent e) {
 				  txtAudioFileName.setText("");
 			  }
 			});
+		*/
+		
+		//Upload Button
 		
 		btnUpload = new JButton("Upload");
-		
 		btnUpload.setBackground(Color.LIGHT_GRAY);
-		
 		removeAudioFileBtn = new JButton("Remove");
 		removeAudioFileBtn.setBackground(Color.LIGHT_GRAY);
 		removeAudioFileBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//file chooser goes here
 			}
 		});
+		
+		//Braille cell info
 		
 		JLabel lblBrailleCell = new JLabel("Braille Cell");
 		lblBrailleCell.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
+		//text to speach header 
+		
 		JLabel lblTTS = new JLabel("Insert Text-To-Speech");
 		lblTTS.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
-		ttsTxtField = new JTextField();
-		ttsTxtField.setText("Type text here");
-		ttsTxtField.setColumns(10);
+		//txt to speach text field
 		
+		ttsTxtField = new JTextField(20);
+		ttsTxtField.setColumns(10);
+		TextPrompt ttsTxtFieldP = new TextPrompt("Insert test-to-speach here" , ttsTxtField); 
+		
+		/*
 		ttsTxtField.addMouseListener(new MouseAdapter() {
 			  @Override
 			  public void mouseClicked(MouseEvent e) {
 				  ttsTxtField.setText("");
 			  }
 			});
+		*/
 		
 		JSeparator separator = new JSeparator();
 		
@@ -279,18 +305,24 @@ public class ScenarioCreator implements ActionListener {
 			}
 		});
 		
+		//save button
 		JButton btnSave = new JButton("Save");
 		
-		QuestionTxtFld = new JTextField();
-		QuestionTxtFld.setText("Enter question here");
-		QuestionTxtFld.setColumns(10);
+		//question text field
 		
+		QuestionTxtFld = new JTextField();
+		QuestionTxtFld.setColumns(20);
+		TextPrompt QuestionTxtFldP = new TextPrompt("Insert question here" , QuestionTxtFld); 
+		
+		/*
 		QuestionTxtFld.addMouseListener(new MouseAdapter() {
 			  @Override
 			  public void mouseClicked(MouseEvent e) {
 				  QuestionTxtFld.setText("");
 			  }
 			});
+			
+			*/
 		
 		JLabel lblAddQuestion = new JLabel("Add Question");
 		lblAddQuestion.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -313,10 +345,10 @@ public class ScenarioCreator implements ActionListener {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(28)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(cellNumTxtField)
-						.addComponent(btnNumTxtField, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-						.addComponent(lblNumberOfButtons)
-						.addComponent(lblNumberOfCells)
+						//.addComponent(cellNumTxtField)
+						//.addComponent(btnNumTxtField, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+						//.addComponent(lblNumberOfButtons)
+						//.addComponent(lblNumberOfCells)
 						.addComponent(lblBrailleCell, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(10)
@@ -381,11 +413,11 @@ public class ScenarioCreator implements ActionListener {
 								.addComponent(separator, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblNumberOfCells)
+										//.addComponent(lblNumberOfCells)
 										.addComponent(lblInsertAudioFile))
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(cellNumTxtField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										//.addComponent(cellNumTxtField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 										.addComponent(txtAudioFileName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 										.addComponent(btnUpload))
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -394,10 +426,10 @@ public class ScenarioCreator implements ActionListener {
 											.addComponent(removeAudioFileBtn))
 										.addGroup(groupLayout.createSequentialGroup()
 											.addGap(18)
-											.addComponent(lblNumberOfButtons)
+											//.addComponent(lblNumberOfButtons)
 											.addPreferredGap(ComponentPlacement.RELATED)
 											.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-												.addComponent(btnNumTxtField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+												//.addComponent(btnNumTxtField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 												.addComponent(lblTTS, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
 											.addPreferredGap(ComponentPlacement.RELATED)
 											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -451,8 +483,8 @@ public class ScenarioCreator implements ActionListener {
 		frmScenarioCreatorWindow.getContentPane().setLayout(groupLayout);
 	}
 	public void setEnabled(boolean initialState) {
-		cellNumTxtField.setEnabled(!initialState);
-		btnNumTxtField.setEnabled(!initialState);
+		//cellNumTxtField.setEnabled(!initialState);
+		//btnNumTxtField.setEnabled(!initialState);
 		txtAudioFileName.setEnabled(initialState);
 		ttsTxtField.setEnabled(initialState);
 		QuestionTxtFld.setEnabled(initialState);
@@ -506,7 +538,8 @@ public class ScenarioCreator implements ActionListener {
 		String fileName = name.getText().toString();
 					String numOfCells = cell.getText().toString();
 					String numOfButtons = button.getText().toString();
-					File newFile = new File(System.getProperty("user.dir")+"/SavedScenarios/"+fileName+".txt");
+					newFile = new File(System.getProperty("user.dir")+"/SavedScenarios/"+fileName+".txt");
+					newFilePath = newFile.getAbsolutePath();
 					
 					try {
 						this.writer = new BufferedWriter(new FileWriter(newFile));
@@ -516,6 +549,7 @@ public class ScenarioCreator implements ActionListener {
 							writer.flush();
 							frame.dispose();
 							initialize(true);
+							setEnabled(true);
 						} else {
 							JOptionPane.showMessageDialog(null, "Please enter a vaild number greater then 0", "WARNING", JOptionPane.WARNING_MESSAGE);
 						}
