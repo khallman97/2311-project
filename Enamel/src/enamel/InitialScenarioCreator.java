@@ -18,8 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /*
- * The goal of this class is to get the name of the file created, 
- * the number of cells and buttons and then save the file.
+ * NO LONGER USING THIS CLASS INFORMATION HAS BEEN BUILT INTO SCENARIO CREATOR
  */
 public class InitialScenarioCreator extends JFrame implements ActionListener  {
 
@@ -41,7 +40,7 @@ public class InitialScenarioCreator extends JFrame implements ActionListener  {
 	
 	private void Int() {
 		frame = new JFrame("New Scenario");
-		
+		frame.isActive();
 		p = new JPanel(new FlowLayout());
 		
 		ok = new JButton("Save and continue");
@@ -108,6 +107,7 @@ public class InitialScenarioCreator extends JFrame implements ActionListener  {
 				e1.printStackTrace();
 			}
 			//
+			
 			frame.dispose();
 			
 		  
@@ -128,8 +128,5 @@ public class InitialScenarioCreator extends JFrame implements ActionListener  {
 		}
 	}
 
-	public static void main(String[]args) {
-		InitialScenarioCreator isc = new InitialScenarioCreator();
-	}
 	
 }

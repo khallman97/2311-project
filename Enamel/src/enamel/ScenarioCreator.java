@@ -1,12 +1,19 @@
 package enamel;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -14,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -28,7 +36,16 @@ import javax.swing.event.DocumentListener;
  * @author Chun-Wah Chung 
  *
  */
-public class ScenarioCreator {
+public class ScenarioCreator implements ActionListener {
+	
+	
+	private JFrame frame;
+	private JPanel p, pi;
+	private JButton ok, close;
+	private JTextField name, cell, button;
+	
+	private Scanner reader;
+	private BufferedWriter writer;
 
 	private JFrame frmScenarioCreatorWindow;
 	private JTextField cellNumTxtField;
@@ -53,25 +70,88 @@ public class ScenarioCreator {
 	private JRadioButton rad8;
 	private JButton AddQuestionBtn;
 	private JButton RmQuestBtn;
+	
+	private InitialScenarioCreator ISC;
 
 	/**
 	 * Create the application.
 	 */
-	public ScenarioCreator() {
-		initialize();
-		setEnabled(false);
+	public ScenarioCreator(boolean newFile) {
+		if(newFile == true) {
+			Int();
+			initialize(false);
+			setEnabled(false);
+		} else {
+			initialize(true);
+			setEnabled(false);
+		}
 	}
 	
-	public ScenarioCreator(String filename) {
-		initialize();
-		setEnabled(false);
+	public ScenarioCreator(String filename, boolean newFile) {
+		
+		if(newFile == true) {
+			Int();
+			initialize(false);
+			setEnabled(false);
+		} else {
+			initialize(true);
+			setEnabled(false);
+		}
 	}
-
+	
+	
+	private void Int() {
+		frame = new JFrame("New Scenario");
+		frame.isActive();
+		p = new JPanel(new FlowLayout());
+		
+		ok = new JButton("Save and continue");
+		ok.addActionListener(this);
+		
+		close = new JButton("Exit");
+		close.addActionListener(this);
+		
+		name = new JTextField(20);
+		name.setPreferredSize( new Dimension( 200, 24 ) );
+		TextPrompt nameP = new TextPrompt("Enter the scenario name" , name);
+		
+		cell = new JTextField(20);
+		cell.setPreferredSize( new Dimension( 200, 24 ) );
+		TextPrompt cellP = new TextPrompt("Enter the number of cells" , cell);
+		
+		button = new JTextField(20);
+		button.setPreferredSize( new Dimension( 200, 24 ) );
+		TextPrompt buttonP = new TextPrompt("Enter the number of buttons" , button);
+		
+		
+		p.add(name);
+		p.add(cell);
+		p.add(button);
+		
+		p.add(ok);
+		p.add(close);
+		
+		frame.add(p);
+		
+		frame.setSize(300,200 );
+		frame.setVisible(true);
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		
+		
+	
+	}
+	
+	
+	
+	
+	
+	
 	/**
 	 * Initialize the contents of the frame.
 	 *
 	 */
-	private void initialize() {
+	private void initialize(boolean visable) {
 		
 		
 		frmScenarioCreatorWindow = new JFrame();
@@ -79,7 +159,7 @@ public class ScenarioCreator {
 		frmScenarioCreatorWindow.setBounds(100, 100, 1200, 500);
 		frmScenarioCreatorWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmScenarioCreatorWindow.setResizable(false);
-		frmScenarioCreatorWindow.setVisible(true);
+		frmScenarioCreatorWindow.setVisible(visable);
 		
 		JLabel lblNumberOfCells = new JLabel("Number of Cells");
 		lblNumberOfCells.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -392,4 +472,82 @@ public class ScenarioCreator {
 		AddQuestionBtn.setEnabled(initialState);
 		RmQuestBtn.setEnabled(initialState);
 	}
-}
+	
+	/*
+	 * Checks to see if cell and button are ints
+	 */
+	
+	public static boolean cellAndButtonInt(String cell , String button) {
+	    try { 
+	        Integer.parseInt(cell); 
+	        Integer.parseInt(button);
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    } catch(NullPointerException e) {
+	        return false;
+	    }
+	    if ((Integer.parseInt(cell) > 0)&&(Integer.parseInt(button) > 0) ) {
+	    	return true;
+	    } else {
+	    	return false;
+	    }
+	   
+	 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		
+		String arg = arg0.getActionCommand();
+		/*
+		 * This checks for the name and correct information of the file
+		 */
+		if (arg == "Save and continue") {
+		String fileName = name.getText().toString();
+					String numOfCells = cell.getText().toString();
+					String numOfButtons = button.getText().toString();
+					File newFile = new File(System.getProperty("user.dir")+"/SavedScenarios/"+fileName+".txt");
+					
+					try {
+						this.writer = new BufferedWriter(new FileWriter(newFile));
+						if(cellAndButtonInt(numOfCells,numOfButtons)) {
+							writer.write("Cell " + numOfCells+"\n");
+							writer.write("Button  " + numOfButtons+"\n");
+							writer.flush();
+							frame.dispose();
+							initialize(true);
+						} else {
+							JOptionPane.showMessageDialog(null, "Please enter a vaild number greater then 0", "WARNING", JOptionPane.WARNING_MESSAGE);
+						}
+						
+						
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					//
+					
+					
+					
+				 /*
+				  * This closes the intital information panel
+				  */
+					
+				} else if (arg == "Exit") {
+					int closeFrame = 0;
+					String[] buttons = { "Yes", "No"};    
+					int returnValue = JOptionPane.showOptionDialog(null, "Your file will not save. Do you wish to continue?","Exit" ,
+					        JOptionPane.WARNING_MESSAGE, 0, null, buttons, buttons[1]);
+					
+					if (returnValue == 0) {
+						closeFrame = 1;
+					} else if (returnValue == 1) {
+						//does nothing
+					}
+				if (closeFrame == 1) {
+					frame.dispose();
+				}
+				}
+			}
+	}
+

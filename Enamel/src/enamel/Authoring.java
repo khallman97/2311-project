@@ -199,7 +199,8 @@ public class Authoring extends JFrame implements ActionListener{
 			if (rep == JFileChooser.APPROVE_OPTION){
 				File file = chooser.getSelectedFile();
 				output.append("Opening "+file.getName()+"\n");
-				sc = new ScenarioCreator(file.getName());
+				sc = new ScenarioCreator(file.getName(), false);
+				//InitialScenarioCreator isc = new InitialScenarioCreator();
 			}
 		}else if(e.getActionCommand() == "Exit") {
 			System.exit(0);
@@ -208,7 +209,7 @@ public class Authoring extends JFrame implements ActionListener{
 			if (rep == JFileChooser.APPROVE_OPTION){
 				File file = chooser.getSelectedFile();
 				output.append("Opening "+file.getName()+"\n");
-				sc = new ScenarioCreator(file.getName());
+				sc = new ScenarioCreator(file.getName(),false);
 			}
 		}else if(e.getActionCommand() == "Test") {
 			File file = null;
@@ -217,16 +218,14 @@ public class Authoring extends JFrame implements ActionListener{
 				file = chooser.getSelectedFile();
 				output.append("Opening "+file.getName()+"\n");
 			}
-			String filepath = file.getPath();
+			String filepath = file.getAbsolutePath();
+			System.out.println(filepath);
 			ScenarioParser sp = new ScenarioParser(true);
 			sp.setScenarioFile(filepath);
 		}else if(e.getActionCommand() == "New") {
-			String n = JOptionPane.showInputDialog("Please enter a file name:");
-			if (!n.isEmpty()) {
-				sc = new ScenarioCreator(n);
-			}else {
-				output.append("No Filename given");
-			}
+			
+			sc = new ScenarioCreator(true);
+			
 		}
 	}
 	public static void main(String[] args) {
