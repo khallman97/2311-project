@@ -13,6 +13,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.GroupLayout;
@@ -46,6 +48,8 @@ public class ScenarioCreator implements ActionListener {
 	private File newFile;
 	private String newFilePath;
 	
+	private LinkedList<String> contents;
+	private Editor edit;
 	private Scanner reader;
 	private BufferedWriter writer;
 
@@ -86,6 +90,7 @@ public class ScenarioCreator implements ActionListener {
 		} else {
 			initialize(true);
 			setEnabled(true);
+			//enableFile();
 		}
 	}
 	
@@ -96,14 +101,25 @@ public class ScenarioCreator implements ActionListener {
 			initialize(false);
 			setEnabled(false);
 		} else {
+			this.newFile = fileName;
 			this.newFilePath = fileName.getAbsolutePath();
 			initialize(true);
 			setEnabled(true);
+			enableFile(fileName);
 		}
 	}
 	
-	private void enableFile() {
-		
+	private void enableFile(File file) {
+		edit = new Editor(file);
+		this.contents = edit.parseToApp(); //copying linked list 
+		System.out.println("test");
+		System.out.println(contents.size());
+		for (int i = 0 ; contents.size() > i ; i++) {
+			String currentLine = contents.get(i);
+			System.out.print(currentLine);
+			System.out.println("test");
+			
+		}
 	}
 	
 	
@@ -545,11 +561,14 @@ public class ScenarioCreator implements ActionListener {
 						this.writer = new BufferedWriter(new FileWriter(newFile));
 						if(cellAndButtonInt(numOfCells,numOfButtons)) {
 							writer.write("Cell " + numOfCells+"\n");
-							writer.write("Button  " + numOfButtons+"\n");
+							writer.write("Button " + numOfButtons+"\n");
 							writer.flush();
 							frame.dispose();
 							initialize(true);
 							setEnabled(true);
+							enableFile(newFile);
+							
+							
 						} else {
 							JOptionPane.showMessageDialog(null, "Please enter a vaild number greater then 0", "WARNING", JOptionPane.WARNING_MESSAGE);
 						}

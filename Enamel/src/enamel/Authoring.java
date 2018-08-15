@@ -199,7 +199,7 @@ public class Authoring extends JFrame implements ActionListener{
 			if (rep == JFileChooser.APPROVE_OPTION){
 				File file = chooser.getSelectedFile();
 				output.append("Opening "+file.getName()+"\n");
-				sc = new ScenarioCreator(file.getName(), false);
+				sc = new ScenarioCreator(file, false);
 				//InitialScenarioCreator isc = new InitialScenarioCreator();
 			}
 		}else if(e.getActionCommand() == "Exit") {
@@ -209,7 +209,7 @@ public class Authoring extends JFrame implements ActionListener{
 			if (rep == JFileChooser.APPROVE_OPTION){
 				File file = chooser.getSelectedFile();
 				output.append("Opening "+file.getName()+"\n");
-				sc = new ScenarioCreator(file.getName(),false);
+				sc = new ScenarioCreator(file,false);
 			}
 		}else if(e.getActionCommand() == "Test") {
 			File file = null;

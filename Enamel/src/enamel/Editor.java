@@ -31,22 +31,23 @@ public class Editor {
 	private Scanner reader;
 	private BufferedWriter writer;
 
-	private List<String> elements;
+	private LinkedList<String> elements;
 	private List<String> toWrite;
 
-	public Editor(File fileName) {
-		this.file = fileName;
+	public Editor(File file) {
+		//this.file = fileName;
 		try {
-			this.reader = new Scanner(fileName);
-
+			this.reader = new Scanner(file);
 			parseToApp();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		e.printStackTrace();
+	}
+		
+		
 
 	}
 
@@ -62,9 +63,11 @@ public class Editor {
 	/**
 	 * Converts the current lines of the list to what we want the user to see
 	 */
-	public void parseToApp() {
+	public LinkedList<String> parseToApp() {
 
 		elements = new LinkedList<String>();
+		
+		int i = 0;
 
 		while (reader.hasNextLine()) {
 
@@ -212,8 +215,13 @@ public class Editor {
 				currentLine = "TTS: " + currentLine;
 				elements.add(currentLine);
 			}
+			
+			System.out.println(elements.get(i));
+			i++;
 
 		}
+		
+		return new LinkedList<String>(elements);
 	}
 
 	/*
