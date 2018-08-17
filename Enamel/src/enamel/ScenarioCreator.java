@@ -177,7 +177,7 @@ public class ScenarioCreator implements ActionListener {
 		
 		frmScenarioCreatorWindow = new JFrame();
 		frmScenarioCreatorWindow.setTitle("Scenario Creator Window");
-		frmScenarioCreatorWindow.setBounds(200, 200, 1600, 700);
+		frmScenarioCreatorWindow.setBounds(200, 200, 1000, 700);
 		frmScenarioCreatorWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmScenarioCreatorWindow.setResizable(false);
 		frmScenarioCreatorWindow.setVisible(visable);
