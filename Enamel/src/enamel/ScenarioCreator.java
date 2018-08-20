@@ -34,11 +34,12 @@ import javax.swing.event.DocumentListener;
  * Scenario Creator Class
  * (GUI for Scenario Creator) 
  *	- Provides one single window for user to create scenario
- *
- * @author Chun-Wah Chung 
+ *  - Allows user to edit and delete parts of the scenario 
+ * @author Chun-Wah Chung , kyle hallman	
+ * 
  *
  */
-public class ScenarioCreator implements ActionListener {
+public class ScenarioCreator extends javax.swing.JFrame implements ActionListener {
 	
 	
 	private JFrame frame;
@@ -49,33 +50,55 @@ public class ScenarioCreator implements ActionListener {
 	private String newFilePath;
 	
 	private LinkedList<String> contents;
-	private Editor edit;
+	private Editor editor;
 	private Scanner reader;
 	private BufferedWriter writer;
-
-	private JFrame frmScenarioCreatorWindow;
-	private JTextField cellNumTxtField;
-	private JTextField btnNumTxtField;
-	private JTextField txtAudioFileName;
-	private JTextField ttsTxtField;
-	private JTextField QuestionTxtFld;
-	private JTextField ScenarioTxtFld;
 	
-	private boolean initialState;
-	private JButton removeAudioFileBtn;
-	private JButton btnUpload;
-	private JButton btnAdd;
-	private JButton removeSpeechBtn;
-	private JRadioButton rad1;
-	private JRadioButton rad2;
-	private JRadioButton rad3;
-	private JRadioButton rad4;
-	private JRadioButton rad5;
-	private JRadioButton rad6;
-	private JRadioButton rad7;
-	private JRadioButton rad8;
-	private JButton AddQuestionBtn;
-	private JButton RmQuestBtn;
+	   private javax.swing.JComboBox<String> buttonSelect;
+	   private javax.swing.JButton correctAudio;
+	   private javax.swing.JTextArea correctQuestion;
+	   private javax.swing.JButton delete;
+	   private javax.swing.JButton edit;
+	   private javax.swing.JButton exitBut;
+	   private javax.swing.JButton finish;
+	   private javax.swing.JSlider inputMethodSlider;
+	   private javax.swing.JButton jButton1;
+	   private javax.swing.JButton jButton2;
+	   private javax.swing.JLabel jLabel1;
+	   private javax.swing.JLabel jLabel2;
+	   private javax.swing.JLabel jLabel3;
+	   private javax.swing.JLabel jLabel4;
+	   private javax.swing.JLabel jLabel5;
+	   private javax.swing.JLabel jLabel6;
+	   private javax.swing.JPanel jPanel1;
+	   private javax.swing.JPanel jPanel2;
+	   private javax.swing.JPanel jPanel3;
+	   private javax.swing.JPanel jPanel4;
+	   private javax.swing.JScrollPane jScrollPane1;
+	   private javax.swing.JScrollPane jScrollPane2;
+	   private javax.swing.JScrollPane jScrollPane3;
+	   private javax.swing.JScrollPane jScrollPane4;
+	   private javax.swing.JScrollPane jScrollPane5;
+	   private javax.swing.JTextArea jTextArea1;
+	   private javax.swing.JTextArea jTextArea2;
+	   private javax.swing.JList<String> list;
+	   private javax.swing.JRadioButton rad1;
+	   private javax.swing.JRadioButton rad2;
+	   private javax.swing.JRadioButton rad3;
+	   private javax.swing.JRadioButton rad4;
+	   private javax.swing.JRadioButton rad5;
+	   private javax.swing.JRadioButton rad6;
+	   private javax.swing.JRadioButton rad7;
+	   private javax.swing.JRadioButton rad8;
+	   private javax.swing.JButton radButBack;
+	   private javax.swing.JButton radButNext;
+	   private javax.swing.JButton saveBut;
+	   private javax.swing.JButton testBut;
+	   private javax.swing.JTextArea ttsArea;
+	   private javax.swing.JButton ttsAudio;
+	   private javax.swing.JTextField txtFldForBinary;
+	   // End of variables declaration  
+
 	
 	private InitialScenarioCreator ISC;
 
@@ -110,7 +133,7 @@ public class ScenarioCreator implements ActionListener {
 	}
 	
 	private void enableFile(File file) {
-		edit = new Editor(file);
+		editor = new Editor(file);
 		
 		/*
 		for (int i = 0 ; edit.getSize() > i ; i++) {
@@ -174,332 +197,456 @@ public class ScenarioCreator implements ActionListener {
 	 */
 	private void initialize(boolean visable) {
 		
-		
-		frmScenarioCreatorWindow = new JFrame();
-		frmScenarioCreatorWindow.setTitle("Scenario Creator Window");
-		frmScenarioCreatorWindow.setBounds(200, 200, 1000, 700);
-		frmScenarioCreatorWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmScenarioCreatorWindow.setResizable(false);
-		frmScenarioCreatorWindow.setVisible(visable);
-		/*
-		JLabel lblNumberOfCells = new JLabel("Number of Cells");
-		lblNumberOfCells.setFont(new Font("Tahoma", Font.BOLD, 16));
-		
-		cellNumTxtField = new JTextField();
-		cellNumTxtField.setText("Enter a positive integer here");
-		cellNumTxtField.setColumns(10);
-		
-		cellNumTxtField.addMouseListener(new MouseAdapter() {
-			  @Override
-			  public void mouseClicked(MouseEvent e) {
-				  cellNumTxtField.setText("");
-			  }
-			});
-		
-		JLabel lblNumberOfButtons = new JLabel("Number of Buttons");
-		lblNumberOfButtons.setFont(new Font("Tahoma", Font.BOLD, 16));
-		
-		btnNumTxtField = new JTextField();
-		btnNumTxtField.setText("Enter a positive integer here");
-		btnNumTxtField.setColumns(10);
-		
-		btnNumTxtField.addMouseListener(new MouseAdapter() {
-			  @Override
-			  public void mouseClicked(MouseEvent e) {
-				  btnNumTxtField.setText("");
-			  }
-			});
-			*/
-		
-		//*****************************************************  Action Listener for checking button and cell number fields have been set
-		
-		/*
-		btnNumTxtField.getDocument().addDocumentListener(new DocumentListener() {
-			
-			  public void changedUpdate(DocumentEvent e) {
-			    warn();
-			  }
-			  public void removeUpdate(DocumentEvent e) {
-			    warn();
-			  }
-			  public void insertUpdate(DocumentEvent e) {
-			    warn();
-			  }
+		   jPanel2 = new javax.swing.JPanel();
+	       jLabel1 = new javax.swing.JLabel();
+	       jScrollPane1 = new javax.swing.JScrollPane();
+	       jTextArea1 = new javax.swing.JTextArea();
+	       inputMethodSlider = new javax.swing.JSlider();
+	       jLabel2 = new javax.swing.JLabel();
+	       jLabel3 = new javax.swing.JLabel();
+	       txtFldForBinary = new javax.swing.JTextField();
+	       rad1 = new javax.swing.JRadioButton();
+	       rad2 = new javax.swing.JRadioButton();
+	       rad3 = new javax.swing.JRadioButton();
+	       rad4 = new javax.swing.JRadioButton();
+	       rad5 = new javax.swing.JRadioButton();
+	       rad6 = new javax.swing.JRadioButton();
+	       rad7 = new javax.swing.JRadioButton();
+	       rad8 = new javax.swing.JRadioButton();
+	       radButNext = new javax.swing.JButton();
+	       radButBack = new javax.swing.JButton();
+	       buttonSelect = new javax.swing.JComboBox<>();
+	       jLabel4 = new javax.swing.JLabel();
+	       jScrollPane2 = new javax.swing.JScrollPane();
+	       correctQuestion = new javax.swing.JTextArea();
+	       correctAudio = new javax.swing.JButton();
+	       jScrollPane3 = new javax.swing.JScrollPane();
+	       jTextArea2 = new javax.swing.JTextArea();
+	       jButton2 = new javax.swing.JButton();
+	       finish = new javax.swing.JButton();
+	       jPanel1 = new javax.swing.JPanel();
+	       jLabel5 = new javax.swing.JLabel();
+	       jScrollPane4 = new javax.swing.JScrollPane();
+	       ttsArea = new javax.swing.JTextArea();
+	       ttsAudio = new javax.swing.JButton();
+	       jLabel6 = new javax.swing.JLabel();
+	       jButton1 = new javax.swing.JButton();
+	       jPanel3 = new javax.swing.JPanel();
+	       jScrollPane5 = new javax.swing.JScrollPane();
+	       list = new javax.swing.JList<>();
+	       delete = new javax.swing.JButton();
+	       edit = new javax.swing.JButton();
+	       jPanel4 = new javax.swing.JPanel();
+	       testBut = new javax.swing.JButton();
+	       saveBut = new javax.swing.JButton();
+	       exitBut = new javax.swing.JButton();
 
-			  public void warn() {
-			     if (Integer.parseInt(btnNumTxtField.getText())<=0){
-			       JOptionPane.showMessageDialog(null,
-			          "Error: Please enter number bigger than 0", "Error Massage",
-			          JOptionPane.ERROR_MESSAGE);
-			     }
-			  }
-			});
-		*/
-		
-		//Audio Button
-		
-		JLabel lblInsertAudioFile = new JLabel("Insert Audio File");
-		lblInsertAudioFile.setFont(new Font("Tahoma", Font.BOLD, 16));
-		txtAudioFileName = new JTextField(20);
-		txtAudioFileName.setColumns(10);
-		TextPrompt txtAudioFileP = new TextPrompt("Audio File Name" , txtAudioFileName); 
-		//txtAudioFileName.setText("Audio File Name");
-		
-		/*
-		txtAudioFileName.addMouseListener(new MouseAdapter() {
-			  @Override
-			  public void mouseClicked(MouseEvent e) {
-				  txtAudioFileName.setText("");
-			  }
-			});
-		*/
-		
-		//Upload Button
-		
-		btnUpload = new JButton("Upload");
-		btnUpload.setBackground(Color.LIGHT_GRAY);
-		removeAudioFileBtn = new JButton("Remove");
-		removeAudioFileBtn.setBackground(Color.LIGHT_GRAY);
-		removeAudioFileBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//file chooser goes here
-			}
-		});
-		
-		//Braille cell info
-		
-		JLabel lblBrailleCell = new JLabel("Braille Cell");
-		lblBrailleCell.setFont(new Font("Tahoma", Font.BOLD, 16));
-		
-		//text to speach header 
-		
-		JLabel lblTTS = new JLabel("Insert Text-To-Speech");
-		lblTTS.setFont(new Font("Tahoma", Font.BOLD, 16));
-		
-		//txt to speach text field
-		
-		ttsTxtField = new JTextField(20);
-		ttsTxtField.setColumns(10);
-		TextPrompt ttsTxtFieldP = new TextPrompt("Insert test-to-speach here" , ttsTxtField); 
-		
-		/*
-		ttsTxtField.addMouseListener(new MouseAdapter() {
-			  @Override
-			  public void mouseClicked(MouseEvent e) {
-				  ttsTxtField.setText("");
-			  }
-			});
-		*/
-		
-		JSeparator separator = new JSeparator();
-		
-		btnAdd = new JButton("Add ");
-		btnAdd.setBackground(Color.LIGHT_GRAY);
-		
-		removeSpeechBtn = new JButton("Remove");
-		removeSpeechBtn.setBackground(Color.LIGHT_GRAY);
-		removeSpeechBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		
-		rad1 = new JRadioButton("");
-		rad2 = new JRadioButton("");
-		rad3 = new JRadioButton("");
-		rad4 = new JRadioButton("");
-		rad5 = new JRadioButton("");
-		rad6 = new JRadioButton("");
-		rad7 = new JRadioButton("");
-		rad8 = new JRadioButton("");
-		
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
-			}
-		});
-		
-		//save button
-		JButton btnSave = new JButton("Save");
-		
-		//question text field
-		
-		QuestionTxtFld = new JTextField();
-		QuestionTxtFld.setColumns(20);
-		TextPrompt QuestionTxtFldP = new TextPrompt("Insert question here" , QuestionTxtFld); 
-		
-		/*
-		QuestionTxtFld.addMouseListener(new MouseAdapter() {
-			  @Override
-			  public void mouseClicked(MouseEvent e) {
-				  QuestionTxtFld.setText("");
-			  }
-			});
-			
-			*/
-		
-		JLabel lblAddQuestion = new JLabel("Add Question");
-		lblAddQuestion.setFont(new Font("Tahoma", Font.BOLD, 16));
-		
-		 AddQuestionBtn = new JButton("Add ");
-		AddQuestionBtn.setBackground(Color.LIGHT_GRAY);
-		
-		 RmQuestBtn = new JButton("Remove");
-		RmQuestBtn.setBackground(Color.LIGHT_GRAY);
-		
-		ScenarioTxtFld = new JTextField();
-		ScenarioTxtFld.setColumns(10);
-		ScenarioTxtFld.setEditable(false);
-		
-		
-		
-		JLabel lblScenarioFile = new JLabel("Scenario File");
-		lblScenarioFile.setFont(new Font("Tahoma", Font.BOLD, 16));
-		GroupLayout groupLayout = new GroupLayout(frmScenarioCreatorWindow.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(28)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						//.addComponent(cellNumTxtField)
-						//.addComponent(btnNumTxtField, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-						//.addComponent(lblNumberOfButtons)
-						//.addComponent(lblNumberOfCells)
-						.addComponent(lblBrailleCell, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(10)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(rad1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(rad2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(rad7, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(rad8, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addComponent(rad5, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-										.addComponent(rad3, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-									.addGap(4)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(rad6, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-										.addComponent(rad4, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))))
-							.addGap(50)))
-					.addGap(38)
-					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(41)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(lblTTS, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(txtAudioFileName, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-								.addComponent(ttsTxtField, Alignment.LEADING)
-								.addComponent(QuestionTxtFld, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblAddQuestion, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-									.addComponent(removeSpeechBtn, GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
-									.addComponent(btnAdd, GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
-									.addComponent(removeAudioFileBtn, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(btnUpload, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))
-								.addComponent(AddQuestionBtn, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-								.addComponent(RmQuestBtn, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(lblInsertAudioFile))
-					.addGap(47)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblScenarioFile, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-							.addComponent(ScenarioTxtFld, GroupLayout.PREFERRED_SIZE, 291, GroupLayout.PREFERRED_SIZE)
-							.addGroup(groupLayout.createSequentialGroup()
-								.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(btnCancel, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(63, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(27)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(separator, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-										//.addComponent(lblNumberOfCells)
-										.addComponent(lblInsertAudioFile))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-										//.addComponent(cellNumTxtField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(txtAudioFileName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(btnUpload))
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(removeAudioFileBtn))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(18)
-											//.addComponent(lblNumberOfButtons)
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-												//.addComponent(btnNumTxtField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblTTS, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addGroup(groupLayout.createSequentialGroup()
-													.addComponent(btnAdd)
-													.addPreferredGap(ComponentPlacement.RELATED)
-													.addComponent(removeSpeechBtn))
-												.addComponent(ttsTxtField, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
-												.addGroup(groupLayout.createSequentialGroup()
-													.addGap(15)
-													.addComponent(lblBrailleCell, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-													.addPreferredGap(ComponentPlacement.UNRELATED)
-													.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-														.addComponent(rad2)
-														.addComponent(rad1))
-													.addPreferredGap(ComponentPlacement.RELATED)
-													.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-														.addComponent(rad3)
-														.addComponent(rad4))))
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addGroup(groupLayout.createSequentialGroup()
-													.addComponent(rad5)
-													.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-														.addGroup(groupLayout.createSequentialGroup()
-															.addGap(4)
-															.addComponent(lblAddQuestion, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-														.addGroup(groupLayout.createSequentialGroup()
-															.addPreferredGap(ComponentPlacement.RELATED)
-															.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-																.addComponent(rad8)
-																.addComponent(rad7)))))
-												.addComponent(rad6))
-											.addGap(3)
-											.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-												.addComponent(QuestionTxtFld, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-												.addComponent(AddQuestionBtn))
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(RmQuestBtn))))))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(23)
-							.addComponent(lblScenarioFile, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(ScenarioTxtFld, GroupLayout.PREFERRED_SIZE, 291, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnCancel)
-								.addComponent(btnSave))))
-					.addContainerGap(120, Short.MAX_VALUE))
-		);
-		frmScenarioCreatorWindow.getContentPane().setLayout(groupLayout);
-		
-	
-	}
+	       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+	       setTitle("Scenario Creator");
+	       setPreferredSize(new java.awt.Dimension(900, 800));
+	       setResizable(false);
+
+	       jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+	       jPanel2.setToolTipText("Create your questions in this zone");
+	       jPanel2.setName(""); // NOI18N
+
+	       jLabel1.setText("Question Builder");
+
+	       jTextArea1.setColumns(20);
+	       jTextArea1.setRows(5);
+	       jTextArea1.setToolTipText("Enter your question here");
+	       jScrollPane1.setViewportView(jTextArea1);
+	       jTextArea1.getAccessibleContext().setAccessibleName("Question");
+
+	       inputMethodSlider.setMaximum(1);
+	       inputMethodSlider.setMinimum(-1);
+	       inputMethodSlider.setMinorTickSpacing(1);
+	       inputMethodSlider.setPaintLabels(true);
+	       inputMethodSlider.setPaintTicks(true);
+	       inputMethodSlider.setToolTipText("Slide to direction of what you would like to input with");
+	       inputMethodSlider.setValue(0);
+	       inputMethodSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+	           public void stateChanged(javax.swing.event.ChangeEvent evt) {
+	               inputMethodSliderStateChanged(evt);
+	           }
+	       });
+	       inputMethodSlider.addMouseListener(new java.awt.event.MouseAdapter() {
+	           public void mouseClicked(java.awt.event.MouseEvent evt) {
+	               inputMethodSliderMouseClicked(evt);
+	           }
+	       });
+
+	       jLabel2.setText("Enter String");
+
+	       jLabel3.setText("Manually Enter");
+
+	       txtFldForBinary.setToolTipText("Enter word here");
+	       txtFldForBinary.setEnabled(false);
+	       
+
+	       rad1.setEnabled(false);
+
+	       rad2.setEnabled(false);
+
+	       rad3.setEnabled(false);
+	     
+	       rad4.setEnabled(false);
+
+	       rad5.setEnabled(false);
+
+	       rad6.setEnabled(false);
+
+	       rad7.setEnabled(false);
+
+	       rad8.setEnabled(false);
+
+	       radButNext.setText(">");
+	       radButNext.setEnabled(false);
+
+	       radButBack.setText("<");
+	       radButBack.setEnabled(false);
+
+	       buttonSelect.setToolTipText("Select the button which will have the right answer");
+
+	       jLabel4.setText("Select button for the correct answer");
+
+	       correctQuestion.setColumns(20);
+	       correctQuestion.setRows(5);
+	       correctQuestion.setToolTipText("Add text to what you want to be said when the correct answer is selected");
+	       jScrollPane2.setViewportView(correctQuestion);
+	       correctQuestion.getAccessibleContext().setAccessibleName("Correct Answer Text");
+	       correctQuestion.getAccessibleContext().setAccessibleDescription("Enter text for the correct answer");
+
+	       correctAudio.setText("Add Audio For Correct");
+
+	       jTextArea2.setColumns(20);
+	       jTextArea2.setRows(5);
+	       jTextArea2.setToolTipText("add text to what you want to be said when an incorrect answer is selected");
+	       jScrollPane3.setViewportView(jTextArea2);
+	       jTextArea2.getAccessibleContext().setAccessibleName("incorrect answer text");
+	       jTextArea2.getAccessibleContext().setAccessibleDescription("enter text for the incorrect answer");
+
+	       jButton2.setText("Add Audio For Incorrect");
+
+	       finish.setText("Finish");
+
+	       javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+	       jPanel2.setLayout(jPanel2Layout);
+	       jPanel2Layout.setHorizontalGroup(
+	           jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	           .addGroup(jPanel2Layout.createSequentialGroup()
+	               .addGap(34, 34, 34)
+	               .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                   .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+	                       .addComponent(radButNext)
+	                       .addContainerGap())
+	                   .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+	                       .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                           .addGroup(jPanel2Layout.createSequentialGroup()
+	                               .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                                   .addComponent(txtFldForBinary)
+	                                   .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+	                                       .addGap(0, 0, Short.MAX_VALUE)
+	                                       .addComponent(jLabel2)))
+	                               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+	                               .addComponent(inputMethodSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+	                               .addGap(28, 28, 28)
+	                               .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+	                                   .addComponent(jLabel3)
+	                                   .addGroup(jPanel2Layout.createSequentialGroup()
+	                                       .addComponent(rad3)
+	                                       .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	                                       .addComponent(rad4))
+	                                   .addGroup(jPanel2Layout.createSequentialGroup()
+	                                       .addComponent(rad1)
+	                                       .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	                                       .addComponent(rad2))))
+	                           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+	                               .addGap(0, 0, Short.MAX_VALUE)
+	                               .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                                   .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+	                                       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+	                                           .addComponent(rad7)
+	                                           .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	                                           .addComponent(rad8))
+	                                       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+	                                           .addComponent(rad5)
+	                                           .addGap(40, 40, 40)
+	                                           .addComponent(rad6)))
+	                                   .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+	                                       .addComponent(radButBack)
+	                                       .addGap(50, 50, 50)))))
+	                       .addGap(33, 33, 33))))
+	           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+	               .addContainerGap()
+	               .addComponent(jScrollPane1))
+	           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+	               .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	               .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                   .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+	                       .addComponent(jLabel4)
+	                       .addGap(58, 58, 58))
+	                   .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+	                       .addComponent(buttonSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+	                       .addGap(133, 133, 133))
+	                   .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+	                       .addComponent(finish)
+	                       .addGap(127, 127, 127))))
+	           .addGroup(jPanel2Layout.createSequentialGroup()
+	               .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                   .addGroup(jPanel2Layout.createSequentialGroup()
+	                       .addContainerGap()
+	                       .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                           .addGroup(jPanel2Layout.createSequentialGroup()
+	                               .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+	                               .addGap(18, 18, 18)
+	                               .addComponent(correctAudio))
+	                           .addGroup(jPanel2Layout.createSequentialGroup()
+	                               .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+	                               .addGap(18, 18, 18)
+	                               .addComponent(jButton2))))
+	                   .addGroup(jPanel2Layout.createSequentialGroup()
+	                       .addGap(128, 128, 128)
+	                       .addComponent(jLabel1)))
+	               .addGap(0, 0, Short.MAX_VALUE))
+	       );
+	       jPanel2Layout.setVerticalGroup(
+	           jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	           .addGroup(jPanel2Layout.createSequentialGroup()
+	               .addContainerGap()
+	               .addComponent(jLabel1)
+	               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	               .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+	               .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                   .addGroup(jPanel2Layout.createSequentialGroup()
+	                       .addGap(35, 35, 35)
+	                       .addComponent(jLabel3)
+	                       .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	                       .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+	                           .addComponent(rad3)
+	                           .addComponent(rad4))
+	                       .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	                       .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                           .addComponent(rad1)
+	                           .addComponent(rad2))
+	                       .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	                       .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+	                           .addComponent(rad6)
+	                           .addComponent(rad5)))
+	                   .addGroup(jPanel2Layout.createSequentialGroup()
+	                       .addGap(17, 17, 17)
+	                       .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+	                           .addComponent(inputMethodSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+	                           .addComponent(jLabel2))
+	                       .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	                       .addComponent(txtFldForBinary, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+	               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	               .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+	                   .addComponent(rad7)
+	                   .addComponent(rad8))
+	               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	               .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+	                   .addComponent(radButNext)
+	                   .addComponent(radButBack))
+	               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+	               .addComponent(jLabel4)
+	               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	               .addComponent(buttonSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+	               .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                   .addGroup(jPanel2Layout.createSequentialGroup()
+	                       .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	                       .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+	                   .addGroup(jPanel2Layout.createSequentialGroup()
+	                       .addGap(19, 19, 19)
+	                       .addComponent(correctAudio)))
+	               .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                   .addGroup(jPanel2Layout.createSequentialGroup()
+	                       .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	                       .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+	                   .addGroup(jPanel2Layout.createSequentialGroup()
+	                       .addGap(17, 17, 17)
+	                       .addComponent(jButton2)))
+	               .addGap(18, 18, 18)
+	               .addComponent(finish)
+	               .addContainerGap(30, Short.MAX_VALUE))
+	       );
+
+	       buttonSelect.getAccessibleContext().setAccessibleName("Correct Button");
+	       buttonSelect.getAccessibleContext().setAccessibleDescription("Select the answer for the corret button");
+	       correctAudio.getAccessibleContext().setAccessibleDescription("Click to add audio for the correct answer");
+	       jButton2.getAccessibleContext().setAccessibleDescription("Click to add audio for the correct answer");
+	       finish.getAccessibleContext().setAccessibleDescription("Click to finish the question");
+
+	       jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+	       jLabel5.setText("Add Text-To-Speech");
+
+	       ttsArea.setColumns(20);
+	       ttsArea.setRows(5);
+	       ttsArea.setToolTipText("add text to be converted to text to speech");
+	       jScrollPane4.setViewportView(ttsArea);
+
+	       ttsAudio.setText("Add Audio");
+
+	       jLabel6.setText("OR");
+
+	       jButton1.setText("Finish");
+
+	       javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+	       jPanel1.setLayout(jPanel1Layout);
+	       jPanel1Layout.setHorizontalGroup(
+	           jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	           .addGroup(jPanel1Layout.createSequentialGroup()
+	               .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                   .addGroup(jPanel1Layout.createSequentialGroup()
+	                       .addContainerGap()
+	                       .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+	                       .addGap(18, 18, 18)
+	                       .addComponent(jLabel6)
+	                       .addGap(29, 29, 29)
+	                       .addComponent(ttsAudio))
+	                   .addGroup(jPanel1Layout.createSequentialGroup()
+	                       .addGap(126, 126, 126)
+	                       .addComponent(jLabel5)))
+	               .addContainerGap(46, Short.MAX_VALUE))
+	           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+	               .addGap(0, 0, Short.MAX_VALUE)
+	               .addComponent(jButton1)
+	               .addGap(126, 126, 126))
+	       );
+	       jPanel1Layout.setVerticalGroup(
+	           jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	           .addGroup(jPanel1Layout.createSequentialGroup()
+	               .addContainerGap()
+	               .addComponent(jLabel5)
+	               .addGap(18, 18, 18)
+	               .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                   .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+	                   .addGroup(jPanel1Layout.createSequentialGroup()
+	                       .addGap(15, 15, 15)
+	                       .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+	                           .addComponent(jLabel6)
+	                           .addComponent(ttsAudio))))
+	               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	               .addComponent(jButton1)
+	               .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+	       );
+
+	       jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+	       list.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+	       jScrollPane5.setViewportView(list);
+
+	       delete.setText("Delete selected");
+
+	       edit.setText("Edit Selected");
+
+	       javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+	       jPanel3.setLayout(jPanel3Layout);
+	       jPanel3Layout.setHorizontalGroup(
+	           jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	           .addGroup(jPanel3Layout.createSequentialGroup()
+	               .addContainerGap()
+	               .addComponent(jScrollPane5)
+	               .addContainerGap())
+	           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+	               .addGap(60, 60, 60)
+	               .addComponent(edit)
+	               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
+	               .addComponent(delete)
+	               .addGap(41, 41, 41))
+	       );
+	       jPanel3Layout.setVerticalGroup(
+	           jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	           .addGroup(jPanel3Layout.createSequentialGroup()
+	               .addContainerGap()
+	               .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
+	               .addGap(18, 18, 18)
+	               .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+	                   .addComponent(delete)
+	                   .addComponent(edit))
+	               .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+	       );
+
+	       delete.getAccessibleContext().setAccessibleDescription("Delete the selected option");
+	       edit.getAccessibleContext().setAccessibleDescription("Edit the selected option");
+
+	       jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+	       testBut.setText("Test");
+
+	       saveBut.setText("Save");
+
+	       exitBut.setText("Exit");
+
+	       javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+	       jPanel4.setLayout(jPanel4Layout);
+	       jPanel4Layout.setHorizontalGroup(
+	           jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	           .addGroup(jPanel4Layout.createSequentialGroup()
+	               .addGap(29, 29, 29)
+	               .addComponent(testBut)
+	               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	               .addComponent(saveBut)
+	               .addGap(109, 109, 109)
+	               .addComponent(exitBut)
+	               .addGap(109, 109, 109))
+	       );
+	       jPanel4Layout.setVerticalGroup(
+	           jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+	               .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	               .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+	                   .addComponent(testBut)
+	                   .addComponent(saveBut)
+	                   .addComponent(exitBut))
+	               .addGap(54, 54, 54))
+	       );
+
+	       testBut.getAccessibleContext().setAccessibleDescription("Test the file");
+	       saveBut.getAccessibleContext().setAccessibleDescription("Save the file");
+	       exitBut.getAccessibleContext().setAccessibleDescription("Exit the file");
+
+	       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+	       getContentPane().setLayout(layout);
+	       layout.setHorizontalGroup(
+	           layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	           .addGroup(layout.createSequentialGroup()
+	               .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+	                   .addGroup(layout.createSequentialGroup()
+	                       .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+	                       .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	                       .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+	                   .addGroup(layout.createSequentialGroup()
+	                       .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+	                       .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+	                       .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+	               .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+	       );
+	       layout.setVerticalGroup(
+	           layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	           .addGroup(layout.createSequentialGroup()
+	               .addContainerGap()
+	               .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+	                   .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	                   .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+	               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	               .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                   .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	                   .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+	               .addContainerGap())
+	       );
+
+	       jPanel2.getAccessibleContext().setAccessibleName("Question Builder");
+	       jPanel2.getAccessibleContext().setAccessibleDescription("This is the zone where you can create questions");
+
+	       setSize(new java.awt.Dimension(1100, 800));
+	       setLocationRelativeTo(null);
+	       setVisible(visable);
+	   }// </editor-fold>     
+
+                                         
+	   /*
 	public void setEnabled(boolean initialState) {
 		//cellNumTxtField.setEnabled(!initialState);
 		//btnNumTxtField.setEnabled(!initialState);
@@ -527,6 +674,46 @@ public class ScenarioCreator implements ActionListener {
 	 * Checks to see if cell and button are ints
 	 */
 	
+	   private void inputMethodSliderMouseClicked(java.awt.event.MouseEvent evt) {                                               
+	       
+	       // TODO add your handling code here:
+	       //test what value slider is and enable/disable the other option for input
+	       if(inputMethodSlider.isMaximumSizeSet() == true) {
+	           enableManual(true);
+	       }
+	   }                                              
+	/*
+	   Try to figure out how to update slider and change states 
+	   */
+	   private void enableManual(boolean set) {
+	       rad1.setEnabled(set);
+	       rad2.setEnabled(set);
+	       rad3.setEnabled(set);
+	       rad4.setEnabled(set);
+	       rad5.setEnabled(set);
+	       rad6.setEnabled(set);
+	       rad7.setEnabled(set);
+	       rad8.setEnabled(set);
+	       radButNext.setEnabled(set);
+	       radButBack.setEnabled(set);
+	}
+	   private void rad2ActionPerformed(java.awt.event.ActionEvent evt) {                                     
+	       // TODO add your handling code here:
+	   }                                    
+
+	   private void inputMethodSliderStateChanged(javax.swing.event.ChangeEvent evt) {                                               
+	       // TODO add your handling code here:
+	       if(inputMethodSlider.getValue() == 1) {
+	           enableManual(true);
+	       } else if (inputMethodSlider.getValue() == -1) {
+	           txtFldForBinary.setEnabled(true);
+	       } else {
+	           enableManual(false);
+	           txtFldForBinary.setEnabled(false);
+	           
+	       }
+	   } 
+	
 	public static boolean cellAndButtonInt(String cell , String button) {
 	    try { 
 	        Integer.parseInt(cell); 
@@ -541,8 +728,7 @@ public class ScenarioCreator implements ActionListener {
 	    } else {
 	    	return false;
 	    }
-	   
-	 
+	
 	}
 
 	@Override
@@ -604,5 +790,8 @@ public class ScenarioCreator implements ActionListener {
 				}
 				}
 			}
+	
+	   
+		
 	}
 
