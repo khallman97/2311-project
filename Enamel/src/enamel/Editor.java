@@ -231,6 +231,10 @@ public class Editor {
 	public void edit(int index, String replace) {
 		elements.set(index, replace);
 	}
+	
+	public void add(String command) {
+		elements.add(command);
+	}
 
 	/*
 	 * Converts the current list from the "english" to what needs to be read by the

@@ -2,6 +2,7 @@ package enamel;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Event;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -17,6 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -49,10 +51,15 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 	private File newFile;
 	private String newFilePath;
 	
+	private String numOfCell, numOfButton;
+	
 	private LinkedList<String> contents;
 	private Editor editor;
 	private Scanner reader;
 	private BufferedWriter writer;
+	private DefaultListModel<String> model = new DefaultListModel<>();
+	
+	private boolean isRunningStart;
 	
 	   private javax.swing.JComboBox<String> buttonSelect;
 	   private javax.swing.JButton correctAudio;
@@ -107,7 +114,11 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 	 */
 	public ScenarioCreator(boolean newFile) {
 		if(newFile == true) {
-			Int();
+			isRunningStart = true;
+			while (isRunningStart) {
+				Int();
+			}
+			
 			initialize(false);
 			setEnabled(false);
 		} else {
@@ -132,8 +143,22 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 		}
 	}
 	
+	private void fillList() {
+		for (int i =0; i < editor.getSize(); i++) {
+			model.addElement(editor.getElement(i));
+		}
+	}
+	
 	private void enableFile(File file) {
 		editor = new Editor(file);
+		System.out.print(editor.getElement(0));
+		if(editor.getElement(0) == null) {
+			
+		} else {
+			fillList();
+		}
+		
+		
 		
 		/*
 		for (int i = 0 ; edit.getSize() > i ; i++) {
@@ -167,6 +192,8 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 		button.setPreferredSize( new Dimension( 200, 24 ) );
 		TextPrompt buttonP = new TextPrompt("Enter the number of buttons" , button);
 		
+	
+		
 		
 		p.add(name);
 		p.add(cell);
@@ -185,10 +212,6 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 		
 	
 	}
-	
-	
-	
-	
 	
 	
 	/**
@@ -233,7 +256,7 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 	       jButton1 = new javax.swing.JButton();
 	       jPanel3 = new javax.swing.JPanel();
 	       jScrollPane5 = new javax.swing.JScrollPane();
-	       list = new javax.swing.JList<>();
+	       list = new javax.swing.JList<String>(model);
 	       delete = new javax.swing.JButton();
 	       edit = new javax.swing.JButton();
 	       jPanel4 = new javax.swing.JPanel();
@@ -329,6 +352,14 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 	       jButton2.setText("Add Audio For Incorrect");
 
 	       finish.setText("Finish");
+	       
+	       finish.addActionListener(new java.awt.event.ActionListener() {
+	            public void actionPerformed(java.awt.event.ActionEvent evt) {
+	                finishActionPerformed(evt);
+	            }
+	        });
+	       
+	       
 
 	       javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
 	       jPanel2.setLayout(jPanel2Layout);
@@ -536,6 +567,10 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 
 	       list.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 	       jScrollPane5.setViewportView(list);
+	       
+	       System.out.print(editor.getSize());
+	       
+	       
 
 	       delete.setText("Delete selected");
 
@@ -696,12 +731,9 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 	       rad8.setEnabled(set);
 	       radButNext.setEnabled(set);
 	       radButBack.setEnabled(set);
-	}
-	   private void rad2ActionPerformed(java.awt.event.ActionEvent evt) {                                     
-	       // TODO add your handling code here:
-	   }                                    
+	}                                  
 
-	   private void inputMethodSliderStateChanged(javax.swing.event.ChangeEvent evt) {                                               
+	 private void inputMethodSliderStateChanged(javax.swing.event.ChangeEvent evt) {                                               
 	       // TODO add your handling code here:
 	       if(inputMethodSlider.getValue() == 1) {
 	           enableManual(true);
@@ -713,6 +745,22 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 	           
 	       }
 	   } 
+	 
+	 private void finishActionPerformed(java.awt.event.ActionEvent evt) {                                       
+		 
+		 String questionTTS = jTextArea1.getText();
+		 editor.add("TTS: "+questionTTS);
+		 model.addElement("TTS: "+questionTTS);
+		 
+		 
+		 
+		 
+		 JOptionPane.showMessageDialog(null, "Hello World");
+		 
+		 // TODO add your handling code here:
+	    }  
+	 
+	 
 	
 	public static boolean cellAndButtonInt(String cell , String button) {
 	    try { 
@@ -756,6 +804,13 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 							setEnabled(true);
 							enableFile(newFile);
 							
+							this.numOfCell = numOfCells;
+							this.numOfButton = numOfButtons;
+							
+							
+							
+							
+									
 							
 						} else {
 							JOptionPane.showMessageDialog(null, "Please enter a vaild number greater then 0", "WARNING", JOptionPane.WARNING_MESSAGE);
@@ -765,6 +820,7 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+						
 					}
 					//
 					
@@ -789,6 +845,7 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 					frame.dispose();
 				}
 				}
+			
 			}
 	
 	   
