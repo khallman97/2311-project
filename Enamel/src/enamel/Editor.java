@@ -162,7 +162,7 @@ public class Editor {
 
 		
 			else if (currentLine.substring(0, 15).equals("/~disp-clearAll")) {
-				currentLine = "Clearning cells";
+				currentLine = "Clearing cells";
 				elements.add(currentLine);
 			}
 
@@ -286,7 +286,7 @@ public class Editor {
 				toWrite.add(currentLine);
 			}
 
-			else if (currentLine.substring(0, 15).equals("Clearning cells")) {
+			else if (currentLine.substring(0, 14).equals("Clearing cells")) {
 				currentLine = "/~disp-clearAll";
 				toWrite.add(currentLine);
 			}

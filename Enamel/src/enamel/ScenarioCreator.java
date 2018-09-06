@@ -115,10 +115,10 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 	public ScenarioCreator(boolean newFile) {
 		if(newFile == true) {
 			isRunningStart = true;
-			while (isRunningStart) {
-				Int();
-			}
-			
+			//while (isRunningStart) {
+				//Int();
+		//	}
+			Int();
 			initialize(false);
 			setEnabled(false);
 		} else {
@@ -129,18 +129,20 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 	}
 	
 	public ScenarioCreator(File fileName, boolean newFile) {
-		
+		/*
 		if(newFile == true) {
 			Int();
 			initialize(false);
 			setEnabled(false);
 		} else {
+		*/
 			this.newFile = fileName;
 			this.newFilePath = fileName.getAbsolutePath();
+			//System.out.println(newFilePath);
 			initialize(true);
 			setEnabled(true);
 			enableFile(fileName);
-		}
+		//}
 	}
 	
 	private void fillList() {
@@ -568,7 +570,7 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 	       list.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 	       jScrollPane5.setViewportView(list);
 	       
-	       System.out.print(editor.getSize());
+	       //System.out.print(editor.getSize());
 	       
 	       
 
@@ -751,6 +753,7 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 		 String questionTTS = jTextArea1.getText();
 		 editor.add("TTS: "+questionTTS);
 		 model.addElement("TTS: "+questionTTS);
+		 
 		 
 		 
 		 
