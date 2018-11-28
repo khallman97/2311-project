@@ -1,0 +1,10 @@
+Cell 22
+Button 2
+Cell 22
+Button 2
+fdf
+/~disp-string:fd
+/~skip-button:0 ONEE
+/~skip-button:1 TWOO
+2
+2

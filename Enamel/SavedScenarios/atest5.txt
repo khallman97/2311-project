@@ -1,0 +1,8 @@
+Cell 2
+Button 2
+f
+/~disp-string:ff
+/~skip-button:0 ONEE
+/~skip-button:1 TWOO
+f
+f

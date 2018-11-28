@@ -1,0 +1,8 @@
+Cell 4
+Button 3
+yes	
+/~disp-string:hi
+/~skip-button:2 ONEE
+/~skip-button:1 ONEE
+/~skip-button:2 TWOO
+/~skip-button:3 TWOO

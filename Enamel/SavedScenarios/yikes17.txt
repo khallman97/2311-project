@@ -1,0 +1,10 @@
+qt	
+/~disp-string:2
+/~skip-button:0 TWOO
+
+/~skip-button:1 ONEE
+
+/~sound:correct.wav
+r
+/~sound:wrong.wav
+w

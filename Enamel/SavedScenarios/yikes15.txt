@@ -1,0 +1,16 @@
+hel
+
+/~disp-string:hi
+
+/~skip-button:0 ONEE
+
+/~skip-button:1 TWOO
+
+/~sound:correct.wav
+
+r
+
+/~sound:wrong.wav
+
+w
+

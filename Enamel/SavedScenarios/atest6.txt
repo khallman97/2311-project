@@ -1,0 +1,17 @@
+Cell 2
+Button 2
+Question
+/~disp-string:d
+/~skip-button:0 TWOO
+/~skip-button:1 ONEE
+/~user-input
+/~ONEE
+/~sound:correct.wav
+Correct Ans
+/~skip:NEXT
+/~TWOO
+/~sound:wrong.wav
+Wrong Ans
+/~skip:NEXT
+ 
+/~NEXT

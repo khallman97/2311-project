@@ -1,0 +1,20 @@
+Cell 2
+Button 2
+Cell 2
+Button 2
+Cell 2
+Button 2
+2	2
+/~disp-string:2
+/~skip-button:0 ONEE
+/~skip-button:1 TWOO
+2
+2
+Cell 2
+Button 2
+2	2
+/~disp-string:2
+/~skip-button:0 ONEE
+/~skip-button:1 TWOO
+2
+2

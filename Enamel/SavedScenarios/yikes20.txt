@@ -1,0 +1,11 @@
+Cell 2
+Button 2
+
+qt
+/~disp-string:hi
+/~skip-button:1 ONEE
+/~skip-button:2 TWOO
+/~sound:correct.wav
+r
+/~sound:wrong.wav
+w
