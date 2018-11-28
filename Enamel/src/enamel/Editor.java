@@ -4,12 +4,15 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -29,7 +32,7 @@ public class Editor {
 
 	public File file;
 	private Scanner reader;
-	private BufferedWriter writer;
+	//private FileWriter writer;
 
 	private static List<String> elements;
 	private List<String> toWrite;
@@ -38,11 +41,15 @@ public class Editor {
 		//this.file = fileName;
 		try {
 			this.reader = new Scanner(file);
+			//this.writer = new FileWriter(file, false);
+			this.file = file;
 			parseToApp();
 		} catch (FileNotFoundException e) {
+			System.out.println("File not found");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			System.out.println("File not found");
 			// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
@@ -94,14 +101,14 @@ public class Editor {
 
 			else if (currentLine.substring(0, 4).equals("Cell")) {
 				String numOfCells = currentLine.substring(5);
-				currentLine = "Cells " + numOfCells;
+				currentLine = "Cells " + numOfCells+"\n";
 				elements.add(currentLine);
 
 			}
 
 			else if (currentLine.substring(0, 6).equals("Button")) {
 				String numOfCells = currentLine.substring(7);
-				currentLine = "Buttons " + numOfCells;
+				currentLine = "Buttons " + numOfCells+"\n";
 				elements.add(currentLine);
 
 			} else if (currentLine.substring(0, 7).equals("/~skip:")) {
@@ -134,6 +141,7 @@ public class Editor {
 				elements.add(currentLine);
 			}
 
+		
 		
 			else if (currentLine.substring(0, 12).equals("/~user-input")) {
 				currentLine = "Wait for answer";
@@ -235,6 +243,10 @@ public class Editor {
 	public void add(String command) {
 		elements.add(command);
 	}
+	
+	public void delete(int index) {
+		elements.remove(index);
+	}
 
 	/*
 	 * Converts the current list from the "english" to what needs to be read by the
@@ -244,11 +256,13 @@ public class Editor {
 	public void parseToFileFormat() {
 
 		toWrite = new LinkedList<String>();
-
+		
 		for (int i = 0; i < elements.size(); i++) {
 
 			String currentLine = elements.get(i);
-
+			//System.out.println(currentLine + "Before change");
+			
+			
 			if (currentLine.trim().isEmpty()) {
 				toWrite.add(currentLine);
 			}
@@ -257,10 +271,17 @@ public class Editor {
 				currentLine = currentLine.substring(5);
 				toWrite.add(currentLine);
 			} else if (currentLine.substring(0, 6).equals("Cells ")) {
-				currentLine = "Cell " + currentLine.substring(5);
+				currentLine = "Cell " + currentLine.substring(6);
 				toWrite.add(currentLine);
-			} else if (currentLine.substring(0, 8).equals("Buttons ")) {
-				currentLine = "Cell " + currentLine.substring(8);
+				
+			}
+			
+			else if (currentLine.substring(0,7).equals("Insert ")) {
+				toWrite.add(currentLine.substring(7));
+			}
+			
+			else if (currentLine.substring(0, 8).equals("Buttons ")) {
+				currentLine = "Button " + currentLine.substring(8);
 				toWrite.add(currentLine);
 			}
 
@@ -282,11 +303,14 @@ public class Editor {
 				toWrite.add(currentLine);
 			} else if (currentLine.substring(0, 15).equals("Answer set to: ")) {
 				String skipBut = currentLine.substring(15);
-				currentLine = "/~skip-button:" + skipBut;
+				currentLine = "/~skip-button:" + skipBut +" ONEE";
 				toWrite.add(currentLine);
-			}
+			} else if (currentLine.substring(0, 15).equals("WrongA set to: ")) {
+				String skipBut = currentLine.substring(15);
+				currentLine = "/~skip-button:" + skipBut +" TWOO";
+				toWrite.add(currentLine);
 
-			else if (currentLine.substring(0, 14).equals("Clearing cells")) {
+			} else if (currentLine.substring(0, 14).equals("Clearing cells")) {
 				currentLine = "/~disp-clearAll";
 				toWrite.add(currentLine);
 			}
@@ -318,12 +342,7 @@ public class Editor {
 				toWrite.add(currentLine);
 			}
 
-			else if (currentLine.substring(0, 20).equals("Program will skip to")) {
-				String skipTo = currentLine.substring(20);
-				currentLine = "/~skip:" + skipTo;
-				toWrite.add(currentLine);
-
-			}
+		
 
 			else if (currentLine.substring(0, 20).equals("Displaying the char ")) {
 				String charact = currentLine.substring(20);
@@ -335,6 +354,12 @@ public class Editor {
 				String pins = currentLine.substring(20);
 				currentLine = "/~disp-cell-raise:" + pins;
 				toWrite.add(currentLine);
+			}
+			else if (currentLine.substring(0, 21).equals("Program will skip to ")) {
+				String skipTo = currentLine.substring(20);
+				currentLine = "/~skip:" + skipTo;
+				toWrite.add(currentLine);
+
 			}
 
 			else if (currentLine.substring(0, 21).equals("Repeat button set to ")) {
@@ -361,33 +386,33 @@ public class Editor {
 
 				toWrite.add(currentLine);
 			}
+		//	System.out.println(currentLine + "After change");
+
 
 		}
+		
+
+
+	}
+	
+	public void save() {
+		
 		try {
-			this.writer = new BufferedWriter(new FileWriter(file));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		for (int i = 0; i < toWrite.size(); i++) {
-			try {
-
-				writer.write(toWrite.get(i) + "\n");
-				System.out.println(toWrite.get(i));
-
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			FileWriter fooWriter = new FileWriter(this.file, false);
+			for(int i =0; i<toWrite.size();i++) {
+				//System.out.println(toWrite.get(i)+"\n");
+				fooWriter.write(toWrite.get(i) + "\n");
 			}
-		}
-		try {
-			writer.flush();
+			fooWriter.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
+		} 
+	
+	}
+	
+	public void close() {
+		this.reader.close();
 	}
 	
 	public String getElement(int index) {

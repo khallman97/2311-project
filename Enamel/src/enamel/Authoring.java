@@ -219,7 +219,7 @@ public class Authoring extends JFrame implements ActionListener{
 				output.append("Opening "+file.getName()+"\n");
 			}
 			String filepath = file.getAbsolutePath();
-			System.out.println(filepath);
+			//System.out.println(filepath);
 			ScenarioParser sp = new ScenarioParser(true);
 			sp.setScenarioFile(filepath);
 		}else if(e.getActionCommand() == "New") {

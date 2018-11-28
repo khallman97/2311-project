@@ -750,15 +750,43 @@ public class ScenarioCreator extends javax.swing.JFrame implements ActionListene
 	 
 	 private void finishActionPerformed(java.awt.event.ActionEvent evt) {                                       
 		 
+		 /* add actions to the file and scenario creator when making the question here */
+		 
 		 String questionTTS = jTextArea1.getText();
 		 editor.add("TTS: "+questionTTS);
-		 model.addElement("TTS: "+questionTTS);
+		 model.addElement("Question being displayed: "+questionTTS);
+		 
+		 //Decides what to add to the editor
+		 if(inputMethodSlider.getValue() == 1) {
+	           enableManual(true);
+	       } else if (inputMethodSlider.getValue() == -1) {
+	    	   String wordToConvert = txtFldForBinary.getText();
+	    	   editor.add("Displaying the string " + wordToConvert);
+	    	   model.addElement("Displaying the string " + wordToConvert);
+	       } else {
+	    	   boolean vRad1 = rad1.isSelected();
+	    	   boolean vRad2 = rad2.isSelected();
+		       boolean vRad3 = rad3.isSelected();
+		       boolean vRad4 = rad4.isSelected();
+		       boolean vRad5 = rad5.isSelected();
+		       boolean vRad6 = rad6.isSelected();
+		       boolean vRad7 = rad7.isSelected();
+		       boolean vRad8 = rad8.isSelected();
+		       
+		      
+		       
+		      
+	           
+	       }
+		 
+		 
+		 
+		
 		 
 		 
 		 
 		 
-		 
-		 JOptionPane.showMessageDialog(null, "Hello World");
+		// JOptionPane.showMessageDialog(null, "Hello World");
 		 
 		 // TODO add your handling code here:
 	    }  
