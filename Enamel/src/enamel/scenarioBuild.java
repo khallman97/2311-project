@@ -643,7 +643,7 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 		int selection = JOptionPane.showOptionDialog(null, "Audio Select", "Audio Select",
 		        JOptionPane.WARNING_MESSAGE, 0, null, close, close[2]);
 		
-		//System.out.println(selection);
+		System.out.println(selection);
 		
 		if(selection == 0) {
 			fileChooser();
