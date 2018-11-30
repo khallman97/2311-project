@@ -1,7 +1,9 @@
 package enamel;
 
+import java.awt.AWTEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -9,6 +11,8 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -20,8 +24,9 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 	private starter start;
 	private File file;
 	private Editor editor;
-	private int buttons;
+	private int buttons,cells;
 	private JFileChooser chooser;
+	
 
 	public scenarioBuild(starter start, String cells, String buttons) {
 		this.start = start;
@@ -30,12 +35,20 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 		enableFile(this.file);
 		initComponents();
 		initCellAndButt(cells, buttons);
-
+		setButtons(Integer.parseInt(start.getButt()));
+		setCells(Integer.parseInt(start.getCell()));
 	}
 
-	public scenarioBuild(File file) {
+	
+
+	public scenarioBuild(String filePath) {
+		File newFile = new File(filePath);
+		enableFile(newFile);
 		initComponents();
+		fillList();
 	}
+
+	
 
 	private void fillList() {
 		for (int i = 0; i < editor.getSize(); i++) {
@@ -51,8 +64,9 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 		setButtons(Integer.parseInt(buttons));
 	}
 
-	private void enableFile(File file) {
-		editor = new Editor(file);
+	private void enableFile(File newFile) {
+		
+		editor = new Editor(newFile);
 		// System.out.println("Editor was made");
 
 	}
@@ -116,6 +130,28 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 		display.setSelectionBackground(new java.awt.Color(135, 206, 250));
 		// display.setSelectionForeground(new java.awt.Color(135, 206, 250));
 		displayP.setViewportView(display);
+		display.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				if (!arg0.getValueIsAdjusting()) {
+					editDelEnable(true);
+				} else {
+					editDelEnable(false);
+				}
+			}
+
+			public void editDelEnable(boolean bol) {
+				if (bol) {
+					editB.setEnabled(true);
+					deleteB.setEnabled(true);
+				} else {
+					editB.setEnabled(false);
+					deleteB.setEnabled(false);
+				}
+
+			}
+		});
 
 		javax.swing.GroupLayout listHolderLayout = new javax.swing.GroupLayout(listHolder);
 		listHolder.setLayout(listHolderLayout);
@@ -141,6 +177,7 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 		editB.setText("Edit");
 		editB.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 		editB.setPreferredSize(new java.awt.Dimension(227, 111));
+		editB.setEnabled(false);
 		editB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				editBActionPerformed(evt);
@@ -153,6 +190,7 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 		deleteB.setText("Delete");
 		deleteB.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 		deleteB.setPreferredSize(new java.awt.Dimension(227, 111));
+		deleteB.setEnabled(false);
 		deleteB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				deleteBActionPerformed(evt);
@@ -294,8 +332,8 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 
 		correctButton.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
 		correctButton.setForeground(new java.awt.Color(70, 70, 85));
-		String butts = start.getButt();
-		int but = Integer.parseInt(butts);
+		//String butts = start.getButt();
+		int but = getButtons();
 		for (int i = 0; i < but; i++) {
 			correctButton.addItem(String.valueOf(i + 1));
 		}
@@ -475,8 +513,7 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 		ttsTxt.setForeground(new java.awt.Color(70, 70, 85));
 		ttsTxt.setRows(5);
 		ttsP.setViewportView(ttsTxt);
-		ttsTxt.getAccessibleContext()
-				.setAccessibleDescription("Enter text here you wish to be read out");
+		ttsTxt.getAccessibleContext().setAccessibleDescription("Enter text here you wish to be read out");
 
 		insertB.setBackground(new java.awt.Color(205, 205, 205));
 		insertB.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -599,6 +636,9 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 						.addGap(0, 0, Short.MAX_VALUE)));
 
 		pack();
+
+		finishB.setMnemonic(KeyEvent.VK_F); // Alt + F to exit
+		saveB.setMnemonic(KeyEvent.VK_S); // Alt + F to exit
 	}// </editor-fold>
 
 	// handles all display events
@@ -629,41 +669,54 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 	public void setButtons(int but) {
 		this.buttons = but;
 	}
-	 private void fileChooser() {
-			chooser = new JFileChooser();
-			FileNameExtensionFilter filter = new FileNameExtensionFilter( "mp3","wav");
-			chooser.setFileFilter(filter);
-			chooser.setAcceptAllFileFilterUsed(false);
-			chooser.setCurrentDirectory(new File(System.getProperty("user.dir")+"/AudioFiles"));
-		}
 	
+	public int getCells() {
+		return this.cells;
+	}
+	
+	private void setCells(int cells) {
+		this.cells = cells;
+		
+	}
+	
+	public void getCells(int cells) {
+		this.cells = cells;
+	}
+	private void fileChooser() {
+		chooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("mp3", "wav");
+		chooser.setFileFilter(filter);
+		chooser.setAcceptAllFileFilterUsed(false);
+	}
+
 	private void recordBActionPerformed(java.awt.event.ActionEvent evt) {
-		
-		String close[] = {"Add Exisiting Audio" , "Create new" , "Cancel"};
-		int selection = JOptionPane.showOptionDialog(null, "Audio Select", "Audio Select",
-		        JOptionPane.WARNING_MESSAGE, 0, null, close, close[2]);
-		
-		System.out.println(selection);
-		
-		if(selection == 0) {
+
+		String close[] = { "Add Exisiting Audio", "Create new", "Cancel" };
+		int selection = JOptionPane.showOptionDialog(null, "Audio Select", "Audio Select", JOptionPane.WARNING_MESSAGE,
+				0, null, close, close[2]);
+
+		// System.out.println(selection);
+
+		if (selection == 0) {
 			fileChooser();
-			File audioF=null;
+			File audioF = null;
 			int rep = chooser.showOpenDialog(getContentPane());
-			if (rep == JFileChooser.APPROVE_OPTION){
+			if (rep == JFileChooser.APPROVE_OPTION) {
 				audioF = chooser.getSelectedFile();
 			}
 			String audioName = audioF.getName();
-			model.addElement("Playing Audio: "+audioName);
-			editor.add("Playing sound: "+audioName);
-		} else if(selection == 1) {
-			AudioRecord ap = new AudioRecord();
+			model.addElement("Playing Audio: " + audioName);
+			editor.add("Playing sound: " + audioName);
+		} else if (selection == 1) {
+			AudioRecorder ap = new AudioRecorder(editor);
 			ap.setVisible(true);
-			
+
 		} else {
-			
+
 		}
-		
+
 	}
+
 	// when edit is pressed
 	private void editBActionPerformed(java.awt.event.ActionEvent evt) {
 		int index = display.getSelectedIndex();
@@ -734,9 +787,17 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 	}
 
 	private void deleteBActionPerformed(java.awt.event.ActionEvent evt) {
+
 		int index = display.getSelectedIndex();
-		editor.delete(index);
-		model.removeElementAt(index);
+		String whatIsThis = model.getElementAt(index);
+		if (whatIsThis.substring(0, 7).equals("Cells: ") || whatIsThis.substring(0, 9).equals("Buttons: ")) {
+			JOptionPane.showMessageDialog(null, "Can not delete cells or buttons. Consider edit to change value",
+					"WARNING", JOptionPane.WARNING_MESSAGE);
+		} else {
+			editor.delete(index);
+			model.removeElementAt(index);
+		}
+
 	}
 
 	private void insertBActionPerformed(java.awt.event.ActionEvent evt) {
@@ -748,6 +809,10 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 			ttsTxt.setText("");
 
 		}
+
+	}
+
+	private void valueChanged(ListSelectionEvent e) {
 
 	}
 
@@ -849,8 +914,8 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 		}
 
 	}
-	
-	//Use this class to easliy add listeners to elements
+
+	// Use this class to easliy add listeners to elements
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
@@ -932,5 +997,5 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 	private javax.swing.JCheckBox wrongAudio;
 	private javax.swing.JLabel wrongL;
 	// End of variables declaration
-	
+
 }

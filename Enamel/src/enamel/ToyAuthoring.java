@@ -3,21 +3,14 @@ package enamel;
 public class ToyAuthoring {
 
 	/*
-	 * 	this is the main class please run here
+	 * 	main method
 	 * 
 	 */
     public static void main(String[] args) { 	  	
-    	   
-    	
-    	
-    	
+
     	   Home home = new Home();
-    	   home.setVisible(false);
-    	   
-    	//ScenarioParser sp = new ScenarioParser(true);
-    	//sp.setScenarioFile("Scenario_1.txt");
-    	
-    	
+    	   //home.setVisible(true);
+    	   home.main(null);
     	    
     }
 }
