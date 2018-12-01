@@ -33,10 +33,11 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 		this.file = start.getFile();
 
 		enableFile(this.file);
-		initComponents();
-		initCellAndButt(cells, buttons);
 		setButtons(Integer.parseInt(start.getButt()));
 		setCells(Integer.parseInt(start.getCell()));
+		initComponents();
+		initCellAndButt(cells, buttons);
+		
 	}
 
 	
@@ -67,7 +68,7 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 	private void enableFile(File newFile) {
 		
 		editor = new Editor(newFile);
-		// System.out.println("Editor was made");
+		// System.out.println("Editor wans made");
 
 	}
 
@@ -334,6 +335,7 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 		correctButton.setForeground(new java.awt.Color(70, 70, 85));
 		//String butts = start.getButt();
 		int but = getButtons();
+	
 		for (int i = 0; i < but; i++) {
 			correctButton.addItem(String.valueOf(i + 1));
 		}
@@ -887,6 +889,8 @@ public class scenarioBuild extends javax.swing.JFrame implements ActionListener 
 	private void saveBActionPerformed(java.awt.event.ActionEvent evt) {
 		editor.parseToFileFormat();
 		editor.save();
+		JOptionPane.showMessageDialog(null, "Save Successful ",
+				"Saved", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	// Event for test button...Tests the file currently being worked on
